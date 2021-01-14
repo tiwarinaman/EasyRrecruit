@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Easy-Recruit
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="banner text-center">
+        <h1>JOBS AROUND YOU</h1>
+        <p>We Will Help You To Find Your Dream Job</p>
+    </div>
+
+
+    <div class="search-job text-center">
+        <input type="text" class="form-control form-control-lg" placeholder="Job Title, Company...">
+        <input type="text" class="form-control form-control-lg" placeholder="Location">
+        <select class="form-control form-control-lg">
+            <option>Full Time</option>
+            <option>Part Time</option>
+            <option>Intership</option>
+        </select>
+        <button class="btn btn-primary btn-lg"><i class="fas fa-search"></i> Search Job</button>
+    </div>
+
+
+
+    <section id="recruiters">
+        <div class="container text-center">
+            <h3>TOP RECRUITERS</h3>
+            <div>
+                <img src="{% static 'img/recruiters/amazon.jpg' %}" alt="">
+                <img src="{% static 'img/recruiters/google.png' %}" alt="">
+                <img src="{% static 'img/recruiters/microsoft.jpg' %}" alt="">
+                <img src="{% static 'img/recruiters/sprint.jpg' %}" alt="">
+                <img src="{% static 'img/recruiters/puma.jpg' %}" alt="">
+                <img src="{% static 'img/recruiters/wipro.png' %}" alt="">
+                <img src="{% static 'img/recruiters/LTI.png' %}" alt="">
+                <img src="{% static 'img/recruiters/infosys.png' %}" alt="">
+                <img src="{% static 'img/recruiters/adidas.jpg' %}" alt="">
+            </div>
+        </div>
+    </section>
+
+
+    <!--------------Recent Jobs----------------->
+
+    <section id="jobs">
+        <div class="container">
+            <h5 class="text-center">RECENT JOBS</h5>
+            <div class="company-details">
+                <div class="job-update">
+                    <h4><b>Software Developer (Fresher)</b></h4>
+                    <p>Wipro Infotech</p>
+                    <i class="fas fa-briefcase"></i><span> 0-1 year</span><br>
+                    <i class="fas fa-rupee-sign"></i><span> 3.50 - 4.00 CTR</span><br>
+                    <i class="fas fa-map-marker-alt"></i><span> Mumbai</span><br>
+                    <p>Skills <i class="fas fa-angle-double-right"></i><small>java </small><small>python </small><small>HTML,
+                        CSS</small></p>
+                    <p>Description <i class="fas fa-angle-double-right"></i> AngularJS Training provides you the skills
+                        needed to
+                        create dynamic web applications.
+                        You will learn about the concepts of AngularJS,
+                        JavaScript, MVC Framework. <a href="#">Read More</a></p>
+                </div>
+                <div class="apply-btn">
+                    <button class="btn btn-primary">Apply</button>
+                </div>
+            </div>
+
+            <div class="company-details">
+                <div class="job-update">
+                    <h4><b>Software Developer (Fresher)</b></h4>
+                    <p>Wipro Infotech</p>
+                    <i class="fas fa-briefcase"></i><span> 0-1 year</span><br>
+                    <i class="fas fa-rupee-sign"></i><span> 3.50 - 4.00 CTR</span><br>
+                    <i class="fas fa-map-marker-alt"></i><span> Mumbai</span><br>
+                    <p>Skills <i class="fas fa-angle-double-right"></i><small>java </small><small>python </small><small>HTML,
+                        CSS</small></p>
+                    <p>Description <i class="fas fa-angle-double-right"></i> AngularJS Training provides you the skills
+                        needed to
+                        create dynamic web applications.
+                        You will learn about the concepts of AngularJS,
+                        JavaScript, MVC Framework. <a href="#">Read More</a></p>
+                </div>
+                <div class="apply-btn">
+                    <button class="btn btn-primary">Apply</button>
+                </div>
+            </div>
+
+            <div class="company-details">
+                <div class="job-update">
+                    <h4><b>Software Developer (Fresher)</b></h4>
+                    <p>Wipro Infotech</p>
+                    <i class="fas fa-briefcase"></i><span> 0-1 year</span><br>
+                    <i class="fas fa-rupee-sign"></i><span> 3.50 - 4.00 CTR</span><br>
+                    <i class="fas fa-map-marker-alt"></i><span> Mumbai</span><br>
+                    <p>Skills <i class="fas fa-angle-double-right"></i><small>java </small><small>python </small><small>HTML,
+                        CSS</small></p>
+                    <p>Description <i class="fas fa-angle-double-right"></i> AngularJS Training provides you the skills
+                        needed to
+                        create dynamic web applications.
+                        You will learn about the concepts of AngularJS,
+                        JavaScript, MVC Framework. <a href="#">Read More</a></p>
+                </div>
+                <div class="apply-btn">
+                    <button class="btn btn-primary">Apply</button>
+                </div>
+            </div>
+
+            <ul class="pagelink text-center">
+                <li class="left-arrow">&#8592;</li>
+                <li class="active">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li class="right-arrow">&#8594;</li>
+            </ul>
+
+        </div>
+    </section>
+
+    <!-------------Site stats----------------->
+
+    <section id="site-stats">
+        <div class="container text-center">
+            <h3>EASY-RECRUIT SITE STATS</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="stats-box">
+                                <i class="fas fa-user"></i> <span><small>100 +</small></span>
+                                <p>Job Seekers </p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stats-box">
+                                <i class="fab fa-slideshare"></i> <span><small>500 +</small></span>
+                                <p>Employers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="stats-box">
+                                <i class="fas fa-hand-peace"></i> <span><small>100 +</small></span>
+                                <p>Active Jobs</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stats-box">
+                                <i class="fas fa-building"></i> <span><small>500 +</small></span>
+                                <p>Companies</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Candidate Sign-Up
+{% endblock %}
+
+{% block body %}
+    <section id="candidate-register">
+
+
+        {% for msg in messages %}
+            <div class="alert alert-danger alert-dismissible fade show col-md-4" role="alert">
+                <span>{{ msg }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+
+        <div class="container registerForm">
+            <div class="title text-center" id="candiSignUP-title">
+                <h1 class="font-weight-bold">Candidate Sign-Up</h1>
+            </div><hr>
+            <form action="{% url 'candidateRegister' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="fname" class="form-control" placeholder="Firstname" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <input type="text" name="lname" class="form-control" placeholder="Lastname" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <input type="text" name="uname" class="form-control" placeholder="Username" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <input type="text" name="contactNumber" class="form-control" placeholder="Contact Number"
+                               required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <input type="password" name="pass" class="form-control" placeholder="Password" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <input type="password" name="confirmPass" class="form-control"
+                               placeholder="Confirm Password" required>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4" class="font-weight-bold">Gender</label><br>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline1" name="gender"
+                                   class="custom-control-input" value="male">
+                            <label class="custom-control-label" for="customRadioInline1">Male</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline2" name="gender"
+                                   class="custom-control-input" value="female">
+                            <label class="custom-control-label" for="customRadioInline2">Female</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1" class="font-weight-bold">Upload Your Image</label>
+                        <input type="file" name="imageFile" class="form-control-file" id="exampleFormControlFile1"
+                               required>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Sign-Up</button>
+                </div>
+            </form>
+        </div>
+
+    </section>
+{% endblock %}

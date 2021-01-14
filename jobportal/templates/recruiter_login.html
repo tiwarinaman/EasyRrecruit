@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Recruiter Login
+{% endblock %}
+
+{% block body %}
+    <section id="candidate-login">
+
+        {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="container myClass">
+            <div class="title text-center" id="recu-title">
+                <h3 class="font-weight-bold">Recruiter Sign-In</h3>
+            </div><hr>
+            <form action="{% url 'recruiterLogin' %}" method="post">
+                {% csrf_token %}
+                <!-- Username input -->
+                <div class="form-outline mb-4 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="uname" id="form2Example1" class="form-control" placeholder="Username"/>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                    </div>
+                    <input type="password" name="passwd" id="form2Example2" class="form-control"
+                           placeholder="Password"/>
+                </div>
+
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                    <div class="col d-flex justify-content-center">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                            <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="form2Example3"
+                                    checked
+                            />
+                            <label class="form-check-label" for="form2Example3"> Remember me </label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <!-- Simple link -->
+                        <a href="{% url 'reset_password' %}">Forgot password?</a>
+                    </div>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+                <!-- Register buttons -->
+                <div class="text-center">
+                    <p>Not a member? <a href="{% url 'recruiterRegister' %}">Register</a></p>
+                </div>
+            </form>
+        </div>
+
+    </section>
+{% endblock %}

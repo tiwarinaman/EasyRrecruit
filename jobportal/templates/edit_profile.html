@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block body %}
+
+    <section id="section-start">
+
+        {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+        <!-----------------  If user role is candidate then render this part of code      ------------>
+
+        {% if user.role == "candidate" %}
+            <div class="container edit-profile">
+                <h2 class="text-center font-weight-bold title">Edit Profile</h2>
+                <hr>
+                <div class="container-fluid">
+                    <div class="row mr-auto">
+                        <div class="col-md-4 text-right">
+                            <img src="{{ candi.candidate_image.url }}" alt="{{ user.first_name }}">
+                            <strong>Last Login :</strong><span> {{ user.last_login }}</span><br>
+                            <strong>Date of Joining :</strong><span> {{ user.date_joined }}</span>
+                        </div>
+                        <div class="col-md-8">
+                            <form method="post" action="{% url 'editCandidateProfile' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4" class="font-weight-bold">First Name</label>
+                                        <input type="text" class="form-control" value="{{ user.first_name }}"
+                                               name="fname">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="font-weight-bold">Last Name</label>
+                                        <input type="text" class="form-control" name="lname"
+                                               value="{{ user.last_name }}">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="font-weight-bold">Email Address</label>
+                                        <input type="email" class="form-control" name="email"
+                                               value="{{ user.email }}">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="font-weight-bold">Username</label>
+                                        <input type="email" class="form-control" name="username"
+                                               value="{{ user.username }}" readonly>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Contact</label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1"
+                                               value="{{ candi.candidate_number }}" name="mobile">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4"
+                                               class="font-weight-bold font-weight-bold">Gender</label><br>
+
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline1" name="gender"
+                                                   class="custom-control-input" value="male">
+                                            <label class="custom-control-label" for="customRadioInline1">Male</label>
+                                        </div>
+
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline2" name="gender"
+                                                   class="custom-control-input" value="female">
+                                            <label class="custom-control-label" for="customRadioInline2">Female</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Upload Image</label>
+                                        <input type="file" class="form-control" id="exampleInputPassword1" name="image">
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+
+        <!---------------------  If user role is recruiter then render this part of code ------------>
+
+        {% if user.role == "recruiter" %}
+            <div class="container edit-profile">
+                <h2 class="text-center font-weight-bold title">Edit Profile</h2>
+                <hr>
+                <div class="container-fluid">
+                    <div class="row mr-auto">
+                        <div class="col-md-4">
+                            <img src="{{ recu.recruiter_image.url }}" alt="{{ user.first_name }}">
+                        </div>
+                        <div class="col-md-8">
+                            <form method="post" action="{% url 'editRecruiterProfile' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4" class="font-weight-bold">First Name</label>
+                                        <input type="text" class="form-control" value="{{ user.first_name }}"
+                                               name="fname">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="font-weight-bold">Last Name</label>
+                                        <input type="text" class="form-control" name="lname"
+                                               value="{{ user.last_name }}">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="font-weight-bold">Email Address</label>
+                                        <input type="email" class="form-control" name="email"
+                                               value="{{ user.email }}" readonly>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="font-weight-bold">Username</label>
+                                        <input type="email" class="form-control" name="username"
+                                               value="{{ user.username }}" readonly>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Company Name</label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1"
+                                               value="{{ recu.company_name }}" name="companyName" readonly>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Contact Number</label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1"
+                                               value="{{ recu.recruiter_number }}" name="mobile">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4"
+                                               class="font-weight-bold font-weight-bold">Gender</label><br>
+
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline1" name="gender"
+                                                   class="custom-control-input" value="male">
+                                            <label class="custom-control-label" for="customRadioInline1">Male</label>
+                                        </div>
+
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline2" name="gender"
+                                                   class="custom-control-input" value="female">
+                                            <label class="custom-control-label" for="customRadioInline2">Female</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Upload Image</label>
+                                        <input type="file" class="form-control" id="exampleInputPassword1" name="image">
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+
+        <!-------------------- If user role is admin then render this part of code ---------------->
+
+    </section>
+
+{% endblock %}

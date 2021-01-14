@@ -1,0 +1,139 @@
+<section id="header">
+    <div class="menu-bar">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="/">
+                <span class="font-weight-bold text-danger">EASY</span><span class="text-success">-</span><span
+                    class="font-weight-bold text-light">RECRUIT</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active-nav">
+                        <a class="nav-link" href="/">HOME<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">ABOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">CONTACT</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        {% if user.role == "candidate" %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">JOB LISTS</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    WELCOME, <span class="text-uppercase">{{ user.first_name }} <i
+                                        class="fas fa-user"></i></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                                    <a class="dropdown-item" href="{% url 'editCandidateProfile' %}">Edit Profile</a>
+                                </div>
+                            </li>
+
+                        {% endif %}
+
+                        {% if user.role == "recruiter" %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">POST JOBS</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">JOB LISTS</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">APPLY JOB LISTS</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    WELCOME,<span class="text-uppercase">{{ user.first_name }} <i
+                                        class="fas fa-user"></i></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                                    <a class="dropdown-item" href="{% url 'editRecruiterProfile' %}">Edit Profile</a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if user.role == "admin" %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">NEW RECRUITER REQUEST</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">VIEW USERS</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    RECRUITER
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">View Recruiter</a>
+                                    <a class="dropdown-item" href="#">Add Recruiter</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    WELCOME, <span class="text-uppercase">{{ user.username }} <i
+                                        class="fas fa-user"></i></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                                    <a class="dropdown-item" href="#">Edit Profile</a>
+                                </div>
+                            </li>
+
+                        {% endif %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">SIGN-OUT <i
+                                    class="fas fa-sign-out-alt"></i></a>
+                        </li>
+                    {% else %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                SIGN-IN <i class="fas fa-sign-in-alt"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'candidateLogin' %}">Candidate</a>
+                                <a class="dropdown-item" href="{% url 'recruiterLogin' %}">Recruiter</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'adminLogin' %}">Admin</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                SIGN-UP <i class="fas fa-user-plus"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'candidateRegister' %}">Candidate</a>
+                                <a class="dropdown-item" href="{% url 'recruiterRegister' %}">Recruiter</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+</section>

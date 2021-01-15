@@ -11,7 +11,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active-nav">
+                    <li class="nav-item">
                         <a class="nav-link" href="/">HOME<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -44,7 +44,7 @@
                         {% if user.role == "recruiter" %}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">POST JOBS</a>
+                                <a class="nav-link" href="{% url 'postJob' %}">POST JOB</a>
                             </li>
 
                             <li class="nav-item">

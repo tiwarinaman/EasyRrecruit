@@ -19,7 +19,7 @@
         <select class="form-control form-control-lg">
             <option>Full Time</option>
             <option>Part Time</option>
-            <option>Intership</option>
+            <option>Internship</option>
         </select>
         <button class="btn btn-primary btn-lg"><i class="fas fa-search"></i> Search Job</button>
     </div>
@@ -49,65 +49,24 @@
     <section id="jobs">
         <div class="container">
             <h5 class="text-center">RECENT JOBS</h5>
-            <div class="company-details">
-                <div class="job-update">
-                    <h4><b>Software Developer (Fresher)</b></h4>
-                    <p>Wipro Infotech</p>
-                    <i class="fas fa-briefcase"></i><span> 0-1 year</span><br>
-                    <i class="fas fa-rupee-sign"></i><span> 3.50 - 4.00 CTR</span><br>
-                    <i class="fas fa-map-marker-alt"></i><span> Mumbai</span><br>
-                    <p>Skills <i class="fas fa-angle-double-right"></i><small>java </small><small>python </small><small>HTML,
-                        CSS</small></p>
-                    <p>Description <i class="fas fa-angle-double-right"></i> AngularJS Training provides you the skills
-                        needed to
-                        create dynamic web applications.
-                        You will learn about the concepts of AngularJS,
-                        JavaScript, MVC Framework. <a href="#">Read More</a></p>
+            {% for data in job_data %}
+                <div class="company-details">
+                    <div class="job-update">
+                        <h4><b>{{ data.job_title }}</b></h4>
+                        <p>{{ data.recruiter.company_name }}</p>
+                        <i class="fas fa-briefcase"></i><span> {{ data.experience }}</span><br>
+                        <i class="fas fa-rupee-sign"></i><span> {{ data.salary }}</span><br>
+                        <i class="fas fa-map-marker-alt"></i><span> {{ data.job_location }}</span><br>
+                        <p>Skills <i
+                                class="fas fa-angle-double-right"></i><small>{{ data.skills }}</small></p>
+                        <p>Description <i class="fas fa-angle-double-right"></i>{{ data.description }}<a href="#">Read
+                            More</a></p>
+                    </div>
+                    <div class="apply-btn">
+                        <button class="btn btn-primary">Apply</button>
+                    </div>
                 </div>
-                <div class="apply-btn">
-                    <button class="btn btn-primary">Apply</button>
-                </div>
-            </div>
-
-            <div class="company-details">
-                <div class="job-update">
-                    <h4><b>Software Developer (Fresher)</b></h4>
-                    <p>Wipro Infotech</p>
-                    <i class="fas fa-briefcase"></i><span> 0-1 year</span><br>
-                    <i class="fas fa-rupee-sign"></i><span> 3.50 - 4.00 CTR</span><br>
-                    <i class="fas fa-map-marker-alt"></i><span> Mumbai</span><br>
-                    <p>Skills <i class="fas fa-angle-double-right"></i><small>java </small><small>python </small><small>HTML,
-                        CSS</small></p>
-                    <p>Description <i class="fas fa-angle-double-right"></i> AngularJS Training provides you the skills
-                        needed to
-                        create dynamic web applications.
-                        You will learn about the concepts of AngularJS,
-                        JavaScript, MVC Framework. <a href="#">Read More</a></p>
-                </div>
-                <div class="apply-btn">
-                    <button class="btn btn-primary">Apply</button>
-                </div>
-            </div>
-
-            <div class="company-details">
-                <div class="job-update">
-                    <h4><b>Software Developer (Fresher)</b></h4>
-                    <p>Wipro Infotech</p>
-                    <i class="fas fa-briefcase"></i><span> 0-1 year</span><br>
-                    <i class="fas fa-rupee-sign"></i><span> 3.50 - 4.00 CTR</span><br>
-                    <i class="fas fa-map-marker-alt"></i><span> Mumbai</span><br>
-                    <p>Skills <i class="fas fa-angle-double-right"></i><small>java </small><small>python </small><small>HTML,
-                        CSS</small></p>
-                    <p>Description <i class="fas fa-angle-double-right"></i> AngularJS Training provides you the skills
-                        needed to
-                        create dynamic web applications.
-                        You will learn about the concepts of AngularJS,
-                        JavaScript, MVC Framework. <a href="#">Read More</a></p>
-                </div>
-                <div class="apply-btn">
-                    <button class="btn btn-primary">Apply</button>
-                </div>
-            </div>
+            {% endfor %}
 
             <ul class="pagelink text-center">
                 <li class="left-arrow">&#8592;</li>
@@ -121,6 +80,8 @@
 
         </div>
     </section>
+
+
 
     <!-------------Site stats----------------->
 

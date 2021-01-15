@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Post A New Job
+{% endblock %}
+
+{% block body %}
+    <section id="section-start">
+
+        <div class="container">
+
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <h2 class="text-center font-weight-bold title">Add Job Details</h2>
+            <hr>
+            <div class="post-job">
+                <form method="post" action="{% url 'postJob' %}" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Company Name</label>
+                            <input type="text" name="companyName" value="{{ recu.company_name }}" class="form-control"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Job Title</label>
+                            <input type="text" name="jobTitle" class="form-control"
+                                   placeholder="eg: Software Developer" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Job Location</label>
+                            <input type="text" name="jobLocation" class="form-control" placeholder="eg: Mumbai"
+                                   required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Job Type</label>
+                            <select name="jobType" class="form-control" title="Select Job Type">
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+                                <option value="Internship">Internship</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Category</label>
+                            <input type="text" name="role" class="form-control" placeholder="eg: Web, Android" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Salary</label>
+                            <input type="text" name="salary" class="form-control" placeholder="eg: 3.5 LPA" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Experience</label>
+                            <input type="text" name="experience" class="form-control" placeholder="eg: 0-1 year"
+                                   required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Start Date</label>
+                            <input type="text" name="startDate" value="{{ date }}" class="form-control" readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Last Date</label>
+                            <input type="date" name="lastDate" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Required Skills</label>
+                            <input type="text" name="requiredSkills" class="form-control"
+                                   placeholder="eg: Java, Python, Django, Angular" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="font-weight-bold">Website</label>
+                            <input type="text" name="website" class="form-control"
+                                   placeholder="eg: https://example.com" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="exampleInputPassword1" class="font-weight-bold">Description</label>
+                            <textarea class="form-control" rows="5" name="description"
+                                      placeholder="eg: Role Responsibilities, Education qualification etc."
+                                      required></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="exampleInputPassword1" class="font-weight-bold">Upload Company Logo</label>
+                            <input type="file" class="form-control" id="exampleInputPassword1" name="image" required>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="text" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

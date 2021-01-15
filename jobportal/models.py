@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+
 User = get_user_model()
 
 
-# Create your models here.
-
+# Candidate Model
 
 class Candidate(models.Model):
     uname = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -16,6 +16,8 @@ class Candidate(models.Model):
         return self.uname.first_name + " " + self.uname.last_name
 
 
+# Recruiter Model
+
 class Recruiter(models.Model):
     uname = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     recruiter_number = models.BigIntegerField(null=True)
@@ -26,3 +28,26 @@ class Recruiter(models.Model):
 
     def __str__(self):
         return self.uname.first_name + " " + self.uname.last_name
+
+
+# Post Job Model
+
+class PostJob(models.Model):
+    recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE, null=True)
+    job_title = models.CharField(max_length=100, null=True)
+    job_location = models.CharField(max_length=100, null=True)
+    job_type = models.CharField(max_length=100, null=True)
+    category = models.CharField(max_length=100, null=True)
+    salary = models.CharField(max_length=100, null=True)
+    experience = models.CharField(max_length=100, null=True)
+    start_date = models.DateField(null=True)
+    last_date = models.DateField(null=True)
+    skills = models.CharField(max_length=200, null=True)
+    website_link = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=1000, null=True)
+    company_logo_image = models.FileField(upload_to='post_job_company_logo/', null=True)
+
+    def __str__(self):
+        return self.job_title + " By " + self.recruiter.company_name
+
+

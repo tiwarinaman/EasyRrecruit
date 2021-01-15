@@ -4,14 +4,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.shortcuts import render, redirect
 
+# Importing for date
+import datetime
+
 # Importing models class
-from .models import Candidate, Recruiter
+from .models import Candidate, Recruiter, PostJob
+
 User = get_user_model()
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    job_data = PostJob.objects.all()
+    return render(request, 'home.html', {'job_data': job_data})
 
 
 def about(request):
@@ -344,3 +349,51 @@ def edit_recruiter_profile(request):
 
     recu = Recruiter.objects.get(uname=request.user)
     return render(request, 'edit_profile.html', {'recu': recu})
+
+
+@login_required(login_url='/recu-login')
+def post_job(request):
+    if request.method == 'POST':
+        companyName = request.POST.get('companyName', False)
+        jobTitle = request.POST.get('jobTitle', False)
+        jobLocation = request.POST.get('jobLocation', False)
+        jobType = request.POST.get('jobType', False)
+        cate = request.POST.get('role', False)
+        sal = request.POST.get('salary', False)
+        exp = request.POST.get('experience', False)
+        startDate = request.POST.get('startDate', False)
+        lastDate = request.POST.get('lastDate', False)
+        requiredSkill = request.POST.get('requiredSkills', False)
+        web = request.POST.get('website', False)
+        des = request.POST.get('description', False)
+        companyLogo = request.FILES.get('image', False)
+
+        if companyName == '' or jobTitle == '' or jobLocation == '' or jobType == '' or cate == '' or sal == '' or exp == '' or startDate == '' or lastDate == '' or requiredSkill == '' or web == '' or des == '' or companyLogo == '':
+            messages.info(request, "All fields are required, please try again !!!")
+            return redirect('postJob')
+        else:
+            start = datetime.datetime.strptime(startDate, "%Y-%m-%d")
+            last = datetime.datetime.strptime(lastDate, "%Y-%m-%d")
+            if start == last:
+                messages.error(request, "Start date and last date can't be same, try again !!!")
+                return redirect('postJob')
+            elif start > last:
+                messages.error(request, "End date should be greater than start date !!!")
+                return redirect('postJob')
+            else:
+                try:
+                    recu = Recruiter.objects.get(uname=request.user)
+                    post = PostJob.objects.create(recruiter=recu, job_title=jobTitle, job_location=jobLocation, job_type=jobType,
+                                                  category=cate, salary=sal, experience=exp, start_date=startDate, last_date=lastDate,
+                                                  skills=requiredSkill, website_link=web, description=des, company_logo_image=companyLogo)
+
+                    post.save()
+                    messages.success(request, "Job Successfully posted !!!")
+                    return redirect('postJob')
+                except:
+                    messages.error(request, "Something went wrong, please try again !!!")
+                    return redirect('postJob')
+
+    recu = Recruiter.objects.get(uname=request.user)
+    d = datetime.date.today()
+    return render(request, 'post_job.html', {'recu': recu, 'date': d.strftime("%Y-%m-%d")})

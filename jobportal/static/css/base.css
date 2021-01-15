@@ -61,7 +61,7 @@ ul li.active-nav a {
 
 .search-job {
     padding: 30px;
-    margin: -300px 6% 50px;
+    margin: -280px 6% 50px;
     /*background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
     background: transparent;
 }
@@ -270,7 +270,7 @@ ul li.active-nav a {
     outline: none;
 }
 
-.contact-form button:hover{
+.contact-form button:hover {
     background: #000;
 }
 
@@ -432,6 +432,28 @@ ul li.active-nav a {
 .edit-profile button:active {
     background: #000;
 }
+
+
+/*------------------ Post Job CSS starts here -------------*/
+
+.post-job {
+    width: 80%;
+    margin: auto;
+}
+
+.post-job .form-control {
+    border-radius: 8px;
+}
+
+.post-job button {
+    font-weight: bold;
+    padding: 10px 40px;
+}
+
+.post-job button:hover {
+    background: #000;
+}
+
 
 /*------------Footer--------------*/
 

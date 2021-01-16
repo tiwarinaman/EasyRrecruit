@@ -52,3 +52,13 @@ class PostJob(models.Model):
         return self.job_title + " By " + self.recruiter.company_name
 
 
+
+class ApplyJob(models.Model):
+    job_applied = models.ForeignKey(PostJob, on_delete=models.CASCADE, null=True)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True)
+    resume = models.FileField(upload_to='candidate_resume/', null=True)
+
+    def __str__(self):
+        return self.candidate.uname.username + " " + self.job_applied.job_title
+
+

@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import render, redirect
 
 # Importing models class
-from .models import Candidate, Recruiter, PostJob
+from .models import Candidate, Recruiter, PostJob, ApplyJob
 
 User = get_user_model()
 
@@ -431,7 +431,7 @@ def jobDetails(request, id):
 def listJobs(request):
     all_jobs = PostJob.objects.all().order_by('-timestamp')
 
-    paginator = Paginator(all_jobs, 6)
+    paginator = Paginator(all_jobs, 5)
 
     try:
         page = int(request.GET.get('page', '1'))
@@ -442,10 +442,29 @@ def listJobs(request):
         jobs = paginator.page(page)
     except(EmptyPage, InvalidPage):
         jobs = paginator.page(paginator.num_pages)
-        print(jobs)
 
     context = {
-        'all_jobs': all_jobs
+        'all_jobs': jobs
     }
 
     return render(request, 'list_jobs.html', context)
+
+
+@login_required(login_url='/candi-login')
+def applyJob(request, id):
+    if request.method == 'POST':
+        candi_resume = request.FILES.get('resume', False)
+        if not candi_resume:
+            messages.error(request, "Please upload your resume !!!")
+            return redirect('/job/'+str(id))
+        else:
+            user = User.objects.get(id=request.user.id)
+            candi = Candidate.objects.get(uname=user)
+            job = PostJob.objects.get(id=id)
+            apply = ApplyJob.objects.create(job_applied=job, candidate=candi, resume=candi_resume)
+            apply.save()
+
+            messages.success(request, "Successfully applied !!!")
+            return redirect('/job/'+str(id))
+
+

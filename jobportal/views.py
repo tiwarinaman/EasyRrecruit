@@ -1,11 +1,11 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import render, redirect
-
-# Importing for date
-import datetime
 
 # Importing models class
 from .models import Candidate, Recruiter, PostJob
@@ -15,8 +15,24 @@ User = get_user_model()
 
 # Create your views here.
 def home(request):
-    job_data = PostJob.objects.all()
-    return render(request, 'home.html', {'job_data': job_data})
+    job_data = PostJob.objects.get_queryset().order_by('-timestamp')
+
+    paginator = Paginator(job_data, 3)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        jobs = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        jobs = paginator.page(paginator.num_pages)
+
+    context = {
+        'job_data': jobs,
+    }
+    return render(request, 'home.html', context)
 
 
 def about(request):
@@ -383,9 +399,12 @@ def post_job(request):
             else:
                 try:
                     recu = Recruiter.objects.get(uname=request.user)
-                    post = PostJob.objects.create(recruiter=recu, job_title=jobTitle, job_location=jobLocation, job_type=jobType,
-                                                  category=cate, salary=sal, experience=exp, start_date=startDate, last_date=lastDate,
-                                                  skills=requiredSkill, website_link=web, description=des, company_logo_image=companyLogo)
+                    post = PostJob.objects.create(recruiter=recu, job_title=jobTitle, job_location=jobLocation,
+                                                  job_type=jobType,
+                                                  category=cate, salary=sal, experience=exp, start_date=startDate,
+                                                  last_date=lastDate,
+                                                  skills=requiredSkill, website_link=web, description=des,
+                                                  company_logo_image=companyLogo)
 
                     post.save()
                     messages.success(request, "Job Successfully posted !!!")
@@ -397,3 +416,36 @@ def post_job(request):
     recu = Recruiter.objects.get(uname=request.user)
     d = datetime.date.today()
     return render(request, 'post_job.html', {'recu': recu, 'date': d.strftime("%Y-%m-%d")})
+
+
+def jobDetails(request, id):
+    job_details = PostJob.objects.get(pk=id)
+
+    context = {
+        'job_details': job_details
+    }
+
+    return render(request, 'job_details.html', context)
+
+
+def listJobs(request):
+    all_jobs = PostJob.objects.all().order_by('-timestamp')
+
+    paginator = Paginator(all_jobs, 6)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        jobs = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        jobs = paginator.page(paginator.num_pages)
+        print(jobs)
+
+    context = {
+        'all_jobs': all_jobs
+    }
+
+    return render(request, 'list_jobs.html', context)

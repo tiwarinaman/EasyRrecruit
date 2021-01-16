@@ -48,36 +48,43 @@
 
     <section id="jobs">
         <div class="container">
-            <h5 class="text-center">RECENT JOBS</h5>
-            {% for data in job_data %}
-                <div class="company-details">
-                    <div class="job-update">
-                        <h4><b>{{ data.job_title }}</b></h4>
-                        <p>{{ data.recruiter.company_name }}</p>
-                        <i class="fas fa-briefcase"></i><span> {{ data.experience }}</span><br>
-                        <i class="fas fa-rupee-sign"></i><span> {{ data.salary }}</span><br>
-                        <i class="fas fa-map-marker-alt"></i><span> {{ data.job_location }}</span><br>
-                        <p>Skills <i
-                                class="fas fa-angle-double-right"></i><small>{{ data.skills }}</small></p>
-                        <p>Description <i class="fas fa-angle-double-right"></i>{{ data.description }}<a href="#">Read
-                            More</a></p>
-                    </div>
-                    <div class="apply-btn">
-                        <button class="btn btn-primary">Apply</button>
-                    </div>
-                </div>
-            {% endfor %}
+            <div class="text-center">
+                <h2 class="font-weight-bold">Recent Jobs</h2>
+            </div>
+            <div class="row">
+                {% for job in job_data %}
+                    <div class="col-9 col-md-6 col-lg-4">
+                        <a href="{% url 'jobDetails' job.id %}" style="text-decoration: none">
+                            <div class="card recent-job" style="width: 20rem; height: 25rem;">
+                                <img class="card-img-top mx-auto" src="{{ job.company_logo_image.url }}"
+                                     alt="Company Logo">
 
-            <ul class="pagelink text-center">
-                <li class="left-arrow">&#8592;</li>
-                <li class="active">1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li class="right-arrow">&#8594;</li>
-            </ul>
-
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-success font-weight-bold">{{ job.job_title }} </h5>
+                                    {% if job.job_type == "Full Time" %}
+                                        <span class="badge badge-primary">Full Time</span>
+                                    {% elif job.job_type == "Part Time" %}
+                                        <span class="badge badge-danger">Part Time</span>
+                                    {% else %}
+                                        <span class="badge badge-info">Internship</span>
+                                    {% endif %}
+                                    <span class="badge badge-secondary">{{ job.job_location }}</span>
+                                    <p class="card-text text-dark mt-3">{{ job.description | safe | truncatechars:150 }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-10 mx-auto my-2 text-center">
+                {% if job_data.paginator.num_pages > 1 %}
+                    {% for page_number in job_data.paginator.page_range %}
+                        <a href="?page={{ page_number }}"
+                           class="btn btn-light btn-sm {% if job_data.number == page_number %}active{% endif %}">
+                            {{ page_number }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </section>
 

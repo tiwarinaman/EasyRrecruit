@@ -21,12 +21,12 @@
                         <a class="nav-link" href="{% url 'contact' %}">CONTACT</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'listJobs' %}">JOB LISTS</a>
+                    </li>
+
                     {% if user.is_authenticated %}
                         {% if user.role == "candidate" %}
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">JOB LISTS</a>
-                            </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -46,10 +46,6 @@
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'postJob' %}">POST JOB</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">JOB LISTS</a>
                             </li>
 
                             <li class="nav-item">

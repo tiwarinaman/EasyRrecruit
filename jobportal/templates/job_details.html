@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Job Details
+{% endblock %}
+
+{% block body %}
+
+    <section id="section-start">
+        <div class="container job-details">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <div class="d-flex align-items-center">
+                        <div class="border p-2 d-inline-block mr-3 rounded">
+                            <img src="{{ job_details.company_logo_image.url }}" alt="Image">
+                        </div>
+                        <div>
+                            <h2>{{ job_details.job_title }}</h2>
+                            <div>
+                                <span class="ml-0 mr-2 mb-2"><i class="fas fa-briefcase"></i>
+                                    <a href="{{ job_details.website_link }}">{{ job_details.recruiter.company_name }}</a>
+                                </span>
+                                <span class="m-2"><i class="fas fa-map-marker-alt"></i>
+                                    {{ job_details.job_location }}
+                                </span>
+                                <span class="m-1"><i class="far fa-clock"></i></span>
+                                <span class="text-primary">
+                                {% if job_details.job_type == "Full Time" %}
+                                    <span class="badge badge-primary">Full Time</span>
+                                {% elif job_details.job_type == "Part Time" %}
+                                    <span class="badge badge-danger">Part Time</span>
+                                {% else %}
+                                    <span class="badge badge-info">Internship</span>
+                                {% endif %}
+                                  </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-5">
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="job" value="{{ job_details.id }}">
+
+                                <input type="submit" class="btn btn-block btn-light btn-md" value="Save"/>
+                            </form>
+                        </div>
+
+                        <div class="col-7">
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="job" value="{{ job_details.id }}">
+
+                                <input type="submit" class="btn btn-block btn-primary btn-md"
+                                       value="Apply Now"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="mb-5">
+                        <!-- <figure class="mb-5"><img src="images/job_single_img_1.jpg" alt="Image" class="img-fluid rounded"></figure> -->
+                        <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span
+                                class="icon-align-left mr-3"></span>Job
+                            Description</h3>
+                        {{ job_details.description | safe }}
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-6">
+
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="job" value="{{ job_details.id }}">
+                                <input type="submit" class="btn btn-block btn-light btn-md" value="Save"/>
+
+                            </form>
+                        </div>
+
+                        <div class="col-6">
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="job" value="{{ job_details.id }}">
+
+                                <input type="submit" class="btn btn-block btn-primary btn-md"
+                                       value="Apply Now"/>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="bg-light p-3 border rounded mb-4">
+                        <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Job Summary</h3>
+                        <ul class="list-unstyled pl-3 mb-0">
+                            <li class="mb-2"><strong class="text-black">Published
+                                on:</strong> {{ job_details.timestamp|date:"d M Y" }}</li>
+                            <li class="mb-2"><strong class="text-black">Employment Status:</strong>
+                                {% if job_details.job_type == "Full Time" %}
+                                    <span class="badge badge-primary">Full Time</span>
+                                {% elif job_details.job_type == "Part Time" %}
+                                    <span class="badge badge-danger">Part Time</span>
+                                {% else %}
+                                    <span class="badge badge-info">Internship</span>
+                                {% endif %}
+                            </li>
+                            <li class="mb-2"><strong class="text-black">
+                                Job Location:</strong> {{ job_details.job_location }}
+                            </li>
+                            <li class="mb-2"><strong class="text-black">
+                                Salary:</strong> {{ job_details.salary }}
+                            </li>
+                            <li class="mb-2"><strong class="text-black">
+                                Experience:</strong> {{ job_details.experience }}
+                            </li>
+                            <li class="mb-2"><strong class="text-black">
+                                Application Deadline:</strong> {{ job_details.last_date|date:"d M Y" }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-light p-3 border rounded">
+                        <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Share</h3>
+                        <div class="px-3">
+                            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -46,6 +46,7 @@ class PostJob(models.Model):
     website_link = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=1000, null=True)
     company_logo_image = models.FileField(upload_to='post_job_company_logo/', null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.job_title + " By " + self.recruiter.company_name

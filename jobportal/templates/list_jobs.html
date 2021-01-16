@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All Jobs
+{% endblock %}
+
+{% block body %}
+    <section id="section-start">
+        <div class="container">
+
+            <div class="row mx-auto mb-5 justify-content-center">
+                <div class="col-md-7 text-center">
+                    <h2 class="section-title mb-2">All Posted Jobs</h2>
+                </div>
+            </div>
+
+            <ul class="job-listings mb-5">
+
+                {% for job in all_jobs %}
+                    <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                        <a href="{% url 'jobDetails' job.id %}"></a>
+                        <div class="job-listing-logo">
+                            <img src="{{ job.company_logo_image.url }}" alt="Free Website Template by Free-Template.co"
+                                 class="img-fluid">
+                        </div>
+
+                        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                            <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                                <h2>{{ job.job_title }}</h2>
+                                <strong>{{ job.recruiter.company_name }}</strong>
+                            </div>
+                            <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                                <span class="icon-room"></span> {{ job.job_location }}
+                            </div>
+                            <div class="job-listing-meta">
+                                {% if job.job_type == "Full Time" %}
+                                    <span class="badge badge-primary">Full Time</span>
+                                {% elif job.job_type == "Part Time" %}
+                                    <span class="badge badge-danger">Part Time</span>
+                                {% else %}
+                                    <span class="badge badge-info">Internship</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="col-10 mx-auto my-2 text-center">
+                {% if job.paginator.num_pages > 1 %}
+                    {% for page_number in job_data.paginator.page_range %}
+                        <a href="?page={{ page_number }}"
+                           class="btn btn-light btn-sm {% if job_data.number == page_number %}active{% endif %}">
+                            {{ page_number }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

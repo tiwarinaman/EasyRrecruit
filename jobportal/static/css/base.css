@@ -448,6 +448,7 @@ ul li.active-nav a {
 .post-job button {
     font-weight: bold;
     padding: 10px 40px;
+    border-radius: 10px;
 }
 
 .post-job button:hover {

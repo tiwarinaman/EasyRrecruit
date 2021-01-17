@@ -446,14 +446,9 @@ def post_job(request):
 
 def jobDetails(request, id):
     job_details = PostJob.objects.get(pk=id)
-    try:
-        applyies_jobs = ApplyJob.objects.get(job_applied=job_details)
-    except:
-        applyies_jobs = None
 
     context = {
         'job_details': job_details,
-        'applyies_jobs': applyies_jobs,
     }
 
     return render(request, 'job_details.html', context)
@@ -505,3 +500,8 @@ def applyJob(request, id):
     }
 
     return render(request, 'apply_job.html', context)
+
+
+@login_required(login_url='/candi-login')
+def appliedJobsByCandidate(request):
+    return render(request, 'applied_jobs_by_candidate.html')

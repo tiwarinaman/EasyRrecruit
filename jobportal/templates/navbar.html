@@ -29,7 +29,7 @@
                         {% if user.role == "candidate" %}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">APPLIED JOBS</a>
+                                <a class="nav-link" href="{% url 'appliedJobsByCandidate' %}">APPLIED JOBS</a>
                             </li>
 
                             <li class="nav-item dropdown">

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load is_job_already_applied %}
 {% block title %}
     Job Details
 {% endblock %}
@@ -59,19 +60,20 @@
                             </form>
                         </div>
                         <!---------------Top apply button to apply for a job----------------->
-                        {% if applyies_jobs == None %}
+                        {% is_job_already_applied job_details.id request.user as is_applied %}
+                        {% if  is_applied %}
                             <div class="col-7">
-                                <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-primary btn-md">
-                                        Apply Now
+                                <a href="#" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-danger btn-md">
+                                        Already Appliyed
                                     </button>
                                 </a>
                             </div>
                         {% else %}
                             <div class="col-7">
-                                <a href="#" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-danger btn-md">
-                                        Already Appliyed
+                                <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-primary btn-md">
+                                        Apply Now
                                     </button>
                                 </a>
                             </div>
@@ -101,20 +103,19 @@
                         </div>
 
                         <!--------------- Apply Button on bottom side  -------------------->
-
-                        {% if applyies_jobs == None %}
+                        {% if is_applied %}
                             <div class="col-6">
-                                <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-primary btn-md">
-                                        Apply Now
+                                <a href="#" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-danger btn-md">
+                                        Already Applied
                                     </button>
                                 </a>
                             </div>
                         {% else %}
                             <div class="col-6">
-                                <a href="#" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-danger btn-md">
-                                        Already Applied
+                                <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-primary btn-md">
+                                        Apply Now
                                     </button>
                                 </a>
                             </div>

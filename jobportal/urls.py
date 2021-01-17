@@ -25,6 +25,7 @@ urlpatterns = [
    path('job/<int:id>', views.jobDetails, name="jobDetails"),
    path('job-list', views.listJobs, name="listJobs"),
    path('apply/<int:id>', views.applyJob, name="applyJob"),
+   path('applied-jobs', views.appliedJobsByCandidate, name="appliedJobsByCandidate"),
 
    # This Urls is for resetting the password (By Using Django Default Views)
    path('reset_password', auth_view.PasswordResetView.as_view(template_name="password_reset.html"), name="reset_password"),

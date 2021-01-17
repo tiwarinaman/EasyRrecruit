@@ -9,6 +9,7 @@ User = get_user_model()
 class Candidate(models.Model):
     uname = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     candidate_number = models.BigIntegerField(null=True)
+    dob = models.DateField(null=True)
     candidate_image = models.FileField(upload_to='candidate_profile/', null=True)
     gender = models.CharField(max_length=100, null=True)
 
@@ -23,6 +24,7 @@ class Recruiter(models.Model):
     recruiter_number = models.BigIntegerField(null=True)
     company_name = models.CharField(max_length=100, null=True)
     gender = models.CharField(max_length=100, null=True)
+    dob = models.DateField(null=True)
     recruiter_image = models.FileField(upload_to='recruiter_profile/', null=True)
     status = models.CharField(max_length=100, null=True)
 
@@ -52,7 +54,6 @@ class PostJob(models.Model):
         return self.job_title + " By " + self.recruiter.company_name
 
 
-
 class ApplyJob(models.Model):
     job_applied = models.ForeignKey(PostJob, on_delete=models.CASCADE, null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True)
@@ -60,5 +61,3 @@ class ApplyJob(models.Model):
 
     def __str__(self):
         return self.candidate.uname.username + " " + self.job_applied.job_title
-
-

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Apply Job
+{% endblock %}
+
+{% block body %}
+    <section id="section-start">
+        <div class="container">
+
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <h2 class="text-center font-weight-bold title">Application Form</h2>
+            <hr>
+
+            <div class="post-job">
+                <form method="post" action="#" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-row">
+
+                        <div class="col-md-6 mx-auto mt-3">
+                            <img src="{{ candi.candidate_image.url }}" alt=""
+                                 style="max-height: 200px; border-radius: 30px;">
+                        </div>
+
+                        <div class="col-md-6 border border-dark rounded mt-3">
+                            <label for="inputEmail4" class="font-weight-bold text-center text-primary">Job
+                                Summary</label><br>
+                            <strong>Position : </strong> {{ job.job_title }} <br>
+                            <strong>Company Name : </strong> {{ job.recruiter.company_name }} <br>
+                            <strong>Job Location : </strong> {{ job.job_location }}<br>
+                            <strong>Employment Status: : </strong> {{ job.job_type }}<br>
+                            <strong>Last Date: </strong> {{ job.last_date }}<br>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Firstname</label>
+                            <input type="text" name="fname" value="{{ request.user.first_name }}" class="form-control"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Lastname</label>
+                            <input type="text" name="lname" class="form-control"
+                                   value="{{ request.user.last_name }} " readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ request.user.email }}"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Contact Number</label>
+                            <input type="text" name="number" class="form-control" value="{{ candi.candidate_number }}"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">Gender</label>
+                            <input type="text" name="gen" class="form-control" value="{{ candi.gender }}" readonly>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="font-weight-bold">DOB</label>
+                            <input type="text" name="dob" class="form-control" value="{{ candi.dob }}" readonly>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="exampleInputPassword1" class="font-weight-bold">Upload your updated resume</label>
+                            <input type="file" class="form-control" id="exampleInputPassword1" name="resume" required>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="text" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

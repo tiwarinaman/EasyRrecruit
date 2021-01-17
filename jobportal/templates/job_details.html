@@ -11,36 +11,12 @@
         {% for message in messages %}
             <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times</span>
                 </button>
                 {{ message }}
             </div>
         {% endfor %}
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Upload your updated resume</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{% url 'applyJob' job_details.id %}" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="file" name="resume">
-                            <input type="submit" class="btn btn-primary btn-md"
-                                   value="Upload"/>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="container job-details">
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
@@ -83,19 +59,23 @@
                             </form>
                         </div>
                         <!---------------Top apply button to apply for a job----------------->
-                        <div class="col-7">
-                            {% if user.is_authenticated %}
-                                <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                        class="btn btn-block btn-primary btn-md">Apply Now
-                                </button>
-                            {% else %}
-                                <a href="{% url 'candidateLogin' %}" style="text-decoration: none">
-                                    <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                            class="btn btn-block btn-primary btn-md">Apply Now
+                        {% if applyies_jobs == None %}
+                            <div class="col-7">
+                                <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-primary btn-md">
+                                        Apply Now
                                     </button>
                                 </a>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% else %}
+                            <div class="col-7">
+                                <a href="#" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-danger btn-md">
+                                        Already Appliyed
+                                    </button>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -103,7 +83,8 @@
                 <div class="col-lg-8">
                     <div class="mb-5">
                         <!-- <figure class="mb-5"><img src="images/job_single_img_1.jpg" alt="Image" class="img-fluid rounded"></figure> -->
-                        <h3 class="h5 d-flex align-items-center mb-4 text-primary"><i class="fas fa-align-left mr-2"></i>Job
+                        <h3 class="h5 d-flex align-items-center mb-4 text-primary"><i
+                                class="fas fa-align-left mr-2"></i>Job
                             Description</h3>
                         {{ job_details.description | safe }}
                     </div>
@@ -120,19 +101,25 @@
                         </div>
 
                         <!--------------- Apply Button on bottom side  -------------------->
-                        <div class="col-6">
-                            {% if user.is_authenticated %}
-                                <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                        class="btn btn-block btn-primary btn-md">Apply Now
-                                </button>
-                            {% else %}
-                                <a href="{% url 'candidateLogin' %}" style="text-decoration: none">
-                                    <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                            class="btn btn-block btn-primary btn-md">Apply Now
+
+                        {% if applyies_jobs == None %}
+                            <div class="col-6">
+                                <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-primary btn-md">
+                                        Apply Now
                                     </button>
                                 </a>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% else %}
+                            <div class="col-6">
+                                <a href="#" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-danger btn-md">
+                                        Already Applied
+                                    </button>
+                                </a>
+                            </div>
+                        {% endif %}
+
                     </div>
 
                 </div>

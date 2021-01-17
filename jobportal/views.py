@@ -1,4 +1,5 @@
 import datetime
+from datetime import date
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -43,6 +44,18 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+# This Python method is used to validate the dob
+def isValidDob(dob):
+    today = date.today()
+    d = datetime.datetime.strptime(dob, "%Y-%m-%d")
+    age = today.year - d.year - ((today.month, today.day) < (d.month, d.day))
+
+    if age < 18:
+        return True
+    else:
+        return False
+
+
 # Candidate Registration Method
 def candidateRegister(request):
     if request.method == 'POST':
@@ -51,12 +64,13 @@ def candidateRegister(request):
         uname = request.POST.get('uname', False)
         em = request.POST.get('email', False)
         conNumber = request.POST.get('contactNumber', False)
+        dob = request.POST.get('dob', False)
         passwd = request.POST.get('pass', False)
         cPasswd = request.POST.get('confirmPass', False)
         gen = request.POST.get('gender', False)
         imgFile = request.FILES.get('imageFile', False)
 
-        if fname == '' or lname == '' or uname == '' or em == '' or conNumber == '' or passwd == '' or cPasswd == '' or gen == '' or imgFile == '':
+        if fname == '' or lname == '' or uname == '' or em == '' or conNumber == '' or passwd == '' or cPasswd == '' or gen == '' or imgFile == '' or dob == '':
             messages.info(request, "All fields are required !!!")
             return redirect('candidateRegister')
         else:
@@ -69,13 +83,16 @@ def candidateRegister(request):
             elif User.objects.filter(email=em).exists():
                 messages.warning(request, "Email Already In Use !!!")
                 return redirect('candidateRegister')
+            elif isValidDob(dob):
+                messages.warning(request, "You are under age !!!")
+                return redirect('candidateRegister')
             else:
                 user = User.objects.create(first_name=fname, last_name=lname, email=em, username=uname,
                                            role="candidate")
                 # Saving Password in the encrypted format.
                 user.set_password(passwd)
                 candi = Candidate.objects.create(uname=user, candidate_number=conNumber, candidate_image=imgFile,
-                                                 gender=gen)
+                                                 dob=dob, gender=gen)
                 user.save()
                 candi.save()
                 messages.success(request, "Registration successfully done !!!")
@@ -93,6 +110,9 @@ def candidateLogin(request):
         if uname == '' or passwd == '':
             messages.info(request, "All Fields are required !!!")
             return redirect('candidateLogin')
+        elif not User.objects.filter(username=uname).exists():
+            messages.error(request, "User doesn't exists !!!")
+            return redirect('candidateLogin')
         else:
             user = auth.authenticate(username=uname, password=passwd)
             if user:
@@ -107,7 +127,7 @@ def candidateLogin(request):
                     messages.error(request, "Something went wrong !!!")
                     return redirect('candidateLogin')
             else:
-                messages.error(request, "User does not exists !!!")
+                messages.error(request, "Invalid credentials, please try again !!!")
                 return redirect('candidateLogin')
 
     return render(request, 'candidate_login.html')
@@ -131,9 +151,10 @@ def recruiterRegister(request):
         passwd = request.POST.get('pass', False)
         cPasswd = request.POST.get('confirmPass', False)
         gen = request.POST.get('gender', False)
+        dob = request.POST.get('dob', False)
         imgFile = request.FILES.get('imageFile', False)
 
-        if fname == '' or lname == '' or comName == '' or em == '' or uname == '' or conNumber == '' or passwd == '' or cPasswd == '' or gen == '' or imgFile == '':
+        if fname == '' or lname == '' or comName == '' or em == '' or uname == '' or conNumber == '' or passwd == '' or cPasswd == '' or gen == '' or imgFile == '' or dob == '':
             messages.info(request, "All fields are required, please try again !!!")
             return redirect('recruiterRegister')
         else:
@@ -146,14 +167,16 @@ def recruiterRegister(request):
             elif User.objects.filter(username=uname).exists():
                 messages.warning(request, "Username Already In Use !!!")
                 return redirect('candidateRegister')
+            elif isValidDob(dob):
+                messages.warning(request, "You are under age !!!")
+                return redirect('recruiterRegister')
             else:
                 user = User.objects.create(first_name=fname, last_name=lname, email=em, username=uname,
                                            role="recruiter")
                 # Saving Password in the encrypted format
                 user.set_password(passwd)
                 recu = Recruiter.objects.create(uname=user, company_name=comName, recruiter_number=conNumber,
-                                                gender=gen,
-                                                recruiter_image=imgFile, status="pending")
+                                                gender=gen, dob=dob, recruiter_image=imgFile, status="pending")
                 user.save()
                 recu.save()
                 messages.success(request, "Registration Successfully Done !!!")
@@ -171,6 +194,9 @@ def recruiterLogin(request):
         if uname == '' or passwd == '':
             messages.info(request, "All fields are required !!!")
             return redirect('recruiterLogin')
+        elif not User.objects.filter(username=uname).exists():
+            messages.error(request, "User doesn't exists !!!")
+            return redirect('recruiterLogin')
         else:
             user = auth.authenticate(username=uname, password=passwd)
             if user:
@@ -185,7 +211,7 @@ def recruiterLogin(request):
                     messages.error(request, "Something went wrong !!!")
                     return redirect('recruiterLogin')
             else:
-                messages.error(request, "User does not exists !!!")
+                messages.error(request, "Invalid credentials, please try again !!!")
                 return redirect('recruiterLogin')
 
     return render(request, 'recruiter_login.html')
@@ -420,9 +446,14 @@ def post_job(request):
 
 def jobDetails(request, id):
     job_details = PostJob.objects.get(pk=id)
+    try:
+        applyies_jobs = ApplyJob.objects.get(job_applied=job_details)
+    except:
+        applyies_jobs = None
 
     context = {
-        'job_details': job_details
+        'job_details': job_details,
+        'applyies_jobs': applyies_jobs,
     }
 
     return render(request, 'job_details.html', context)
@@ -452,19 +483,25 @@ def listJobs(request):
 
 @login_required(login_url='/candi-login')
 def applyJob(request, id):
+    user = User.objects.get(id=request.user.id)
+    candi = Candidate.objects.get(uname=user)
+    job = PostJob.objects.get(id=id)
+
     if request.method == 'POST':
         candi_resume = request.FILES.get('resume', False)
         if not candi_resume:
             messages.error(request, "Please upload your resume !!!")
-            return redirect('/job/'+str(id))
+            return redirect('/apply/'+str(id))
         else:
-            user = User.objects.get(id=request.user.id)
-            candi = Candidate.objects.get(uname=user)
-            job = PostJob.objects.get(id=id)
             apply = ApplyJob.objects.create(job_applied=job, candidate=candi, resume=candi_resume)
             apply.save()
 
             messages.success(request, "Successfully applied !!!")
-            return redirect('/job/'+str(id))
+            return redirect('/job/' + str(id))
 
+    context = {
+        'candi': candi,
+        'job': job
+    }
 
+    return render(request, 'apply_job.html', context)

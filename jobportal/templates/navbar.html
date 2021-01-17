@@ -28,12 +28,18 @@
                     {% if user.is_authenticated %}
                         {% if user.role == "candidate" %}
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">APPLIED JOBS</a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     WELCOME, <span class="text-uppercase">{{ user.first_name }} <i
                                         class="fas fa-user"></i></span>
                                 </a>
+
+
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
                                     <a class="dropdown-item" href="{% url 'editCandidateProfile' %}">Edit Profile</a>

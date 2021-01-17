@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Candidate Applied
+{% endblock %}
+
+{% block body %}
+
+    <section id="section-start">
+        <div class="container" style="margin-bottom: 200px">
+            <div class="row mt-5">
+                <div class="col-lg-12 mb-5">
+                    <div class="card">
+
+                        <h5 class="card-header text-center">Candidates Applied For Jobs</h5>
+
+                        <table class="table text-center mt-5">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Sr. No</th>
+                                <th>Job Title</th>
+                                <th>Fullname</th>
+                                <th>Email Id</th>
+                                <th>Contact</th>
+                                <th>Company Name</th>
+                                <th>Resume</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for c in candi_applied %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ c.job_applied.job_title }}</td>
+                                    <td>{{ c.candidate.uname.first_name }} {{ c.candidate.uname.last_name }}</td>
+                                    <td>{{ c.candidate.uname.email }}</td>
+                                    <td>{{ c.candidate.candidate_number }}</td>
+                                    <td>{{ c.job_applied.recruiter.company_name }}</td>
+                                    <td><a href="{{ c.resume.url }}" style="text-decoration: none" target="_blank" class="btn btn-outline-primary btn-sm">
+                                        Download Resume</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

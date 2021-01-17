@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import render, redirect
+from jobportal.permission import *
 
 # Importing models class
 from .models import Candidate, Recruiter, PostJob, ApplyJob
@@ -247,6 +248,8 @@ def adminLogin(request):
 
 
 # Admin Home page render
+@login_required(login_url='/admin-login')
+@user_is_admin
 def admin_home(request):
     return render(request, 'admin_home.html')
 
@@ -289,6 +292,7 @@ def change_password(request):
 
 # Editing Profile details
 @login_required(login_url='/')
+@user_is_candidate
 def edit_candidate_profile(request):
     if request.method == 'POST':
         fname = request.POST.get('fname', False)
@@ -341,6 +345,7 @@ def edit_candidate_profile(request):
 
 
 @login_required(login_url='/')
+@user_is_recruiter
 def edit_recruiter_profile(request):
     if request.method == 'POST':
         fname = request.POST.get('fname', False)
@@ -394,6 +399,7 @@ def edit_recruiter_profile(request):
 
 
 @login_required(login_url='/recu-login')
+@user_is_recruiter
 def post_job(request):
     if request.method == 'POST':
         companyName = request.POST.get('companyName', False)
@@ -453,7 +459,7 @@ def jobDetails(request, id):
 
     return render(request, 'job_details.html', context)
 
-
+@user_is_candidate
 def listJobs(request):
     all_jobs = PostJob.objects.all().order_by('-timestamp')
 
@@ -477,6 +483,7 @@ def listJobs(request):
 
 
 @login_required(login_url='/candi-login')
+@user_is_candidate
 def applyJob(request, id):
     user = User.objects.get(id=request.user.id)
     candi = Candidate.objects.get(uname=user)
@@ -486,7 +493,7 @@ def applyJob(request, id):
         candi_resume = request.FILES.get('resume', False)
         if not candi_resume:
             messages.error(request, "Please upload your resume !!!")
-            return redirect('/apply/'+str(id))
+            return redirect('/apply/' + str(id))
         else:
             apply = ApplyJob.objects.create(job_applied=job, candidate=candi, resume=candi_resume)
             apply.save()
@@ -503,5 +510,33 @@ def applyJob(request, id):
 
 
 @login_required(login_url='/candi-login')
+@user_is_candidate
 def appliedJobsByCandidate(request):
-    return render(request, 'applied_jobs_by_candidate.html')
+    jobs = ApplyJob.objects.filter(candidate__uname=request.user)
+
+    context = {
+        'applied': jobs,
+    }
+
+    return render(request, 'applied_jobs_by_candidate.html', context)
+
+
+@login_required(login_url='/candi-login')
+@user_is_candidate
+def withdrawJob(request, id):
+    job = ApplyJob.objects.get(job_applied_id=id, candidate__uname=request.user)
+    job.delete()
+    return redirect('appliedJobsByCandidate')
+
+
+@login_required(login_url='/recu-login')
+@user_is_recruiter
+def candidateApplied(request):
+
+    candi_applied = ApplyJob.objects.filter(job_applied__recruiter__uname=request.user)
+
+    context = {
+        'candi_applied': candi_applied,
+    }
+
+    return render(request, 'candidate_applied_job.html', context)

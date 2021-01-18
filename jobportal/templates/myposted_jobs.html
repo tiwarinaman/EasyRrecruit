@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Your Applied Jobs
+    My Posted Jobs
 {% endblock %}
 
 {% block body %}
@@ -12,34 +12,30 @@
                 <div class="col-lg-12 mb-5">
                     <div class="card">
 
-                        <h5 class="card-header text-center">Your Applied Jobs</h5>
+                        <h5 class="card-header text-center">My Posted Jobs</h5>
 
                         <table class="table text-center mt-5">
                             <thead class="thead-dark">
                             <tr>
-                                <th>Sr. No.</th>
+                                <th>Sr. No</th>
                                 <th>Job Title</th>
                                 <th>Posted Date</th>
-                                <th>Date expiring</th>
-                                <th>Actions</th>
+                                <th>Last Date</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for j in applied %}
+                            {% for m in myjobs %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a href="{% url 'jobDetails' j.job_applied.id %}" style="text-decoration: none;">{{ j.job_applied.job_title }}</a></td>
-                                    <td>{{ j.job_applied.start_date }}</td>
-                                    <td>{{ j.job_applied.last_date }}</td>
-                                    <td>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'withdrawJob' j.job_applied.id %}" role="button">Withdraw</a>
-                                    </td>
+                                    <td><a href="{% url 'jobDetails' m.id %}" style="text-decoration: none">{{ m.job_title }}</a></td>
+                                    <td>{{ m.start_date }}</td>
+                                    <td>{{ m.last_date }}</td>
+                                    <td><a href="{% url 'deleteJob' m.id %}" class="btn btn-danger btn-sm">Delete Job</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
             </div>

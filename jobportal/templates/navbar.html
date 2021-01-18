@@ -20,18 +20,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contact' %}">CONTACT</a>
                     </li>
-                {% if not user.role == "recruiter" %}
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'listJobs' %}">JOB LISTS</a>
-                    </li>
-
-                {% endif %}
                     {% if user.is_authenticated %}
                         {% if user.role == "candidate" %}
 
                             <li class="nav-item">
-                               <a class="nav-link" href="{% url 'appliedJobsByCandidate' %}">APPLIED JOBS</a>
+                                <a class="nav-link" href="{% url 'listJobs' %}">JOB LISTS</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'appliedJobsByCandidate' %}">APPLIED JOBS</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -57,7 +55,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">MY POSTED JOBS</a>
+                                <a class="nav-link" href="{% url 'mypostedJobs' %}">MY POSTED JOBS</a>
                             </li>
 
                             <li class="nav-item">

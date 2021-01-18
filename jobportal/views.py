@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import render, redirect
-from jobportal.permission import *
 
+from jobportal.permission import *
 # Importing models class
 from .models import Candidate, Recruiter, PostJob, ApplyJob
 
@@ -451,7 +451,11 @@ def post_job(request):
 
 
 def jobDetails(request, id):
-    job_details = PostJob.objects.get(pk=id)
+    try:
+        job_details = PostJob.objects.get(pk=id)
+    except:
+        messages.error(request, "This job might be deleted by recruiter !!!")
+        return redirect('listJobs')
 
     context = {
         'job_details': job_details,
@@ -459,7 +463,7 @@ def jobDetails(request, id):
 
     return render(request, 'job_details.html', context)
 
-@user_is_candidate
+
 def listJobs(request):
     all_jobs = PostJob.objects.all().order_by('-timestamp')
 
@@ -532,7 +536,6 @@ def withdrawJob(request, id):
 @login_required(login_url='/recu-login')
 @user_is_recruiter
 def candidateApplied(request):
-
     candi_applied = ApplyJob.objects.filter(job_applied__recruiter__uname=request.user)
 
     context = {
@@ -540,3 +543,23 @@ def candidateApplied(request):
     }
 
     return render(request, 'candidate_applied_job.html', context)
+
+
+@login_required(login_url='/recu-login')
+@user_is_recruiter
+def mypostedJobs(request):
+    my_jobs = PostJob.objects.filter(recruiter__uname=request.user)
+
+    context = {
+        'myjobs': my_jobs,
+    }
+
+    return render(request, 'myposted_jobs.html', context)
+
+
+@login_required(login_url='/recu-login')
+@user_is_recruiter
+def deleteJob(request, id):
+    del_job = PostJob.objects.filter(id=id, recruiter__uname=request.user)
+    del_job.delete()
+    return redirect('mypostedJobs')

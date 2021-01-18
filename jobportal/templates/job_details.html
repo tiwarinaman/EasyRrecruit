@@ -60,14 +60,30 @@
                             </form>
                         </div>
                         <!---------------Top apply button to apply for a job----------------->
-                        {% is_job_already_applied job_details.id request.user as is_applied %}
-                        {% if  is_applied %}
+                        {% if user.is_authenticated and user.role == "candidate" %}
+                            {% is_job_already_applied job_details.id request.user as applied %}
+                            {% if applied %}
+                                <div class="col-7">
+                                    <a href="#" style="text-decoration: none">
+                                        <button type="button" class="btn btn-block btn-danger btn-md">
+                                            Already Applied
+                                        </button>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="col-7">
+                                    <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
+                                        <button type="button" class="btn btn-block btn-primary btn-md">
+                                            Apply Now
+                                        </button>
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                        {% elif user.role == "recruiter" %}
+
                             <div class="col-7">
-                                <a href="#" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-danger btn-md">
-                                        Already Applied
-                                    </button>
-                                </a>
+                                <a href="#" class="btn btn-block btn-warning btn-md">Edit</a>
                             </div>
                         {% else %}
                             <div class="col-7">
@@ -103,11 +119,32 @@
                         </div>
 
                         <!--------------- Apply Button on bottom side  -------------------->
-                        {% if is_applied %}
+
+                        {% if user.is_authenticated and user.role == "candidate" %}
+                            {% if applied %}
+                                <div class="col-6">
+                                    <a href="#" style="text-decoration: none">
+                                        <button type="button" class="btn btn-block btn-danger btn-md">
+                                            Already Applied
+                                        </button>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="col-6">
+                                    <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
+                                        <button type="button" class="btn btn-block btn-primary btn-md">
+                                            Apply Now
+                                        </button>
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                        {% elif user.role == "recruiter" %}
+
                             <div class="col-6">
                                 <a href="#" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-danger btn-md">
-                                        Already Applied
+                                    <button type="button" class="btn btn-block btn-warning btn-md">
+                                        Edit
                                     </button>
                                 </a>
                             </div>
@@ -119,6 +156,7 @@
                                     </button>
                                 </a>
                             </div>
+
                         {% endif %}
 
                     </div>

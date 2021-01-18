@@ -30,7 +30,7 @@
                             {% for c in candi_applied %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ c.job_applied.job_title }}</td>
+                                    <td><a href="{% url 'jobDetails' c.job_applied_id %}" style="text-decoration: none">{{ c.job_applied.job_title }}</a></td>
                                     <td>{{ c.candidate.uname.first_name }} {{ c.candidate.uname.last_name }}</td>
                                     <td>{{ c.candidate.uname.email }}</td>
                                     <td>{{ c.candidate.candidate_number }}</td>

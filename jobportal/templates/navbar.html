@@ -2,7 +2,8 @@
     <div class="menu-bar">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="/">
-                <span class="font-weight-bold text-danger"><i class="fas fa-briefcase"></i> EASY</span><span class="text-success">-</span><span
+                <span class="font-weight-bold text-danger"><i class="fas fa-briefcase"></i> EASY</span><span
+                    class="text-success">-</span><span
                     class="font-weight-bold text-light">RECRUIT</span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -85,8 +86,15 @@
                                 <a class="nav-link" href="#">NEW RECRUITER REQUEST</a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">VIEW USERS</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    CANDIDATE
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'viewAllCandidate' %}">View Candidate</a>
+                                    <a class="dropdown-item" href="#">Add Candidate</a>
+                                </div>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -95,7 +103,7 @@
                                     RECRUITER
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">View Recruiter</a>
+                                    <a class="dropdown-item" href="{% url 'viewAllRecruiter' %}">View Recruiter</a>
                                     <a class="dropdown-item" href="#">Add Recruiter</a>
                                 </div>
                             </li>

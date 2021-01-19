@@ -6,26 +6,36 @@
 
 {% block body %}
 
-    <section id="section-start">
-        <div class="container" style="margin-bottom: 200px">
+     <section id="section-start">
+
+        {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="container-fluid" style="margin-bottom: 200px">
             <div class="row mt-5">
                 <div class="col-lg-12 mb-5">
-                    <div class="card">
+                    <div class="card table-responsive-sm">
 
-                        <h5 class="card-header text-center">Your Applied Jobs</h5>
+                        <h5 class="card-header text-center">Your Saved Jobs</h5>
 
                         <table class="table text-center mt-5">
                             <thead class="thead-dark">
                             <tr>
-                                <th>Sr. No.</th>
-                                <th>Job Title</th>
-                                <th>Posted Date</th>
-                                <th>Date expiring</th>
-                                <th>Actions</th>
+                                <th scope="col">Sr. No.</th>
+                                <th scope="col">Job Title</th>
+                                <th scope="col">Posted Date</th>
+                                <th scope="col">Date expiring</th>
+                                <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for j in applied %}
+                             {% for j in applied %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td><a href="{% url 'jobDetails' j.job_applied.id %}" style="text-decoration: none;">{{ j.job_applied.job_title }}</a></td>
@@ -38,6 +48,8 @@
                             {% endfor %}
                             </tbody>
                         </table>
+
+
                     </div>
                 </div>
             </div>

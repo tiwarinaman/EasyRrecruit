@@ -33,6 +33,10 @@ urlpatterns = [
    path('bookmark-job/<int:id>', views.bookmarkJob, name="bookmarkJob"),
    path('saved-job', views.savedJobs, name="savedJobs"),
    path('delete-bookmark/<int:id>', views.deleteBookmark, name="deleteBookmark"),
+   path('all-candidates', views.viewAllCandidates, name="viewAllCandidate"),
+   path('all-recruiters', views.viewAllRecruiters, name="viewAllRecruiter"),
+   path('delete-candidate/<int:id>', views.deleteCandidate, name="deleteCandidate"),
+   path('delete-recruiter/<int:id>', views.deleteRecruiter, name="deleteRecruiter"),
 
    # This Urls is for resetting the password (By Using Django Default Views)
    path('reset_password', auth_view.PasswordResetView.as_view(template_name="common/password_reset.html"), name="reset_password"),

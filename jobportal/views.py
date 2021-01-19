@@ -450,9 +450,9 @@ def post_job(request):
     return render(request, 'recruiter/post_job.html', {'recu': recu, 'date': d.strftime("%Y-%m-%d")})
 
 
-def jobDetails(request, id):
+def jobDetails(request, pid):
     try:
-        job_details = PostJob.objects.get(pk=id)
+        job_details = PostJob.objects.get(pk=pid)
     except:
         messages.error(request, "This job might be deleted by recruiter !!!")
         return redirect('listJobs')
@@ -488,22 +488,22 @@ def listJobs(request):
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def applyJob(request, id):
+def applyJob(request, pid):
     user = User.objects.get(id=request.user.id)
     candi = Candidate.objects.get(uname=user)
-    job = PostJob.objects.get(id=id)
+    job = PostJob.objects.get(id=pid)
 
     if request.method == 'POST':
         candi_resume = request.FILES.get('resume', False)
         if not candi_resume:
             messages.error(request, "Please upload your resume !!!")
-            return redirect('/apply/' + str(id))
+            return redirect('/apply/' + str(pid))
         else:
             apply = ApplyJob.objects.create(job_applied=job, candidate=candi, resume=candi_resume)
             apply.save()
 
             messages.success(request, "Successfully applied !!!")
-            return redirect('/job/' + str(id))
+            return redirect('/job/' + str(pid))
 
     context = {
         'candi': candi,
@@ -527,8 +527,8 @@ def appliedJobsByCandidate(request):
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def withdrawJob(request, id):
-    job = ApplyJob.objects.get(job_applied_id=id, candidate__uname=request.user)
+def withdrawJob(request, pid):
+    job = ApplyJob.objects.get(job_applied_id=pid, candidate__uname=request.user)
     job.delete()
     return redirect('appliedJobsByCandidate')
 
@@ -542,7 +542,7 @@ def candidateApplied(request):
         'candi_applied': candi_applied,
     }
 
-    return render(request, 'candidate/candidate_applied_job.html', context)
+    return render(request, 'recruiter/candidate_applied_job.html', context)
 
 
 @login_required(login_url='/recu-login')
@@ -559,23 +559,23 @@ def mypostedJobs(request):
 
 @login_required(login_url='/recu-login')
 @user_is_recruiter
-def deleteJob(request, id):
-    del_job = PostJob.objects.filter(id=id, recruiter__uname=request.user)
+def deleteJob(request, pid):
+    del_job = PostJob.objects.filter(id=pid, recruiter__uname=request.user)
     del_job.delete()
     return redirect('mypostedJobs')
 
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def bookmarkJob(request, id):
+def bookmarkJob(request, pid):
     try:
-        bookmark_job = BookmarkJob(user=request.user, job_id=id)
+        bookmark_job = BookmarkJob(user=request.user, job_id=pid)
         bookmark_job.save()
         messages.success(request, "Job successfully saved !!!")
-        return redirect('/job/' + str(id))
+        return redirect('/job/' + str(pid))
     except:
         messages.error(request, "Something went wrong !!!")
-        return redirect('/job/' + str(id))
+        return redirect('/job/' + str(pid))
 
 
 @login_required(login_url='/candi-login')
@@ -596,9 +596,9 @@ def savedJobs(request):
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def deleteBookmark(request, id):
+def deleteBookmark(request, pid):
     try:
-        del_saved_job = BookmarkJob.objects.get(user=request.user, job_id=id)
+        del_saved_job = BookmarkJob.objects.get(user=request.user, job_id=pid)
         del_saved_job.delete()
         messages.success(request, del_saved_job.job.job_title + " Job Deleted successfully !!!!")
         return redirect('savedJobs')
@@ -606,4 +606,53 @@ def deleteBookmark(request, id):
         messages.error(request, "Something went wrong !!!")
         return redirect('savedJobs')
 
-    return redirect('savedJobs')
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def viewAllCandidates(request):
+    candi = Candidate.objects.all()
+
+    context = {
+        'candi': candi
+    }
+
+    return render(request, 'admin/view_all_candidates.html', context)
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def viewAllRecruiters(request):
+    recu = Recruiter.objects.all()
+
+    context = {
+        'recu': recu
+    }
+
+    return render(request, 'admin/view_all_recruiter.html', context)
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def deleteCandidate(request, pid):
+    try:
+        user = User.objects.filter(id=pid)
+        user.delete()
+        messages.success(request, "Successfully deleted !!!")
+    except:
+        messages.error(request, "Something went wrong !!!")
+        return redirect('viewAllCandidate')
+
+    return redirect('viewAllCandidate')
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def deleteRecruiter(request, pid):
+    try:
+        del_recu = User.objects.get(id=pid)
+        del_recu.delete()
+        messages.success(request, "Successfully deleted")
+        return redirect('viewAllRecruiter')
+    except:
+        messages.error(request, "Something went wrong !!!")
+        return redirect('viewAllRecruiter')

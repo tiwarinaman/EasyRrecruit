@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load is_job_already_applied %}
+{% load is_job_already_saved %}
 {% block title %}
     Job Details
 {% endblock %}
@@ -29,7 +30,7 @@
                             <h2>{{ job_details.job_title }}</h2>
                             <div>
                                 <span class="ml-0 mr-2 mb-2"><i class="fas fa-briefcase"></i>
-                                    <a href="{{ job_details.website_link }}">{{ job_details.recruiter.company_name }}</a>
+                                    <a href="{{ job_details.website_link }}" target="_blank">{{ job_details.recruiter.company_name }}</a>
                                 </span>
                                 <span class="m-2"><i class="fas fa-map-marker-alt"></i>
                                     {{ job_details.job_location }}
@@ -51,14 +52,38 @@
                 <div class="col-lg-4">
                     <div class="row">
                         <!---------------Top Save Button to save job----------------->
-                        <div class="col-5">
-                            <form action="#" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="job" value="{{ job_details.id }}">
+                        {% if user.is_authenticated and user.role == "candidate" %}
+                            {% is_job_already_saved job_details user as is_saved %}
+                            {% if is_saved %}
+                                <div class="col-5">
+                                <span href="#" class="btn btn-block btn-light btn-md">
+                                    <span class="text-danger"><i class="far fa-heart"></i></span>
+                                     Saved
+                                </span>
+                                </div>
+                            {% else %}
+                                <div class="col-5">
 
-                                <input type="button" class="btn btn-block btn-light btn-md" value="Save"/>
-                            </form>
-                        </div>
+                                    <a href="{% url 'bookmarkJob' job_details.id %}"
+                                       class="btn btn-block btn-light btn-md">Save</a>
+
+                                </div>
+                            {% endif %}
+
+                        {% elif user.role == "recruiter" %}
+
+                            <div class="col-5">
+                                <a href="{% url 'deleteJob' job_details.id %}"
+                                   class="btn btn-block btn-danger btn-md">Delete</a>
+                            </div>
+                        {% else %}
+
+                            <div class="col-5">
+                                <a href="{% url 'bookmarkJob' job_details.id %}" class="btn btn-block btn-light btn-md">Save</a>
+                            </div>
+
+                        {% endif %}
+
                         <!---------------Top apply button to apply for a job----------------->
                         {% if user.is_authenticated and user.role == "candidate" %}
                             {% is_job_already_applied job_details.id request.user as applied %}
@@ -107,16 +132,40 @@
                         {{ job_details.description | safe }}
                     </div>
 
+                    <!------------------------ Bottom Save button   ---------------------------->
+
                     <div class="row mb-5">
-                        <div class="col-6">
 
-                            <form action="#" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="job" value="{{ job_details.id }}">
-                                <input type="submit" class="btn btn-block btn-light btn-md" value="Save"/>
+                        {% if user.is_authenticated and user.role == "candidate" %}
+                            {% if is_saved %}
+                                <div class="col-6">
+                                    <span href="#" class="btn btn-block btn-light btn-md">
+                                    <span class="text-danger"><i class="far fa-heart"></i></span>
+                                     Saved
+                                </span>
+                                </div>
+                            {% else %}
+                                <div class="col-6">
+                                    <a href="{% url 'bookmarkJob' job_details.id %}"
+                                       class="btn btn-block btn-light btn-md">Save</a>
+                                </div>
+                            {% endif %}
 
-                            </form>
-                        </div>
+                        {% elif user.role == "recruiter" %}
+
+                            <div class="col-6">
+                                <a href="{% url 'deleteJob' job_details.id %}"
+                                   class="btn btn-block btn-danger btn-md">Delete</a>
+                            </div>
+
+                        {% else %}
+
+                            <div class="col-6">
+                                <a href="{% url 'bookmarkJob' job_details.id %}"
+                                   class="btn btn-block btn-light btn-md">Save</a>
+                            </div>
+
+                        {% endif %}
 
                         <!--------------- Apply Button on bottom side  -------------------->
 

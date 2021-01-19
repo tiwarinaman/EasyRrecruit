@@ -61,3 +61,12 @@ class ApplyJob(models.Model):
 
     def __str__(self):
         return self.candidate.uname.username + " " + self.job_applied.job_title
+
+
+class BookmarkJob(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(PostJob, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __str__(self):
+        return self.user.first_name + " - " + self.job.job_title

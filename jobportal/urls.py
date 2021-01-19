@@ -30,12 +30,15 @@ urlpatterns = [
    path('candidate-applied', views.candidateApplied, name="candidateApplied"),
    path('myposted-jobs', views.mypostedJobs, name="mypostedJobs"),
    path('delete-job/<int:id>', views.deleteJob, name="deleteJob"),
+   path('bookmark-job/<int:id>', views.bookmarkJob, name="bookmarkJob"),
+   path('saved-job', views.savedJobs, name="savedJobs"),
+   path('delete-bookmark/<int:id>', views.deleteBookmark, name="deleteBookmark"),
 
    # This Urls is for resetting the password (By Using Django Default Views)
-   path('reset_password', auth_view.PasswordResetView.as_view(template_name="password_reset.html"), name="reset_password"),
-   path('reset_password_send', auth_view.PasswordResetDoneView.as_view(template_name="password_reset_send.html"), name="password_reset_done"),
-   path('reset/<uidb64>/<token>/', auth_view.PasswordResetConfirmView.as_view(template_name="password_reset_form.html"), name="password_reset_confirm"),
-   path('reset_password_complete', auth_view.PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), name="password_reset_complete"),
+   path('reset_password', auth_view.PasswordResetView.as_view(template_name="common/password_reset.html"), name="reset_password"),
+   path('reset_password_send', auth_view.PasswordResetDoneView.as_view(template_name="common/password_reset_send.html"), name="password_reset_done"),
+   path('reset/<uidb64>/<token>/', auth_view.PasswordResetConfirmView.as_view(template_name="common/password_reset_form.html"), name="password_reset_confirm"),
+   path('reset_password_complete', auth_view.PasswordResetCompleteView.as_view(template_name="common/password_reset_done.html"), name="password_reset_complete"),
 
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

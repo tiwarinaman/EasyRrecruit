@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 
 from jobportal.permission import *
 # Importing models class
-from .models import Candidate, Recruiter, PostJob, ApplyJob
+from .models import Candidate, Recruiter, PostJob, ApplyJob, BookmarkJob
 
 User = get_user_model()
 
@@ -99,7 +99,7 @@ def candidateRegister(request):
                 messages.success(request, "Registration successfully done !!!")
                 return redirect('candidateLogin')
 
-    return render(request, 'candidate_register.html')
+    return render(request, 'candidate/candidate_register.html')
 
 
 # Candidate Login Method
@@ -131,7 +131,7 @@ def candidateLogin(request):
                 messages.error(request, "Invalid credentials, please try again !!!")
                 return redirect('candidateLogin')
 
-    return render(request, 'candidate_login.html')
+    return render(request, 'candidate/candidate_login.html')
 
 
 # Logout Method To destroy the current session
@@ -183,7 +183,7 @@ def recruiterRegister(request):
                 messages.success(request, "Registration Successfully Done !!!")
                 return redirect('recruiterLogin')
 
-    return render(request, 'recruiter_register.html')
+    return render(request, 'recruiter/recruiter_register.html')
 
 
 # Recruiter Login Method
@@ -215,7 +215,7 @@ def recruiterLogin(request):
                 messages.error(request, "Invalid credentials, please try again !!!")
                 return redirect('recruiterLogin')
 
-    return render(request, 'recruiter_login.html')
+    return render(request, 'recruiter/recruiter_login.html')
 
 
 # Admin Login Method
@@ -244,14 +244,14 @@ def adminLogin(request):
                 messages.error(request, "User does not exists !!!")
                 return redirect('adminLogin')
 
-    return render(request, 'admin_login.html')
+    return render(request, 'admin/admin_login.html')
 
 
 # Admin Home page render
 @login_required(login_url='/admin-login')
 @user_is_admin
 def admin_home(request):
-    return render(request, 'admin_home.html')
+    return render(request, 'admin/admin_home.html')
 
 
 # Changing The Password
@@ -287,7 +287,7 @@ def change_password(request):
                     messages.warning(request, "Something went wrong !!!")
                     return redirect('changePassword')
 
-    return render(request, 'change_password.html')
+    return render(request, 'common/change_password.html')
 
 
 # Editing Profile details
@@ -341,7 +341,7 @@ def edit_candidate_profile(request):
                 return redirect('editCandidateProfile')
 
     candi = Candidate.objects.get(uname=request.user)
-    return render(request, 'edit_profile.html', {'candi': candi})
+    return render(request, 'common/edit_profile.html', {'candi': candi})
 
 
 @login_required(login_url='/')
@@ -395,7 +395,7 @@ def edit_recruiter_profile(request):
                 return redirect('editRecruiterProfile')
 
     recu = Recruiter.objects.get(uname=request.user)
-    return render(request, 'edit_profile.html', {'recu': recu})
+    return render(request, 'common/edit_profile.html', {'recu': recu})
 
 
 @login_required(login_url='/recu-login')
@@ -447,7 +447,7 @@ def post_job(request):
 
     recu = Recruiter.objects.get(uname=request.user)
     d = datetime.date.today()
-    return render(request, 'post_job.html', {'recu': recu, 'date': d.strftime("%Y-%m-%d")})
+    return render(request, 'recruiter/post_job.html', {'recu': recu, 'date': d.strftime("%Y-%m-%d")})
 
 
 def jobDetails(request, id):
@@ -461,7 +461,7 @@ def jobDetails(request, id):
         'job_details': job_details,
     }
 
-    return render(request, 'job_details.html', context)
+    return render(request, 'common/job_details.html', context)
 
 
 def listJobs(request):
@@ -483,7 +483,7 @@ def listJobs(request):
         'all_jobs': jobs
     }
 
-    return render(request, 'list_jobs.html', context)
+    return render(request, 'common/list_jobs.html', context)
 
 
 @login_required(login_url='/candi-login')
@@ -510,7 +510,7 @@ def applyJob(request, id):
         'job': job
     }
 
-    return render(request, 'apply_job.html', context)
+    return render(request, 'candidate/apply_job.html', context)
 
 
 @login_required(login_url='/candi-login')
@@ -522,7 +522,7 @@ def appliedJobsByCandidate(request):
         'applied': jobs,
     }
 
-    return render(request, 'applied_jobs_by_candidate.html', context)
+    return render(request, 'candidate/applied_jobs_by_candidate.html', context)
 
 
 @login_required(login_url='/candi-login')
@@ -542,7 +542,7 @@ def candidateApplied(request):
         'candi_applied': candi_applied,
     }
 
-    return render(request, 'candidate_applied_job.html', context)
+    return render(request, 'candidate/candidate_applied_job.html', context)
 
 
 @login_required(login_url='/recu-login')
@@ -554,7 +554,7 @@ def mypostedJobs(request):
         'myjobs': my_jobs,
     }
 
-    return render(request, 'myposted_jobs.html', context)
+    return render(request, 'recruiter/myposted_jobs.html', context)
 
 
 @login_required(login_url='/recu-login')
@@ -563,3 +563,47 @@ def deleteJob(request, id):
     del_job = PostJob.objects.filter(id=id, recruiter__uname=request.user)
     del_job.delete()
     return redirect('mypostedJobs')
+
+
+@login_required(login_url='/candi-login')
+@user_is_candidate
+def bookmarkJob(request, id):
+    try:
+        bookmark_job = BookmarkJob(user=request.user, job_id=id)
+        bookmark_job.save()
+        messages.success(request, "Job successfully saved !!!")
+        return redirect('/job/' + str(id))
+    except:
+        messages.error(request, "Something went wrong !!!")
+        return redirect('/job/' + str(id))
+
+
+@login_required(login_url='/candi-login')
+@user_is_candidate
+def savedJobs(request):
+    try:
+        saved_jobs = BookmarkJob.objects.filter(user=request.user)
+    except:
+        messages.error(request, "Something went wrong !!!")
+        return redirect('savedJobs')
+
+    context = {
+        'saved_jobs': saved_jobs
+    }
+
+    return render(request, 'candidate/saved_jobs.html', context)
+
+
+@login_required(login_url='/candi-login')
+@user_is_candidate
+def deleteBookmark(request, id):
+    try:
+        del_saved_job = BookmarkJob.objects.get(user=request.user, job_id=id)
+        del_saved_job.delete()
+        messages.success(request, del_saved_job.job.job_title + " Job Deleted successfully !!!!")
+        return redirect('savedJobs')
+    except:
+        messages.error(request, "Something went wrong !!!")
+        return redirect('savedJobs')
+
+    return redirect('savedJobs')

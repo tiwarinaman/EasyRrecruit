@@ -44,14 +44,12 @@
                                     <td>{{ s.job.last_date }}</td>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'deleteBookmark' s.job.id %}"
-                                           role="button">Delete</a>
+                                           role="button"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
             </div>

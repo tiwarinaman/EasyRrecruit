@@ -1,10 +1,12 @@
 import datetime
 from datetime import date
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import render, redirect
 
@@ -96,6 +98,7 @@ def candidateRegister(request):
                                                  dob=dob, gender=gen)
                 user.save()
                 candi.save()
+
                 messages.success(request, "Registration successfully done !!!")
                 return redirect('candidateLogin')
 
@@ -450,9 +453,61 @@ def post_job(request):
     return render(request, 'recruiter/post_job.html', {'recu': recu, 'date': d.strftime("%Y-%m-%d")})
 
 
-def jobDetails(request, pid):
+@login_required(login_url='/recu-login')
+@user_is_recruiter
+def editJob(request, id):
+    edit_job = PostJob.objects.get(recruiter__uname=request.user, id=id)
+
+    if request.method == 'POST':
+        companyName = request.POST.get('companyName', False)
+        jobTitle = request.POST.get('jobTitle', False)
+        jobLocation = request.POST.get('jobLocation', False)
+        jobType = request.POST.get('jobType', False)
+        cate = request.POST.get('role', False)
+        sal = request.POST.get('salary', False)
+        exp = request.POST.get('experience', False)
+        startDate = request.POST.get('startDate', False)
+        lastDate = request.POST.get('lastDate', False)
+        requiredSkill = request.POST.get('requiredSkills', False)
+        web = request.POST.get('website', False)
+        des = request.POST.get('description', False)
+        companyLogo = request.FILES.get('image', False)
+
+        if companyName == '' or jobTitle == '' or jobLocation == '' or jobType == '' or cate == '' or sal == '' or exp == '' or startDate == '' or requiredSkill == '' or web == '' or des == '':
+            messages.info(request, "All fields are required, please try again !!!")
+            return redirect('postJob')
+        else:
+            if lastDate != '':
+                edit_job.last_date = lastDate
+
+            if companyLogo:
+                edit_job.company_logo_image = companyLogo
+
+            edit_job.job_title = jobTitle
+            edit_job.job_location = jobLocation
+            edit_job.job_type = jobType
+            edit_job.category = cate
+            edit_job.salary = sal
+            edit_job.experience = exp
+            edit_job.skills = requiredSkill
+            edit_job.website_link = web
+            edit_job.description = des
+
+            edit_job.save()
+
+            messages.success(request, "Job details has been updated !!!")
+            return redirect('mypostedJobs')
+
+    context = {
+        'edit_job': edit_job
+    }
+
+    return render(request, 'recruiter/edit_job.html', context)
+
+
+def jobDetails(request, id):
     try:
-        job_details = PostJob.objects.get(pk=pid)
+        job_details = PostJob.objects.get(pk=id)
     except:
         messages.error(request, "This job might be deleted by recruiter !!!")
         return redirect('listJobs')
@@ -488,22 +543,22 @@ def listJobs(request):
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def applyJob(request, pid):
+def applyJob(request, id):
     user = User.objects.get(id=request.user.id)
     candi = Candidate.objects.get(uname=user)
-    job = PostJob.objects.get(id=pid)
+    job = PostJob.objects.get(id=id)
 
     if request.method == 'POST':
         candi_resume = request.FILES.get('resume', False)
         if not candi_resume:
             messages.error(request, "Please upload your resume !!!")
-            return redirect('/apply/' + str(pid))
+            return redirect('/apply/' + str(id))
         else:
             apply = ApplyJob.objects.create(job_applied=job, candidate=candi, resume=candi_resume)
             apply.save()
 
             messages.success(request, "Successfully applied !!!")
-            return redirect('/job/' + str(pid))
+            return redirect('/job/' + str(id))
 
     context = {
         'candi': candi,
@@ -527,8 +582,8 @@ def appliedJobsByCandidate(request):
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def withdrawJob(request, pid):
-    job = ApplyJob.objects.get(job_applied_id=pid, candidate__uname=request.user)
+def withdrawJob(request, id):
+    job = ApplyJob.objects.get(job_applied_id=id, candidate__uname=request.user)
     job.delete()
     return redirect('appliedJobsByCandidate')
 
@@ -559,23 +614,23 @@ def mypostedJobs(request):
 
 @login_required(login_url='/recu-login')
 @user_is_recruiter
-def deleteJob(request, pid):
-    del_job = PostJob.objects.filter(id=pid, recruiter__uname=request.user)
+def deleteJob(request, id):
+    del_job = PostJob.objects.filter(id=id, recruiter__uname=request.user)
     del_job.delete()
     return redirect('mypostedJobs')
 
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def bookmarkJob(request, pid):
+def bookmarkJob(request, id):
     try:
-        bookmark_job = BookmarkJob(user=request.user, job_id=pid)
+        bookmark_job = BookmarkJob(user=request.user, job_id=id)
         bookmark_job.save()
         messages.success(request, "Job successfully saved !!!")
-        return redirect('/job/' + str(pid))
+        return redirect('/job/' + str(id))
     except:
         messages.error(request, "Something went wrong !!!")
-        return redirect('/job/' + str(pid))
+        return redirect('/job/' + str(id))
 
 
 @login_required(login_url='/candi-login')
@@ -596,9 +651,9 @@ def savedJobs(request):
 
 @login_required(login_url='/candi-login')
 @user_is_candidate
-def deleteBookmark(request, pid):
+def deleteBookmark(request, id):
     try:
-        del_saved_job = BookmarkJob.objects.get(user=request.user, job_id=pid)
+        del_saved_job = BookmarkJob.objects.get(user=request.user, job_id=id)
         del_saved_job.delete()
         messages.success(request, del_saved_job.job.job_title + " Job Deleted successfully !!!!")
         return redirect('savedJobs')
@@ -633,9 +688,9 @@ def viewAllRecruiters(request):
 
 @login_required(login_url='/admin-login')
 @user_is_admin
-def deleteCandidate(request, pid):
+def deleteCandidate(request, id):
     try:
-        user = User.objects.filter(id=pid)
+        user = User.objects.filter(id=id)
         user.delete()
         messages.success(request, "Successfully deleted !!!")
     except:
@@ -647,12 +702,52 @@ def deleteCandidate(request, pid):
 
 @login_required(login_url='/admin-login')
 @user_is_admin
-def deleteRecruiter(request, pid):
+def deleteRecruiter(request, id):
     try:
-        del_recu = User.objects.get(id=pid)
+        del_recu = User.objects.get(id=id)
         del_recu.delete()
         messages.success(request, "Successfully deleted")
         return redirect('viewAllRecruiter')
     except:
         messages.error(request, "Something went wrong !!!")
         return redirect('viewAllRecruiter')
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def newRecruiterRequest(request):
+    new_recu = Recruiter.objects.filter(status="pending")
+
+    context = {
+        'new_recu': new_recu
+    }
+
+    return render(request, 'admin/recruiter_request.html', context)
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def assignStatus(request, id):
+    recu_info = Recruiter.objects.get(uname_id=id)
+    if request.method == 'POST':
+        status = request.POST.get('status', False)
+        recu_info.status = status
+        recu_info.save()
+
+        if status == "accepted":
+            message = f'<h1>Hi <strong style="color:cyan;">{recu_info.uname.first_name}</strong>, <strong style="color:green;">Good news :)</strong> your account has been <strong style="color: green;">approved</strong>. Now you can post your vacancies !!!</h1>'
+        else:
+            message = f'<h1>Hi <strong style="color:cyan">{recu_info.uname.first_name}</strong>, Sorry to inform you that your account has been <strong style="color:red;">rejected</strong>.</h1>'
+
+        subject = 'Easy Recruit Team'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [recu_info.uname.email, ]
+        send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
+
+        messages.success(request, "New status has been assigned To " + recu_info.uname.first_name)
+        return redirect('newRecruiterRequest')
+
+    context = {
+        'recu_info': recu_info
+    }
+    return render(request, 'admin/assign_status.html', context)

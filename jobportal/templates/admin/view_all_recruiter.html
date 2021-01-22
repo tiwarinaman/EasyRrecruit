@@ -31,21 +31,27 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Date of Joining</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for r in recu %}
-                                <tr>
-                                    <td scope="row">{{ forloop.counter }}</td>
-                                    <td scope="row">{{ r.uname.first_name }} {{ r.uname.last_name }}</td>
-                                    <td scope="row">{{ r.uname.email }}</td>
-                                    <td scope="row">{{ r.uname.date_joined }}</td>
-                                    <td scope="row"><img src="{{ r.recruiter_image.url }}" alt=""
-                                                         style="max-height: 150px; max-width: 150px; border-radius: 30px"></td>
-                                    <td scope="row"><a href="{% url 'deleteRecruiter' r.uname.id %}" role="button" class="btn btn-danger btn-sm"
-                                                       style="text-decoration: none; color: white">Delete</a></td>
-                                </tr>
+                                {% if r.status == "accepted" %}
+                                    <tr>
+                                        <td scope="row">{{ forloop.counter }}</td>
+                                        <td scope="row">{{ r.uname.first_name }} {{ r.uname.last_name }}</td>
+                                        <td scope="row">{{ r.uname.email }}</td>
+                                        <td scope="row">{{ r.uname.date_joined }}</td>
+                                        <td scope="row"><img src="{{ r.recruiter_image.url }}" alt=""
+                                                             style="max-height: 150px; max-width: 150px; border-radius: 30px">
+                                        </td>
+                                        <td scope="row" class="text-success font-weight-bold">{{ r.status }}</td>
+                                        <td scope="row"><a href="{% url 'deleteRecruiter' r.uname.id %}" role="button"
+                                                           class="btn btn-danger btn-sm"
+                                                           style="text-decoration: none; color: white"><i class="fas fa-trash-alt"></i></a></td>
+                                    </tr>
+                                {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>

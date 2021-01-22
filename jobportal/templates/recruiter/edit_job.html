@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Post A New Job
+    Edit Job
 {% endblock %}
 
 {% block body %}
@@ -18,7 +18,7 @@
                 </div>
             {% endfor %}
 
-            {% if recu.status == "pending" %}
+            {% if edit_job.recruiter.status == "pending" %}
 
                 <div class="alert alert-info mt-5" role="alert">
                     <p class="text-dark font-weight-bold">Account is pending will be reviewed by admin, have patience <i
@@ -27,7 +27,7 @@
                         class="badge badge-danger">{{ recu.status }}</span>
                 </div>
 
-            {% elif recu.status == "rejected" %}
+            {% elif edit_job.recruiter.status == "rejected" %}
 
                 <div class="alert alert-danger mt-5" role="alert">
                     <p class="text-dark font-weight-bold">Sorry <i class="far fa-frown"></i> to inform you that your
@@ -39,17 +39,17 @@
 
             {% else %}
 
-                <h2 class="text-center font-weight-bold title">Add Job Details</h2>
+                <h2 class="text-center font-weight-bold title">Edit Job Details</h2>
                 <hr>
                 <div class="post-job">
-                    <form method="post" action="{% url 'postJob' %}" enctype="multipart/form-data">
+                    <form method="post" action="#" enctype="multipart/form-data">
 
                         {% csrf_token %}
 
                         <div class="form-row">
                             <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Company Name</label>
-                                <input type="text" name="companyName" value="{{ recu.company_name }}"
+                                <input type="text" name="companyName" value="{{ edit_job.recruiter.company_name }}"
                                        class="form-control"
                                        readonly>
                             </div>
@@ -57,17 +57,17 @@
                             <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Job Title</label>
                                 <input type="text" name="jobTitle" class="form-control"
-                                       placeholder="eg: Software Developer" required>
+                                       value="{{ edit_job.job_title }}" required>
                             </div>
 
                             <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Job Location</label>
-                                <input type="text" name="jobLocation" class="form-control" placeholder="eg: Mumbai"
+                                <input type="text" name="jobLocation" class="form-control" value="{{ edit_job.job_location }}"
                                        required>
                             </div>
 
                             <div class="col-md-12">
-                                <label for="inputEmail4" class="font-weight-bold">Job Type</label>
+                                <label for="inputEmail4" class="font-weight-bold">Job Type</label><br>
                                 <select name="jobType" class="form-control" title="Select Job Type">
                                     <option value="Full Time">Full Time</option>
                                     <option value="Part Time">Part Time</option>
@@ -77,55 +77,52 @@
 
                             <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Category</label>
-                                <input type="text" name="role" class="form-control" placeholder="eg: Web, Android"
+                                <input type="text" name="role" class="form-control" value="{{ edit_job.category }}"
                                        required>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="inputEmail4" class="font-weight-bold">Salary</label>
-                                <input type="text" name="salary" class="form-control" placeholder="eg: 3.5 LPA"
+                                <input type="text" name="salary" class="form-control" value="{{ edit_job.salary }}"
                                        required>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="inputEmail4" class="font-weight-bold">Experience</label>
-                                <input type="text" name="experience" class="form-control" placeholder="eg: 0-1 year"
+                                <input type="text" name="experience" class="form-control" value="{{ edit_job.experience }}"
                                        required>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="inputEmail4" class="font-weight-bold">Start Date</label>
-                                <input type="text" name="startDate" value="{{ date }}" class="form-control" readonly>
+                                <input type="text" name="startDate" value="{{ edit_job.start_date }}" class="form-control" readonly>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="inputEmail4" class="font-weight-bold">Last Date</label>
-                                <input type="date" name="lastDate" class="form-control" required>
+                                <input type="date" name="lastDate" class="form-control">
                             </div>
 
                             <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Required Skills</label>
                                 <input type="text" name="requiredSkills" class="form-control"
-                                       placeholder="eg: Java, Python, Django, Angular" required>
+                                        value="{{ edit_job.skills }}" required>
                             </div>
 
                             <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Website</label>
                                 <input type="text" name="website" class="form-control"
-                                       placeholder="eg: https://example.com" required>
+                                       value="{{ edit_job.website_link }}" required>
                             </div>
 
                             <div class="col-md-12">
                                 <label for="exampleInputPassword1" class="font-weight-bold">Description</label>
-                                <textarea class="form-control" rows="5" name="description"
-                                          placeholder="eg: Role Responsibilities, Education qualification etc."
-                                          required></textarea>
+                                <textarea class="form-control" rows="5" name="description" required>{{ edit_job.description }}</textarea>
                             </div>
 
                             <div class="col-md-12">
                                 <label for="exampleInputPassword1" class="font-weight-bold">Upload Company Logo</label>
-                                <input type="file" class="form-control" id="exampleInputPassword1" name="image"
-                                       required>
+                                <input type="file" class="form-control" id="exampleInputPassword1" name="image">
                             </div>
                         </div>
                         <div class="text-center mt-4">
@@ -137,3 +134,4 @@
         </div>
     </section>
 {% endblock %}
+

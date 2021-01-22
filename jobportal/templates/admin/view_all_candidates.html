@@ -44,7 +44,7 @@
                                     <td scope="row"><img src="{{ c.candidate_image.url }}" alt=""
                                                          style="max-height: 150px; max-width: 150px; border-radius: 30px"></td>
                                     <td scope="row"><a href="{% url 'deleteCandidate' c.uname.id %}" role="button" class="btn btn-danger btn-sm"
-                                                       style="text-decoration: none; color: white">Delete</a></td>
+                                                       style="text-decoration: none; color: white"><i class="fas fa-trash-alt"></i></a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

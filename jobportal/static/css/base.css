@@ -473,6 +473,40 @@ ul li.active-nav a {
 }
 
 
+/*  Assign Status CSS  */
+
+.assign-status {
+    box-shadow: 2px 2px 4px black;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 70%;
+    margin: auto;
+}
+
+.assign-status h2 {
+    letter-spacing: 4px;
+    background: #aaf1aa;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.assign-status .form-control {
+    border-radius: 15px;
+}
+
+.assign-status button {
+    border-radius: 13px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    max-width: 300px;
+    margin: auto;
+}
+
+.assign-status button:hover {
+    background: #000;
+}
+
 
 /*------------Footer--------------*/
 

@@ -7,39 +7,59 @@
 {% block body %}
 
     <section id="section-start">
-        <div class="container" style="margin-bottom: 200px">
-            <div class="row mt-5">
-                <div class="col-lg-12 mb-5">
-                    <div class="card">
 
-                        <h5 class="card-header text-center">My Posted Jobs</h5>
+        {% include 'common/message.html' %}
 
-                        <table class="table text-center mt-5">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>Sr. No</th>
-                                <th>Job Title</th>
-                                <th>Posted Date</th>
-                                <th>Last Date</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for m in myjobs %}
+        {% if myjobs.status == "pending" %}
+            <div class="alert alert-info mt-5" role="alert">
+                <p class="text-dark font-weight-bold">Account is pending will be reviewed by admin, have patience <i
+                        class="far fa-smile"></i> !!!</p>
+                <span class="text-dark font-weight-bold">Status : </span><span
+                    class="badge badge-danger">{{ recu.status }}</span>
+            </div>
+        {% elif myjobs.status == "rejected" %}
+            <div class="alert alert-danger mt-5" role="alert">
+                <p class="text-dark font-weight-bold">Sorry <i class="far fa-frown"></i> to inform you that your account
+                    has been rejected</p>
+                <span class="text-dark font-weight-bold">Status : </span><span
+                    class="badge badge-danger">{{ recu.status }}</span>
+            </div>
+        {% else %}
+            <div class="container" style="margin-bottom: 200px">
+                <div class="row mt-5">
+                    <div class="col-lg-12 mb-5">
+                        <div class="card">
+
+                            <h5 class="card-header text-center">My Posted Jobs</h5>
+
+                            <table class="table text-center mt-5">
+                                <thead class="thead-dark">
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td><a href="{% url 'jobDetails' m.id %}" style="text-decoration: none">{{ m.job_title }}</a></td>
-                                    <td>{{ m.start_date }}</td>
-                                    <td>{{ m.last_date }}</td>
-                                    <td><a href="{% url 'deleteJob' m.id %}" class="btn btn-danger btn-sm">Delete Job</a></td>
+                                    <th>Sr. No</th>
+                                    <th>Job Title</th>
+                                    <th>Posted Date</th>
+                                    <th>Last Date</th>
+                                    <th>Action</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for m in myjobs %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'jobDetails' m.id %}"
+                                               style="text-decoration: none">{{ m.job_title }}</a></td>
+                                        <td>{{ m.start_date }}</td>
+                                        <td>{{ m.last_date }}</td>
+                                        <td><a href="{% url 'deleteJob' m.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </section>
 
 {% endblock %}

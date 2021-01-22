@@ -30,7 +30,8 @@
                             <h2>{{ job_details.job_title }}</h2>
                             <div>
                                 <span class="ml-0 mr-2 mb-2"><i class="fas fa-briefcase"></i>
-                                    <a href="{{ job_details.website_link }}" target="_blank">{{ job_details.recruiter.company_name }}</a>
+                                    <a href="{{ job_details.website_link }}"
+                                       target="_blank">{{ job_details.recruiter.company_name }}</a>
                                 </span>
                                 <span class="m-2"><i class="fas fa-map-marker-alt"></i>
                                     {{ job_details.job_location }}
@@ -108,7 +109,7 @@
                         {% elif user.role == "recruiter" %}
 
                             <div class="col-7">
-                                <a href="#" class="btn btn-block btn-warning btn-md">Edit</a>
+                                <a href="{% url 'editJob' job_details.id %}" class="btn btn-block btn-warning btn-md">Edit</a>
                             </div>
                         {% else %}
                             <div class="col-7">
@@ -191,7 +192,7 @@
                         {% elif user.role == "recruiter" %}
 
                             <div class="col-6">
-                                <a href="#" style="text-decoration: none">
+                                <a href="{% url 'editJob' job_details.id %}" style="text-decoration: none">
                                     <button type="button" class="btn btn-block btn-warning btn-md">
                                         Edit
                                     </button>

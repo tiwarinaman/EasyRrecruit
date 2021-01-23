@@ -735,9 +735,9 @@ def assignStatus(request, id):
         recu_info.save()
 
         if status == "accepted":
-            message = f'<h1>Hi <strong style="color:cyan;">{recu_info.uname.first_name}</strong>, <strong style="color:green;">Good news :)</strong> your account has been <strong style="color: green;">approved</strong>. Now you can post your vacancies !!!</h1>'
+            message = f'<h1>Hi <strong style="color:blue;">{recu_info.uname.first_name}</strong>, <strong style="color:green;">Good news :)</strong> your account has been <strong style="color: green;">approved</strong>. Now you can post your vacancies !!!</h1>'
         else:
-            message = f'<h1>Hi <strong style="color:cyan">{recu_info.uname.first_name}</strong>, Sorry to inform you that your account has been <strong style="color:red;">rejected</strong>.</h1>'
+            message = f'<h1>Hi <strong style="color:blue">{recu_info.uname.first_name}</strong>, Sorry to inform you that your account has been <strong style="color:red;">rejected</strong>.</h1>'
 
         subject = 'Easy Recruit Team'
         email_from = settings.EMAIL_HOST_USER
@@ -751,3 +751,13 @@ def assignStatus(request, id):
         'recu_info': recu_info
     }
     return render(request, 'admin/assign_status.html', context)
+
+
+@login_required(login_url='/recu-login')
+@user_is_recruiter
+def resubmitProfileForReview(request):
+    recu_detail = Recruiter.objects.get(uname=request.user)
+    recu_detail.status = "pending"
+    recu_detail.save()
+
+    return redirect('postJob')

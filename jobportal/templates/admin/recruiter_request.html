@@ -42,8 +42,8 @@
                                         </td>
                                         <td scope="row" class="text-danger font-weight-bold">{{ n.status }}</td>
                                         <td scope="row"><a href="{% url 'assignStatus' n.uname.id %}" role="button"
-                                                           class="btn btn-primary btn-sm"
-                                                           style="text-decoration: none; color: white">Assign Status</a>
+                                                           class="btn btn-primary btn-sm font-weight-bold"
+                                                           style="text-decoration: none; color: white"><i class="far fa-edit"></i> Assign Status</a>
                                         </td>
                                         <td scope="row"><a href="{% url 'deleteRecruiter' n.uname.id %}" role="button"
                                                            class="btn btn-danger btn-sm"

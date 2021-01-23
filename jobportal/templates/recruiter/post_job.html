@@ -22,7 +22,9 @@
 
                 <div class="alert alert-info mt-5" role="alert">
                     <p class="text-dark font-weight-bold">Account is pending will be reviewed by admin, have patience <i
-                            class="far fa-smile"></i> !!!</p>
+                            class="far fa-smile"></i> !!! <br>
+                        once account accepted you will be intimated via email...
+                    </p>
                     <span class="text-dark font-weight-bold">Status : </span><span
                         class="badge badge-danger">{{ recu.status }}</span>
                 </div>
@@ -33,6 +35,13 @@
                     <p class="text-dark font-weight-bold">Sorry <i class="far fa-frown"></i> to inform you that your
                         account
                         has been rejected</p>
+                    <p class="text-dark font-weight-bold">
+                        <strong class="text-danger">Note :</strong> update your profile and request to
+                        review again
+                    </p>
+
+                    <a href="{% url 'resubmitProfile' %}">Resubmit Profile</a><br>
+
                     <span class="text-dark font-weight-bold">Status : </span><span
                         class="badge badge-danger">{{ recu.status }}</span>
                 </div>

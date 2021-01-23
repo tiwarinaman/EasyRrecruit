@@ -31,7 +31,7 @@
 .nav-link:hover,
 .nav-link:focus,
 ul li.active-nav a {
-    color: black !important;
+    color: gray !important;
 }
 
 .dropdown:hover .dropdown-menu {

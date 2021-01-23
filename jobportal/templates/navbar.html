@@ -2,9 +2,10 @@
     <div class="menu-bar">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="/">
-                <span class="font-weight-bold text-danger"><i class="fas fa-briefcase"></i> EASY</span><span
+                <span class="font-weight-bold text-danger"><i
+                        class="fas fa-briefcase text-primary"></i> EASY</span><span
                     class="text-success">-</span><span
-                    class="font-weight-bold text-light">RECRUIT</span>
+                    class="font-weight-bold text-info">RECRUIT</span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,29 +13,33 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">HOME<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">ABOUT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact' %}">CONTACT</a>
-                    </li>
-
+                    {% if not user.role == "admin" %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"><i class="fas fa-home"></i> HOME<span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about' %}"><i class="fas fa-address-card"></i> ABOUT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact' %}"><i class="fas fa-phone"></i> CONTACT</a>
+                        </li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                         {% if user.role == "candidate" %}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'listJobs' %}">JOB LISTS</a>
+                                <a class="nav-link" href="{% url 'listJobs' %}"><i class="fas fa-list-ul"></i> JOB LISTS</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'appliedJobsByCandidate' %}">APPLIED JOBS</a>
+                                <a class="nav-link" href="{% url 'appliedJobsByCandidate' %}"><i
+                                        class="fas fa-briefcase"></i> APPLIED JOBS</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'savedJobs' %}">SAVED JOBS</a>
+                                <a class="nav-link" href="{% url 'savedJobs' %}"><i class="far fa-bookmark"></i> SAVED
+                                    JOBS</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -46,8 +51,8 @@
 
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
-                                    <a class="dropdown-item" href="{% url 'editCandidateProfile' %}">Edit Profile</a>
+                                    <a class="dropdown-item" href="{% url 'changePassword' %}"><i class="fas fa-key"></i> Change Password</a>
+                                    <a class="dropdown-item" href="{% url 'editCandidateProfile' %}"><i class="fas fa-user-edit"></i> Edit Profile</a>
                                 </div>
                             </li>
 
@@ -55,16 +60,20 @@
 
                         {% if user.role == "recruiter" %}
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'postJob' %}">POST JOB</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-briefcase"></i> JOB
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'postJob' %}"><i class="far fa-plus-square"></i> POST JOB</a>
+                                    <a class="dropdown-item" href="{% url 'mypostedJobs' %}"><i class="fas fa-briefcase"></i> MY POSTED JOBS</a>
+                                </div>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'mypostedJobs' %}">MY POSTED JOBS</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'candidateApplied' %}">CANDIDATE APPLIED</a>
+                                <a class="nav-link" href="{% url 'candidateApplied' %}"><i class="fas fa-users"></i>
+                                    CANDIDATE APPLIED</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -74,8 +83,8 @@
                                         class="fas fa-user"></i></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
-                                    <a class="dropdown-item" href="{% url 'editRecruiterProfile' %}">Edit Profile</a>
+                                    <a class="dropdown-item" href="{% url 'changePassword' %}"><i class="fas fa-key"></i> Change Password</a>
+                                    <a class="dropdown-item" href="{% url 'editRecruiterProfile' %}"><i class="fas fa-user-edit"></i> Edit Profile</a>
                                 </div>
                             </li>
                         {% endif %}
@@ -83,13 +92,14 @@
                         {% if user.role == "admin" %}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'newRecruiterRequest' %}">NEW RECRUITER REQUEST</a>
+                                <a class="nav-link" href="{% url 'newRecruiterRequest' %}">
+                                    <i class="fas fa-inbox"></i> NEW RECRUITER REQUEST</a>
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    CANDIDATE
+                                    CANDIDATE <i class="fas fa-user-alt"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{% url 'viewAllCandidate' %}">View Candidate</a>
@@ -100,7 +110,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    RECRUITER
+                                    RECRUITER <i class="fas fa-user-tie"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{% url 'viewAllRecruiter' %}">View Recruiter</a>
@@ -115,8 +125,8 @@
                                         class="fas fa-user"></i></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
-                                    <a class="dropdown-item" href="#">Edit Profile</a>
+                                    <a class="dropdown-item" href="{% url 'changePassword' %}"><i class="fas fa-key"></i> Change Password</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-user-edit"></i> Edit Profile</a>
                                 </div>
                             </li>
 

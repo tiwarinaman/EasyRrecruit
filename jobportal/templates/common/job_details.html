@@ -2,6 +2,7 @@
 {% load static %}
 {% load is_job_already_applied %}
 {% load is_job_already_saved %}
+{% load is_same_recruiter %}
 {% block title %}
     Job Details
 {% endblock %}
@@ -10,16 +11,21 @@
 
     <section id="section-start">
 
-        {% for message in messages %}
-            <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times</span>
-                </button>
-                {{ message }}
-            </div>
-        {% endfor %}
+        {% include 'common/message.html' %}
 
         <div class="container job-details">
+
+            {% if user.is_authenticated and user.role == "recruiter" %}
+                {% is_same_recruiter job_details.id user as is_same %}
+                {% if not is_same %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong class="text-danger">This job is not posted by you <i class="far fa-frown-open"></i>
+                            so you can only view this job !!!
+                        </strong>
+                    </div>
+                {% endif %}
+            {% endif %}
+
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
                     <div class="d-flex align-items-center">
@@ -64,25 +70,23 @@
                                 </div>
                             {% else %}
                                 <div class="col-5">
-
                                     <a href="{% url 'bookmarkJob' job_details.id %}"
                                        class="btn btn-block btn-light btn-md">Save</a>
-
                                 </div>
                             {% endif %}
 
                         {% elif user.role == "recruiter" %}
-
-                            <div class="col-5">
-                                <a href="{% url 'deleteJob' job_details.id %}"
-                                   class="btn btn-block btn-danger btn-md">Delete</a>
-                            </div>
+                            {% is_same_recruiter job_details.id user as is_same %}
+                            {% if is_same %}
+                                <div class="col-5">
+                                    <a href="{% url 'deleteJob' job_details.id %}"
+                                       class="btn btn-block btn-danger btn-md">Delete</a>
+                                </div>
+                            {% endif %}
                         {% else %}
-
                             <div class="col-5">
                                 <a href="{% url 'bookmarkJob' job_details.id %}" class="btn btn-block btn-light btn-md">Save</a>
                             </div>
-
                         {% endif %}
 
                         <!---------------Top apply button to apply for a job----------------->
@@ -107,10 +111,12 @@
                             {% endif %}
 
                         {% elif user.role == "recruiter" %}
-
-                            <div class="col-7">
-                                <a href="{% url 'editJob' job_details.id %}" class="btn btn-block btn-warning btn-md">Edit</a>
-                            </div>
+                            {% if is_same %}
+                                <div class="col-7">
+                                    <a href="{% url 'editJob' job_details.id %}"
+                                       class="btn btn-block btn-warning btn-md">Edit</a>
+                                </div>
+                            {% endif %}
                         {% else %}
                             <div class="col-7">
                                 <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
@@ -153,12 +159,12 @@
                             {% endif %}
 
                         {% elif user.role == "recruiter" %}
-
-                            <div class="col-6">
-                                <a href="{% url 'deleteJob' job_details.id %}"
-                                   class="btn btn-block btn-danger btn-md">Delete</a>
-                            </div>
-
+                            {% if is_same %}
+                                <div class="col-6">
+                                    <a href="{% url 'deleteJob' job_details.id %}"
+                                       class="btn btn-block btn-danger btn-md">Delete</a>
+                                </div>
+                            {% endif %}
                         {% else %}
 
                             <div class="col-6">
@@ -190,14 +196,15 @@
                             {% endif %}
 
                         {% elif user.role == "recruiter" %}
-
-                            <div class="col-6">
-                                <a href="{% url 'editJob' job_details.id %}" style="text-decoration: none">
-                                    <button type="button" class="btn btn-block btn-warning btn-md">
-                                        Edit
-                                    </button>
-                                </a>
-                            </div>
+                            {% if is_same %}
+                                <div class="col-6">
+                                    <a href="{% url 'editJob' job_details.id %}" style="text-decoration: none">
+                                        <button type="button" class="btn btn-block btn-warning btn-md">
+                                            Edit
+                                        </button>
+                                    </a>
+                                </div>
+                            {% endif %}
                         {% else %}
                             <div class="col-6">
                                 <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">

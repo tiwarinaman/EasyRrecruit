@@ -1,5 +1,5 @@
 {% for message in messages %}
-    <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
+    <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert" onclick="toastr.error('Hi! I am info message.');">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

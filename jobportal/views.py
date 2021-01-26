@@ -44,6 +44,26 @@ def about(request):
 
 
 def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', False)
+        email = request.POST.get('email', False)
+        sub = request.POST.get('subject', False)
+        msg = request.POST.get('message', False)
+
+        if name == '' or email == '' or sub == '' or msg == '':
+            messages.info(request, "All fields are required !!!")
+            return redirect('contact')
+        else:
+            subject = f'Message By - { name }'
+            message = f'<strong>Subject :</strong> { sub } <br> <strong>Email : </strong> { email } <br> ' \
+                      f'<strong>Message : </strong> { msg }'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [settings.EMAIL_HOST_USER, ]
+            send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
+
+            messages.success(request, "Message successfully send. We will contact you shortly.")
+            return redirect('contact')
+
     return render(request, 'contact.html')
 
 
@@ -783,6 +803,33 @@ def assignStatus(request, id):
         'recu_info': recu_info
     }
     return render(request, 'admin/assign_status.html', context)
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def temporaryDisableAccount(request, id):
+    user = User.objects.get(id=id)
+
+    if request.method == 'POST':
+        status = request.POST.get('status', False)
+        if status == "active":
+            user.is_active = True
+        else:
+            user.is_active = False
+        user.save()
+
+        if user.role == "candidate":
+            messages.success(request, "Account status has been changed")
+            return redirect('viewAllCandidate')
+        else:
+            messages.success(request, "Account status has been changed")
+            return redirect('viewAllRecruiter')
+
+    context = {
+        'userData': user
+    }
+
+    return render(request, 'admin/temporary_disable_account.html', context)
 
 
 @login_required(login_url='/recu-login')

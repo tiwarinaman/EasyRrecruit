@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'accounts',
-    'jobportal'
+    'accounts.apps.AccountsConfig',
+    'jobportal.apps.JobportalConfig'
 
 ]
 

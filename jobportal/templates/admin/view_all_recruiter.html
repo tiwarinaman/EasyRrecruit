@@ -31,7 +31,8 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Date of Joining</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Account Status</th>
+                                <th scope="col">Assign Account Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
@@ -46,10 +47,26 @@
                                         <td scope="row"><img src="{{ r.recruiter_image.url }}" alt=""
                                                              style="max-height: 150px; max-width: 150px; border-radius: 30px">
                                         </td>
-                                        <td scope="row" class="text-success font-weight-bold">{{ r.status }}</td>
-                                        <td scope="row"><a href="{% url 'deleteRecruiter' r.uname.id %}" role="button"
+                                        <td scope="row">
+                                            {% if r.uname.is_active %}
+                                                <span class="text-success font-weight-bold">Active</span>
+                                            {% else %}
+                                                <span class="text-danger font-weight-bold">Disabled</span>
+                                            {% endif %}
+
+                                        </td>
+
+                                        <td scope="row"><a href="{% url 'temporaryDisable' r.uname.id %}"
+                                                           role="button"
+                                                           class="btn btn-primary btn-sm"
+                                                           style="text-decoration: none; color: white"><i
+                                                class="fas fa-user-edit"></i></a></td>
+
+                                        <td scope="row"><a href="{% url 'deleteRecruiter' r.uname.id %}"
+                                                           role="button"
                                                            class="btn btn-danger btn-sm"
-                                                           style="text-decoration: none; color: white"><i class="fas fa-trash-alt"></i></a></td>
+                                                           style="text-decoration: none; color: white"><i
+                                                class="fas fa-trash-alt"></i></a></td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}

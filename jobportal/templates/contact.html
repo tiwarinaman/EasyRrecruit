@@ -7,34 +7,59 @@
 {% block body %}
 
     <section id="contact">
-        <div class="container contact-form">
-            <form method="post" action="#">
+        {% include 'common/message.html' %}
+        <div class="container contact-form mx-auto">
+            <div class="text-center mt-2">
+                <h2 class="font-weight-bold text-primary"><i class="far fa-envelope"></i> Drop Your Message Here</h2>
+                <p class="font-weight-bold">We will gladly support you</p>
+            </div>
+            <hr>
+
+            <form action="#" method="post">
                 {% csrf_token %}
-                <h3><i class="fas fa-envelope"></i> Drop Us a Message</h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text" name="txtName" class="form-control" placeholder="Your Name *" value=""/>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                         </div>
-                        <div class="form-group">
-                            <input type="text" name="txtEmail" class="form-control" placeholder="Your Email *"
-                                   value=""/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="txtPhone" class="form-control" placeholder="Your Phone Number *"
-                                   value=""/>
-                        </div>
-                        <div class="form-group text-center">
-                            <button class="btn btn-primary font-weight-bold">Send Message</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <textarea name="txtMsg" class="form-control message-box" placeholder="Your Message *"></textarea>
-                        </div>
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                    class="fas fa-envelope-open-text"></i></span>
+                        </div>
+                        <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comment"></i></span>
+                        </div>
+                        <textarea type="text" name="message" class="form-control" placeholder="Messages" required></textarea>
+                    </div>
+                </div>
+
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </div>
             </form>
+
         </div>
     </section>
 

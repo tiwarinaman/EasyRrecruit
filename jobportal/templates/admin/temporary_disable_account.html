@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Temporary Disable
+{% endblock %}
+
+{% block body %}
+    <section id="section-start">
+        <div class="container mt-2">
+            <div class="assign-status">
+                <h2 class="text-center font-weight-bold">Assign Account Status</h2>
+                <form method="post" action="#">
+
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="font-weight-bold">Fullname</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1"
+                               value="{{ userData.first_name }} {{ userData.last_name }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" class="font-weight-bold">Email</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1"
+                               value="{{ userData.email }}"
+                               readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail4" class="font-weight-bold">Assign Status</label>
+                        <select name="status" class="form-control">
+                            <option value="active">Active</option>
+                            <option value="disable">Temporary Disable</option>
+                        </select>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

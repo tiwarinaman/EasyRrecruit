@@ -31,6 +31,8 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Date of Joining</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">Account Status</th>
+                                <th scope="col">Assign Account Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
@@ -42,9 +44,28 @@
                                     <td scope="row">{{ c.uname.email }}</td>
                                     <td scope="row">{{ c.uname.date_joined }}</td>
                                     <td scope="row"><img src="{{ c.candidate_image.url }}" alt=""
-                                                         style="max-height: 150px; max-width: 150px; border-radius: 30px"></td>
-                                    <td scope="row"><a href="{% url 'deleteCandidate' c.uname.id %}" role="button" class="btn btn-danger btn-sm"
-                                                       style="text-decoration: none; color: white"><i class="fas fa-trash-alt"></i></a></td>
+                                                         style="max-height: 150px; max-width: 150px; border-radius: 30px">
+                                    </td>
+                                    <td scope="row">
+                                        {% if c.uname.is_active %}
+                                            <span class="text-success font-weight-bold">Active</span>
+                                        {% else %}
+                                            <span class="text-danger font-weight-bold">Disabled</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td scope="row">
+                                        <a href="{% url 'temporaryDisable' c.uname.id %}"
+                                           role="button"
+                                           class="btn btn-primary btn-sm"
+                                           style="text-decoration: none; color: white"><i
+                                                class="fas fa-user-edit"></i></a>
+                                    </td>
+
+                                    <td scope="row"><a href="{% url 'deleteCandidate' c.uname.id %}" role="button"
+                                                       class="btn btn-danger btn-sm"
+                                                       style="text-decoration: none; color: white"><i
+                                            class="fas fa-trash-alt"></i></a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

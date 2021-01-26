@@ -21,6 +21,7 @@
                             <tr>
                                 <th scope="col">Sr. No.</th>
                                 <th scope="col">Fullname</th>
+                                <th scope="col">Company Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Date of Joining</th>
                                 <th scope="col">Image</th>
@@ -35,6 +36,7 @@
                                     <tr>
                                         <td scope="row">{{ forloop.counter }}</td>
                                         <td scope="row">{{ n.uname.first_name }} {{ n.uname.last_name }}</td>
+                                        <td scope="row">{{ n.company_name }}</td>
                                         <td scope="row">{{ n.uname.email }}</td>
                                         <td scope="row">{{ n.uname.date_joined }}</td>
                                         <td scope="row"><img src="{{ n.recruiter_image.url }}" alt=""

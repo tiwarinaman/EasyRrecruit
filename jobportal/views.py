@@ -19,7 +19,20 @@ User = get_user_model()
 
 # Create your views here.
 def home(request):
+    # Fetching all jobs for candidate
     job_data = PostJob.objects.get_queryset().order_by('-timestamp')
+
+    # Fetching jobs posted by recruiter
+    if request.user.is_authenticated and request.user.role == "recruiter":
+        recu = Recruiter.objects.get(uname=request.user)
+        job_data = PostJob.objects.filter(recruiter=recu).order_by('-timestamp')
+
+    # Fetching details for site stats
+    total_candidate = Candidate.objects.count()
+    total_recruiter = Recruiter.objects.count()
+    total_job_posted = PostJob.objects.count()
+
+    print(total_candidate, total_recruiter, total_job_posted)
 
     paginator = Paginator(job_data, 3)
 
@@ -35,6 +48,9 @@ def home(request):
 
     context = {
         'job_data': jobs,
+        'total_candidate': total_candidate,
+        'total_recruiter': total_recruiter,
+        'total_job_posted': total_job_posted,
     }
     return render(request, 'home.html', context)
 
@@ -54,9 +70,9 @@ def contact(request):
             messages.info(request, "All fields are required !!!")
             return redirect('contact')
         else:
-            subject = f'Message By - { name }'
-            message = f'<strong>Subject :</strong> { sub } <br> <strong>Email : </strong> { email } <br> ' \
-                      f'<strong>Message : </strong> { msg }'
+            subject = f'Message By - {name}'
+            message = f'<strong>Subject :</strong> {sub} <br> <strong>Email : </strong> {email} <br> ' \
+                      f'<strong>Message : </strong> {msg}'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [settings.EMAIL_HOST_USER, ]
             send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
@@ -565,18 +581,6 @@ def listJobs(request):
     return render(request, 'common/list_jobs.html', context)
 
 
-# checking if the job is still available
-def isJobActive(last):
-    today = datetime.datetime.today()
-    t = datetime.datetime(today.year, today.month, today.day)
-    l = datetime.datetime.strptime(str(last), "%Y-%m-%d")
-
-    if l < t:
-        return True
-    else:
-        return False
-
-
 @login_required(login_url='/candi-login')
 @user_is_candidate
 def applyJob(request, id):
@@ -590,9 +594,6 @@ def applyJob(request, id):
         if not candi_resume:
             messages.error(request, "Please upload your resume !!!")
             return redirect('applyJob', id)
-        elif isJobActive(last_date):
-            messages.error(request, "This job is no longer available last date was !!!")
-            return redirect('jobDetails', id)
         else:
             apply = ApplyJob.objects.create(job_applied=job, candidate=candi, resume=candi_resume)
             apply.save()
@@ -655,7 +656,7 @@ def candidateApplied(request):
 @login_required(login_url='/recu-login')
 @user_is_recruiter
 def mypostedJobs(request):
-    my_jobs = PostJob.objects.filter(recruiter__uname=request.user)
+    my_jobs = PostJob.objects.filter(recruiter__uname=request.user).order_by('-timestamp')
 
     context = {
         'myjobs': my_jobs,

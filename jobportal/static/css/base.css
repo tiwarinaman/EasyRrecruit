@@ -127,6 +127,11 @@ ul li.active-nav a {
     margin: 30px auto;
 }
 
+.recent-job__title h2 {
+    letter-spacing: 2px;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
 .recent-job img {
     max-width: 100px;
     margin: 10px 20px;

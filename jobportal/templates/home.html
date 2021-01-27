@@ -48,8 +48,12 @@
 
     <section id="jobs">
         <div class="container">
-            <div class="text-center">
-                <h2 class="font-weight-bold">Recent Jobs</h2>
+            <div class="text-center recent-job__title">
+                {% if user.is_authenticated and user.role == "recruiter" %}
+                    <h2 class="text-info font-weight-bold">Recent Jobs Posted By You</h2>
+                {% else %}
+                    <h2 class="text-info font-weight-bold">Recent Jobs</h2>
+                {% endif %}
             </div>
             <div class="row">
                 {% for job in job_data %}
@@ -80,7 +84,7 @@
                 {% if job_data.paginator.num_pages > 1 %}
                     {% for page_number in job_data.paginator.page_range %}
                         <a href="?page={{ page_number }}"
-                           class="btn btn-light btn-sm {% if job_data.number == page_number %}active{% endif %}">
+                           class="btn btn-outline-primary btn-sm {% if job_data.number == page_number %}active{% endif %}">
                             {{ page_number }}</a>
                     {% endfor %}
                 {% endif %}
@@ -100,14 +104,14 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="stats-box">
-                                <i class="fas fa-user"></i> <span><small>100 +</small></span>
-                                <p>Job Seekers </p>
+                                <i class="fas fa-user"></i> <span>{{ total_candidate }}</span>
+                                <p>Candidates</p>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="stats-box">
-                                <i class="fab fa-slideshare"></i> <span><small>500 +</small></span>
-                                <p>Employers</p>
+                                <i class="fab fa-slideshare"></i> <span>{{ total_recruiter }}</span>
+                                <p>Recruiters</p>
                             </div>
                         </div>
                     </div>
@@ -117,13 +121,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="stats-box">
-                                <i class="fas fa-hand-peace"></i> <span><small>100 +</small></span>
+                                <i class="fas fa-hand-peace"></i> <span>{{ total_job_posted }}</span>
                                 <p>Active Jobs</p>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="stats-box">
-                                <i class="fas fa-building"></i> <span><small>500 +</small></span>
+                                <i class="fas fa-building"></i> <span>{{ total_recruiter }}</span>
                                 <p>Companies</p>
                             </div>
                         </div>

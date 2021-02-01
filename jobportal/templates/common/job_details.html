@@ -29,14 +29,15 @@
                 {% endif %}
             {% endif %}
 
-            <!-- Showing warning if job is expired  -->
+            <!-- Showing warning to recruiter if job is expired  -->
 
             {% if user.is_authenticated and user.role == "recruiter" %}
                 {% is_job_expired job_details.id as is_expired %}
                 {% if is_expired and is_same %}
                     <div class="alert alert-warning" role="alert">
                         <strong class="text-danger">
-                            Job has been expired <i class="far fa-frown-open fx-2x"></i>, so candidates can't apply for this job. <br>
+                            Job has been expired <i class="far fa-frown-open fx-2x"></i>, so candidates can't apply for
+                            this job. <br>
                             You can extend the last date by editing the job, so that candidates can apply !!!
                         </strong>
                     </div>
@@ -51,7 +52,14 @@
                             <img src="{{ job_details.company_logo_image.url }}" alt="Image">
                         </div>
                         <div>
-                            <h2>{{ job_details.job_title }}</h2>
+                            <h2>
+                                {{ job_details.job_title }}
+                                {% if user.is_authenticated and user.role == "admin" %}
+                                    <small class="h6 text-danger">
+                                        [ Posted by - {{ job_details.recruiter.uname.first_name }} ]
+                                    </small>
+                                {% endif %}
+                            </h2>
                             <div>
                                 <span class="ml-0 mr-2 mb-2"><i class="fas fa-briefcase"></i>
                                     <a href="{{ job_details.website_link }}"
@@ -111,6 +119,11 @@
                                        class="btn btn-block btn-danger btn-md">Delete</a>
                                 </div>
                             {% endif %}
+                        {% elif user.role == "admin" %}
+                            <div class="col-5">
+                                <a href="{% url 'sendWarningToRecruiter' job_details.id %}"
+                                   class="btn btn-block btn-warning btn-md">Send Warning</a>
+                            </div>
                         {% else %}
                             <div class="col-5">
                                 <a href="{% url 'bookmarkJob' job_details.id %}" class="btn btn-block btn-light btn-md">Save</a>
@@ -157,6 +170,11 @@
                                        class="btn btn-block btn-warning btn-md">Edit</a>
                                 </div>
                             {% endif %}
+                        {% elif user.role == "admin" %}
+                            <div class="col-7">
+                                <a href="{% url 'deleteJobByAdmin' job_details.id %}"
+                                   class="btn btn-block btn-danger btn-md">Delete Job</a>
+                            </div>
                         {% else %}
                             <div class="col-7">
                                 <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">
@@ -214,6 +232,11 @@
                                        class="btn btn-block btn-danger btn-md">Delete</a>
                                 </div>
                             {% endif %}
+                        {% elif user.role == "admin" %}
+                            <div class="col-6">
+                                <a href="{% url 'sendWarningToRecruiter' job_details.id %}"
+                                   class="btn btn-block btn-warning btn-md">Send Warning To Recruiter </a>
+                            </div>
                         {% else %}
 
                             <div class="col-6">
@@ -264,6 +287,14 @@
                                     </a>
                                 </div>
                             {% endif %}
+                        {% elif user.role == "admin" %}
+                            <div class="col-6">
+                                <a href="{% url 'deleteJobByAdmin' job_details.id %}" style="text-decoration: none">
+                                    <button type="button" class="btn btn-block btn-danger btn-md">
+                                        Delete Job
+                                    </button>
+                                </a>
+                            </div>
                         {% else %}
                             <div class="col-6">
                                 <a href="{% url 'applyJob' job_details.id %}" style="text-decoration: none">

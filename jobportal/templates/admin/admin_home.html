@@ -7,7 +7,52 @@
 {% block body %}
 
     <section id="admin-panel">
-        <h1>Admin panel</h1>
+        <div class="container admin-panel">
+            <div class="text-center">
+                <h2>WELCOME TO ADMIN PANEL</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-10 col-xs-12 mt-4">
+                    <div class="card text-center">
+                        <div class="card-header font-weight-bold">
+                            Candidates Details
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-info font-weight-bold">Total Candidates</h5>
+                            <p class="card-text text-primary font-weight-bold">{{ total_candi }}</p>
+                            <a href="{% url 'viewAllCandidate' %}" class="btn btn-primary btn-block">View All Candidates</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-10 col-xs-12 mt-4">
+                    <div class="card text-center">
+                        <div class="card-header font-weight-bold">
+                            Recruiter Details
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-warning font-weight-bold">Total Recruiter</h5>
+                            <p class="card-text text-dark font-weight-bold">{{ total_recu }}</p>
+                            <a href="{% url 'viewAllRecruiter' %}" class="btn btn-danger btn-block">View All Recruiters</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-10 col-xs-12 mt-4">
+                    <div class="card text-center">
+                        <div class="card-header text-center font-weight-bold">
+                            Job Details
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-muted font-weight-bold">Total Posted Jobs</h5>
+                            <p class="card-text text-info font-weight-bold">{{ total_job }}</p>
+                            <a href="{% url 'listJobs' %}" class="btn btn-success btn-block">View All Jobs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
 {% endblock %}

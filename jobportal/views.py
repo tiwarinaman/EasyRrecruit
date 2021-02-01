@@ -19,6 +19,10 @@ User = get_user_model()
 
 # Create your views here.
 def home(request):
+    # Restricting To admin to see the users home page
+    if request.user.is_authenticated and request.user.role == "admin":
+        return redirect('adminPanel')
+
     # Fetching all jobs for candidate
     job_data = PostJob.objects.get_queryset().order_by('-timestamp')
 
@@ -31,8 +35,6 @@ def home(request):
     total_candidate = Candidate.objects.count()
     total_recruiter = Recruiter.objects.count()
     total_job_posted = PostJob.objects.count()
-
-    print(total_candidate, total_recruiter, total_job_posted)
 
     paginator = Paginator(job_data, 3)
 
@@ -290,7 +292,17 @@ def adminLogin(request):
 @login_required(login_url='/admin-login')
 @user_is_admin
 def admin_home(request):
-    return render(request, 'admin/admin_home.html')
+    total_candi = Candidate.objects.count()
+    total_recu = Recruiter.objects.count()
+    total_job = PostJob.objects.count()
+
+    context = {
+        'total_candi': total_candi,
+        'total_recu': total_recu,
+        'total_job': total_job,
+    }
+
+    return render(request, 'admin/admin_home.html', context)
 
 
 # Changing The Password
@@ -673,6 +685,16 @@ def deleteJob(request, id):
     return redirect('mypostedJobs')
 
 
+@login_required(login_url='/recu-login')
+@user_is_recruiter
+def resubmitProfileForReview(request):
+    recu_detail = Recruiter.objects.get(uname=request.user)
+    recu_detail.status = "pending"
+    recu_detail.save()
+
+    return redirect('postJob')
+
+
 @login_required(login_url='/candi-login')
 @user_is_candidate
 def bookmarkJob(request, id):
@@ -833,11 +855,40 @@ def temporaryDisableAccount(request, id):
     return render(request, 'admin/temporary_disable_account.html', context)
 
 
-@login_required(login_url='/recu-login')
-@user_is_recruiter
-def resubmitProfileForReview(request):
-    recu_detail = Recruiter.objects.get(uname=request.user)
-    recu_detail.status = "pending"
-    recu_detail.save()
+@login_required(login_url='/admin-login')
+@user_is_admin
+def sendWarningToRecruiter(request, id):
+    job = PostJob.objects.get(id=id)
 
-    return redirect('postJob')
+    subject = f'Warning Form Admin'
+    msg = f'Hello <strong>{job.recruiter.uname.first_name}</strong>, ' \
+          f'We have noticed that update is required for the below job details <br>' \
+          f'<strong>Job Id : </strong> {id} <br>' \
+          f'<strong>Job Title : </strong> {job.job_title} <br>' \
+          f'<strong>Please Update above job else will be deleted by admin.</strong>'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [job.recruiter.uname.email, ]
+    send_mail(subject, msg, email_from, recipient_list, html_message=msg, fail_silently=True)
+
+    messages.success(request, "Warning email has been send to " + job.recruiter.uname.first_name + " !!!")
+    return redirect('listJobs')
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def deleteJobByAdmin(request, id):
+    job = PostJob.objects.get(id=id)
+    job.delete()
+
+    subject = f'Job Deleted By Admin'
+    msg = f'Hello <strong>{job.recruiter.uname.first_name}</strong>, ' \
+          f'Sorry to inform you that we have deleted the below job <br>' \
+          f'<strong>Job Id : </strong> { id } <br>' \
+          f'<strong>Job Title : </strong> { job.job_title } <br>'
+
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [job.recruiter.uname.email, ]
+    send_mail(subject, msg, email_from, recipient_list, html_message=msg, fail_silently=True)
+
+    messages.success(request, "Job successfully deleted")
+    return redirect('listJobs')

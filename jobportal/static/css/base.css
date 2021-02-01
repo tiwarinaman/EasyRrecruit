@@ -336,6 +336,33 @@ ul li.active-nav a {
     padding-top: 70px;
 }
 
+.admin-panel {
+    padding: 25px;
+}
+
+.admin-panel h2 {
+    font-weight: bold;
+    letter-spacing: 3px;
+    background-image: linear-gradient(to right, #6db9ef, #7ce08a);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+.admin-panel .card-body {
+    background: #f8f8fa;
+}
+
+.admin-panel .card-body a {
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.admin-panel .card-body a:hover {
+    background: #000;
+}
+
 
 /*------------------- Reset Password ------------------------*/
 

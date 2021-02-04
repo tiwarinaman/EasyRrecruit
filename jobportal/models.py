@@ -34,7 +34,7 @@ class Recruiter(models.Model):
 
 # Post Job Model
 
-class PostJob(models.Model):
+class Job(models.Model):
     recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE, null=True)
     job_title = models.CharField(max_length=100, null=True)
     job_location = models.CharField(max_length=100, null=True)
@@ -55,7 +55,7 @@ class PostJob(models.Model):
 
 
 class ApplyJob(models.Model):
-    job_applied = models.ForeignKey(PostJob, on_delete=models.CASCADE, null=True)
+    job_applied = models.ForeignKey(Job, on_delete=models.CASCADE, null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True)
     resume = models.FileField(upload_to='candidate_resume/', null=True)
 
@@ -65,7 +65,7 @@ class ApplyJob(models.Model):
 
 class BookmarkJob(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    job = models.ForeignKey(PostJob, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):

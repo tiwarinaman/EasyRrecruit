@@ -17,6 +17,7 @@ urlpatterns = [
                   path('admin-login', views.adminLogin, name='adminLogin'),
                   path('admin-panel', views.admin_home, name='adminPanel'),
                   path('logout', views.logout, name="logout"),
+                  path('search-result', views.search, name="search"),
                   path('change-password', views.change_password, name="changePassword"),
                   path('edit-candidate-profile', views.edit_candidate_profile, name="editCandidateProfile"),
                   path('edit-recruiter-profile', views.edit_recruiter_profile, name="editRecruiterProfile"),

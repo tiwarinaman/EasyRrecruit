@@ -14,14 +14,18 @@
 
 
     <div class="search-job text-center">
-        <input type="text" class="form-control form-control-lg" placeholder="Job Title, Company...">
-        <input type="text" class="form-control form-control-lg" placeholder="Location">
-        <select class="form-control form-control-lg">
-            <option>Full Time</option>
-            <option>Part Time</option>
-            <option>Internship</option>
-        </select>
-        <button class="btn btn-primary btn-lg"><i class="fas fa-search"></i> Search Job</button>
+        <form method="get" action="{% url 'search' %}">
+
+            <input type="text" name="job_title_or_company_name" class="form-control form-control-lg"
+                   placeholder="Job Title, Company...">
+            <input type="text" name="location" class="form-control form-control-lg" placeholder="Location">
+            <select name="job_type" class="form-control form-control-lg">
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Internship">Internship</option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-search"></i> Search Job</button>
+        </form>
     </div>
 
 
@@ -57,7 +61,7 @@
             </div>
             <div class="row">
                 {% for job in job_data %}
-                    <div class="col-9 col-md-6 col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <a href="{% url 'jobDetails' job.id %}" style="text-decoration: none">
                             <div class="card recent-job" style="width: 20rem; height: 25rem;">
                                 <img class="card-img-top mx-auto" src="{{ job.company_logo_image.url }}"

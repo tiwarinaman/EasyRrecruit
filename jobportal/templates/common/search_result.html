@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+    Search Result
+{% endblock %}
+
+{% block body %}
+    <section id="section-start">
+        <div class="container bg-light border border-success rounded p-4 mt-3">
+            <div class="text-center">
+                <h2 class="text-info font-weight-bold">Search Results</h2>
+            </div>
+            <hr>
+            <div class="row">
+                {% if no_job %}
+                    <div class="col-9 col-lg-12 text-center">
+                        <h4 class="text-danger font-weight-bold">No search result found...</h4>
+                    </div>
+                {% else %}
+                    {% for job in job_list %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a href="#" style="text-decoration: none">
+                                <div class="card recent-job" style="width: 20rem; height: 25rem;">
+                                    <img class="card-img-top mx-auto" src="{{ job.company_logo_image.url }}"
+                                         alt="Company Logo">
+
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-success font-weight-bold">{{ job.job_title }} </h5>
+                                        {% if job.job_type == "Full Time" %}
+                                            <span class="badge badge-primary">Full Time</span>
+                                        {% elif job.job_type == "Part Time" %}
+                                            <span class="badge badge-danger">Part Time</span>
+                                        {% else %}
+                                            <span class="badge badge-info">Internship</span>
+                                        {% endif %}
+                                        <span class="badge badge-secondary">{{ job.job_location }}</span>
+                                        <p class="card-text text-dark mt-3">{{ job.description | safe | truncatechars:90 }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

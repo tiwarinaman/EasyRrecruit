@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 
 from jobportal.permission import *
 # Importing models class
-from .models import Candidate, Recruiter, PostJob, ApplyJob, BookmarkJob
+from .models import Candidate, Recruiter, Job, ApplyJob, BookmarkJob
 
 User = get_user_model()
 
@@ -24,17 +24,17 @@ def home(request):
         return redirect('adminPanel')
 
     # Fetching all jobs for candidate
-    job_data = PostJob.objects.get_queryset().order_by('-timestamp')
+    job_data = Job.objects.get_queryset().order_by('-timestamp')
 
     # Fetching jobs posted by recruiter
     if request.user.is_authenticated and request.user.role == "recruiter":
         recu = Recruiter.objects.get(uname=request.user)
-        job_data = PostJob.objects.filter(recruiter=recu).order_by('-timestamp')
+        job_data = Job.objects.filter(recruiter=recu).order_by('-timestamp')
 
     # Fetching details for site stats
     total_candidate = Candidate.objects.count()
     total_recruiter = Recruiter.objects.count()
-    total_job_posted = PostJob.objects.count()
+    total_job_posted = Job.objects.count()
 
     paginator = Paginator(job_data, 3)
 
@@ -288,13 +288,52 @@ def adminLogin(request):
     return render(request, 'admin/admin_login.html')
 
 
+# This view handle the search feature
+def search(request):
+    job_list = Job.objects.order_by('-timestamp')
+
+    # search by keywords
+    if 'job_title_or_company_name' in request.GET:
+        job_title_or_company_name = request.GET['job_title_or_company_name']
+
+        if job_title_or_company_name:
+            job_list = job_list.filter(job_title__icontains=job_title_or_company_name) \
+                       | job_list.filter(recruiter__company_name__icontains=job_title_or_company_name)
+
+    # search by location
+    if 'location' in request.GET:
+        location = request.GET['location']
+
+        if location:
+            job_list = job_list.filter(job_location__icontains=location)
+
+    # filter by job type
+    if 'job_type' in request.GET:
+        job_type = request.GET['job_type']
+
+        if job_type:
+            job_list = job_list.filter(job_type__iexact=job_type)
+
+    if not job_list:
+        no_job = True
+    else:
+        no_job = False
+
+    context = {
+        'job_list': job_list,
+        'no_job': no_job
+    }
+
+    return render(request, 'common/search_result.html', context)
+
+
 # Admin Home page render
 @login_required(login_url='/admin-login')
 @user_is_admin
 def admin_home(request):
     total_candi = Candidate.objects.count()
     total_recu = Recruiter.objects.count()
-    total_job = PostJob.objects.count()
+    total_job = Job.objects.count()
 
     context = {
         'total_candi': total_candi,
@@ -482,12 +521,12 @@ def post_job(request):
             else:
                 try:
                     recu = Recruiter.objects.get(uname=request.user)
-                    post = PostJob.objects.create(recruiter=recu, job_title=jobTitle, job_location=jobLocation,
-                                                  job_type=jobType,
-                                                  category=cate, salary=sal, experience=exp, start_date=startDate,
-                                                  last_date=lastDate,
-                                                  skills=requiredSkill, website_link=web, description=des,
-                                                  company_logo_image=companyLogo)
+                    post = Job.objects.create(recruiter=recu, job_title=jobTitle, job_location=jobLocation,
+                                              job_type=jobType,
+                                              category=cate, salary=sal, experience=exp, start_date=startDate,
+                                              last_date=lastDate,
+                                              skills=requiredSkill, website_link=web, description=des,
+                                              company_logo_image=companyLogo)
 
                     post.save()
                     messages.success(request, "Job Successfully posted !!!")
@@ -505,7 +544,7 @@ def post_job(request):
 @user_is_recruiter
 def editJob(request, id):
     try:
-        edit_job = PostJob.objects.get(recruiter__uname=request.user, id=id)
+        edit_job = Job.objects.get(recruiter__uname=request.user, id=id)
     except:
         messages.error(request, "Something went wrong !!!")
         return redirect('postJob')
@@ -559,7 +598,7 @@ def editJob(request, id):
 
 def jobDetails(request, id):
     try:
-        job_details = PostJob.objects.get(pk=id)
+        job_details = Job.objects.get(pk=id)
     except:
         messages.error(request, "This job might be deleted by recruiter !!!")
         return redirect('listJobs')
@@ -572,7 +611,7 @@ def jobDetails(request, id):
 
 
 def listJobs(request):
-    all_jobs = PostJob.objects.all().order_by('-timestamp')
+    all_jobs = Job.objects.all().order_by('-timestamp')
 
     paginator = Paginator(all_jobs, 5)
 
@@ -598,7 +637,7 @@ def listJobs(request):
 def applyJob(request, id):
     user = User.objects.get(id=request.user.id)
     candi = Candidate.objects.get(uname=user)
-    job = PostJob.objects.get(id=id)
+    job = Job.objects.get(id=id)
     last_date = job.last_date
 
     if request.method == 'POST':
@@ -668,7 +707,7 @@ def candidateApplied(request):
 @login_required(login_url='/recu-login')
 @user_is_recruiter
 def mypostedJobs(request):
-    my_jobs = PostJob.objects.filter(recruiter__uname=request.user).order_by('-timestamp')
+    my_jobs = Job.objects.filter(recruiter__uname=request.user).order_by('-timestamp')
 
     context = {
         'myjobs': my_jobs,
@@ -680,7 +719,7 @@ def mypostedJobs(request):
 @login_required(login_url='/recu-login')
 @user_is_recruiter
 def deleteJob(request, id):
-    del_job = PostJob.objects.filter(id=id, recruiter__uname=request.user)
+    del_job = Job.objects.filter(id=id, recruiter__uname=request.user)
     del_job.delete()
     return redirect('mypostedJobs')
 
@@ -858,7 +897,7 @@ def temporaryDisableAccount(request, id):
 @login_required(login_url='/admin-login')
 @user_is_admin
 def sendWarningToRecruiter(request, id):
-    job = PostJob.objects.get(id=id)
+    job = Job.objects.get(id=id)
 
     subject = f'Warning Form Admin'
     msg = f'Hello <strong>{job.recruiter.uname.first_name}</strong>, ' \
@@ -877,14 +916,14 @@ def sendWarningToRecruiter(request, id):
 @login_required(login_url='/admin-login')
 @user_is_admin
 def deleteJobByAdmin(request, id):
-    job = PostJob.objects.get(id=id)
+    job = Job.objects.get(id=id)
     job.delete()
 
     subject = f'Job Deleted By Admin'
     msg = f'Hello <strong>{job.recruiter.uname.first_name}</strong>, ' \
           f'Sorry to inform you that we have deleted the below job <br>' \
-          f'<strong>Job Id : </strong> { id } <br>' \
-          f'<strong>Job Title : </strong> { job.job_title } <br>'
+          f'<strong>Job Id : </strong> {id} <br>' \
+          f'<strong>Job Title : </strong> {job.job_title} <br>'
 
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [job.recruiter.uname.email, ]

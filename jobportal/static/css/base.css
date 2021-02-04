@@ -121,7 +121,7 @@ ul li.active-nav a {
 
 .recent-job {
     text-decoration: none !important;
-    padding: 30px;
+    padding: 25px;
     box-shadow: 2px 2px 10px lightslategrey;
     border-radius: 20px;
     margin: 30px auto;
@@ -140,6 +140,7 @@ ul li.active-nav a {
 .recent-job:hover {
     box-shadow: 2px 2px 10px blue;
 }
+
 
 /*-------------------site stats-------------------------*/
 

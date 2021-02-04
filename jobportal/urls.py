@@ -45,6 +45,9 @@ urlpatterns = [
                   path('delete-job-by-admin/<int:id>', views.deleteJobByAdmin, name="deleteJobByAdmin"),
                   path('resubmit-profile', views.resubmitProfileForReview, name="resubmitProfile"),
 
+                  # URL is to update the code on deployment server
+                  path("update_server/", views.update, name="update"),
+
                   # This Urls is for resetting the password (By Using Django Default Views)
                   path('reset_password',
                        auth_view.PasswordResetView.as_view(template_name="common/password_reset.html"),

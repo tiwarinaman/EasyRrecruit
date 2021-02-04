@@ -1,6 +1,8 @@
 import datetime
 from datetime import date
 
+# This import is for updating the code base on deployment server
+import git
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -8,7 +10,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from jobportal.permission import *
 # Importing models class
@@ -931,3 +935,28 @@ def deleteJobByAdmin(request, id):
 
     messages.success(request, "Job successfully deleted")
     return redirect('listJobs')
+
+
+"""
+
+Update the changes on deployment serer
+
+"""
+
+
+@csrf_exempt
+def update(request):
+    if request.method == "POST":
+        '''
+        pass the path of the diectory where your project will be 
+        stored on PythonAnywhere in the git.Repo() as parameter.
+        Here the name of my directory is "test.pythonanywhere.com"
+        '''
+        repo = git.Repo("easyrecruit.pythonanywhere.com/")
+        origin = repo.remotes.origin
+
+        origin.pull()
+
+        return HttpResponse("Updated code on PythonAnywhere")
+    else:
+        return HttpResponse("Couldn't update the code on PythonAnywhere")

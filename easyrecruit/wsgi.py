@@ -1,5 +1,5 @@
 """
-WSGI config for EasyRecruit project.
+WSGI config for easyrecruit project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'EasyRecruit.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'easyrecruit.settings')
 
 application = get_wsgi_application()

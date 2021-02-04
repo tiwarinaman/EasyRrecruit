@@ -46,7 +46,7 @@ urlpatterns = [
                   path('resubmit-profile', views.resubmitProfileForReview, name="resubmitProfile"),
 
                   # URL is to update the code on deployment server
-                  path("update_server/", views.update, name="update"),
+                  path("update_server", views.update, name="update"),
 
                   # This Urls is for resetting the password (By Using Django Default Views)
                   path('reset_password',

@@ -18,7 +18,7 @@
                 {% else %}
                     {% for job in job_list %}
                         <div class="col-12 col-md-6 col-lg-4">
-                            <a href="#" style="text-decoration: none">
+                            <a href="{% url 'jobDetails' job.id %}" style="text-decoration: none">
                                 <div class="card recent-job" style="width: 20rem; height: 25rem;">
                                     <img class="card-img-top mx-auto" src="{{ job.company_logo_image.url }}"
                                          alt="Company Logo">

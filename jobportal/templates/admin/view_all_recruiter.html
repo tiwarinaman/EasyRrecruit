@@ -7,14 +7,7 @@
 {% block body %}
     <section id="section-start">
 
-        {% for message in messages %}
-            <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-        {% endfor %}
+        {% include 'common/message.html' %}
 
         <div class="container-fluid" style="margin-bottom: 200px">
             <div class="row mt-5">

@@ -43,6 +43,7 @@ urlpatterns = [
                   path('temporary-disable/<int:id>', views.temporaryDisableAccount, name="temporaryDisable"),
                   path('send-warning/<int:id>', views.sendWarningToRecruiter, name="sendWarningToRecruiter"),
                   path('delete-job-by-admin/<int:id>', views.deleteJobByAdmin, name="deleteJobByAdmin"),
+                  path('add-recruiter', views.addNewRecruiter, name="addNewRecruiter"),
                   path('resubmit-profile', views.resubmitProfileForReview, name="resubmitProfile"),
 
                   # URL is to update the code on deployment server

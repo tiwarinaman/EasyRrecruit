@@ -642,7 +642,6 @@ def applyJob(request, id):
     user = User.objects.get(id=request.user.id)
     candi = Candidate.objects.get(uname=user)
     job = Job.objects.get(id=id)
-    last_date = job.last_date
 
     if request.method == 'POST':
         candi_resume = request.FILES.get('resume', False)
@@ -935,6 +934,53 @@ def deleteJobByAdmin(request, id):
 
     messages.success(request, "Job successfully deleted")
     return redirect('listJobs')
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def addNewRecruiter(request):
+    if request.method == 'POST':
+        fname = request.POST.get('fname', False)
+        lname = request.POST.get('lname', False)
+        comName = request.POST.get('comName', False)
+        em = request.POST.get('email', False)
+        uname = request.POST.get('uname', False)
+        conNumber = request.POST.get('contactNumber', False)
+        passwd = request.POST.get('pass', False)
+        cPasswd = request.POST.get('confirmPass', False)
+        gen = request.POST.get('gender', False)
+        dob = request.POST.get('dob', False)
+        imgFile = request.FILES.get('imageFile', False)
+
+        if fname == '' or lname == '' or comName == '' or em == '' or uname == '' or conNumber == '' or passwd == '' or cPasswd == '' or gen == '' or imgFile == '' or dob == '':
+            messages.info(request, "All fields are required, please try again !!!")
+            return redirect('addNewRecruiter')
+        else:
+            if passwd != cPasswd:
+                messages.warning(request, "Password must be same !!!")
+                return redirect('addNewRecruiter')
+            elif User.objects.filter(email=em).exists():
+                messages.warning(request, "Email Already In Use !!!")
+                return redirect('addNewRecruiter')
+            elif User.objects.filter(username=uname).exists():
+                messages.warning(request, "Username Already In Use !!!")
+                return redirect('addNewRecruiter')
+            elif isValidDob(dob):
+                messages.warning(request, "You are under age !!!")
+                return redirect('addNewRecruiter')
+            else:
+                user = User.objects.create(first_name=fname, last_name=lname, email=em, username=uname,
+                                           role="recruiter")
+                # Saving Password in the encrypted format
+                user.set_password(passwd)
+                recu = Recruiter.objects.create(uname=user, company_name=comName, recruiter_number=conNumber,
+                                                gender=gen, dob=dob, recruiter_image=imgFile, status="accepted")
+                user.save()
+                recu.save()
+                messages.success(request, "Registration Successfully Done !!!")
+                return redirect('viewAllRecruiter')
+
+    return render(request, 'admin/add_recruiter.html')
 
 
 """

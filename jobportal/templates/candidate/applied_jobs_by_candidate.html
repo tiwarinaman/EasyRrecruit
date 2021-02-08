@@ -6,7 +6,7 @@
 
 {% block body %}
 
-     <section id="section-start">
+    <section id="section-start">
 
         {% for message in messages %}
             <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
@@ -31,18 +31,30 @@
                                 <th scope="col">Job Title</th>
                                 <th scope="col">Posted Date</th>
                                 <th scope="col">Date expiring</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                             {% for j in applied %}
+                            {% for j in applied %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a href="{% url 'jobDetails' j.job_applied.id %}" style="text-decoration: none;">{{ j.job_applied.job_title }}</a></td>
+                                    <td><a href="{% url 'jobDetails' j.job_applied.id %}"
+                                           style="text-decoration: none;">{{ j.job_applied.job_title }}</a></td>
                                     <td>{{ j.job_applied.start_date }}</td>
                                     <td>{{ j.job_applied.last_date }}</td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'withdrawJob' j.job_applied.id %}" role="button">Withdraw</a>
+                                        {% if j.status == "hire" %}
+                                            <span class="badge badge-success">Shortlisted</span>
+                                        {% elif j.status == "fire" %}
+                                            <span class="badge badge-danger">Not Shortlisted</span>
+                                        {% else %}
+                                            <span class="badge badge-secondary">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'withdrawJob' j.job_applied.id %}"
+                                           role="button">Withdraw</a>
                                     </td>
                                 </tr>
                             {% endfor %}

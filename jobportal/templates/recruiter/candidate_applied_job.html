@@ -7,7 +7,10 @@
 {% block body %}
 
     <section id="section-start">
-        <div class="container" style="margin-bottom: 200px">
+
+        {% include 'common/message.html' %}
+
+        <div class="container-fluid" style="margin-bottom: 200px">
             <div class="row mt-5">
                 <div class="col-lg-12 mb-5">
                     <div class="card table-responsive-sm">
@@ -18,32 +21,56 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Sr. No</th>
+                                <th scope="col">Job ID</th>
                                 <th scope="col">Job Title</th>
                                 <th scope="col">Fullname</th>
                                 <th scope="col">Email Id</th>
                                 <th scope="col">Contact</th>
-                                <th scope="col">Company Name</th>
-                                <th scope="col">Resume</th>
+                                <th scope="col">Candidate Image</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Change Status</th>
+                                <th scope="col">Download Resume</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for c in candi_applied %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a href="{% url 'jobDetails' c.job_applied_id %}" style="text-decoration: none">{{ c.job_applied.job_title }}</a></td>
+                                    <td>{{ c.job_applied.id }}</td>
+                                    <td><a href="{% url 'jobDetails' c.job_applied_id %}"
+                                           style="text-decoration: none">{{ c.job_applied.job_title }}</a></td>
                                     <td>{{ c.candidate.uname.first_name }} {{ c.candidate.uname.last_name }}</td>
                                     <td>{{ c.candidate.uname.email }}</td>
                                     <td>{{ c.candidate.candidate_number }}</td>
-                                    <td>{{ c.job_applied.recruiter.company_name }}</td>
-                                    <td><a href="{{ c.resume.url }}" style="text-decoration: none" target="_blank" class="btn btn-outline-primary btn-sm">
-                                        Download Resume</a>
+                                    <td>
+                                        <img src="{{ c.candidate.candidate_image.url }}" alt=""
+                                             style="max-height: 120px; max-width: 120px; border-radius: 20px">
+                                    </td>
+                                    <td>
+                                        {% if c.status == "hire" %}
+                                            <span class="badge badge-success">Shortlisted</span>
+                                        {% elif c.status == "fire" %}
+                                            <span class="badge badge-danger">Not Shortlisted</span>
+                                        {% else %}
+                                            <span class="badge badge-warning">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'changeCandidateJobStatus' c.id %}" role="button"
+                                           class="btn btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ c.resume.url }}" style="text-decoration: none" target="_blank"
+                                           class="btn btn-outline-success btn-sm">
+                                            <i class="fas fa-download"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
             </div>

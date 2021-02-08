@@ -57,6 +57,7 @@ class Job(models.Model):
 class ApplyJob(models.Model):
     job_applied = models.ForeignKey(Job, on_delete=models.CASCADE, null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=100, null=True)
     resume = models.FileField(upload_to='candidate_resume/', null=True)
 
     def __str__(self):

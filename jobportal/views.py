@@ -315,7 +315,9 @@ def search(request):
     if 'job_type' in request.GET:
         job_type = request.GET['job_type']
 
-        if job_type:
+        if job_type == 'job type':
+            pass
+        else:
             job_list = job_list.filter(job_type__iexact=job_type)
 
     if not job_list:

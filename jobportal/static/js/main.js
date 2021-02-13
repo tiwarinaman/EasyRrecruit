@@ -1,3 +1,9 @@
+
+function load() {
+    document.getElementById("overlayer").style.display = 'none';
+}
+
+
 // To make Active Navbar Code
 
 $(document).ready(function () {

@@ -9,14 +9,7 @@
 
         <div class="container">
 
-            {% for message in messages %}
-                <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                </div>
-            {% endfor %}
+            {% include 'common/message.html' %}
 
             {% if recu.status == "pending" %}
 
@@ -138,7 +131,12 @@
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <button type="text" class="btn btn-primary btn-lg">Submit</button>
+                            <button id="submit" type="text" class="btn btn-primary btn-lg">Submit</button>
+                            <button id="btn-loader" class="btn btn-primary"
+                                type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
+                                                             aria-hidden="true"></span>
+                            Please Wait...
+                        </button>
                         </div>
                     </form>
                 </div>

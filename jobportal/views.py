@@ -644,28 +644,35 @@ def applyJob(request, job_id):
     job = Job.objects.get(id=job_id)
 
     if request.method == 'POST':
-        candi_resume = request.FILES.get('resume', False)
-        if not candi_resume:
-            messages.error(request, "Please upload your resume !!!")
+
+        is_applied = ApplyJob.objects.filter(job_applied__id=job_id, candidate__uname=request.user)
+
+        if is_applied:
+            messages.error(request, "You have already applied for this job.")
             return redirect('applyJob', job_id)
         else:
-            apply = ApplyJob.objects.create(job_applied=job, candidate=candi, status="pending", resume=candi_resume)
-            apply.save()
+            candi_resume = request.FILES.get('resume', False)
+            if not candi_resume:
+                messages.error(request, "Please upload your resume !!!")
+                return redirect('applyJob', job_id)
+            else:
+                apply = ApplyJob.objects.create(job_applied=job, candidate=candi, status="pending", resume=candi_resume)
+                apply.save()
 
-            subject = 'Easy Recruit Team'
-            message = f'<h3>Hi {candi.uname.first_name}, your application has been submitted. <br></h3>' \
-                      f'<strong>Company Name : </strong>{job.recruiter.company_name} <br>' \
-                      f'<strong>Job ID : </strong>{job.id} <br>' \
-                      f'<strong>Job Title : </strong>{job.job_title} <br>' \
-                      f'<strong>Job Location : </strong>{job.job_location} <br><br>' \
-                      f'You will be communicated by recruiter, if your resume will be shortlisted.'
+                subject = 'Easy Recruit Team'
+                message = f'<h3>Hi {candi.uname.first_name}, your application has been submitted. <br></h3>' \
+                          f'<strong>Company Name : </strong>{job.recruiter.company_name} <br>' \
+                          f'<strong>Job ID : </strong>{job.id} <br>' \
+                          f'<strong>Job Title : </strong>{job.job_title} <br>' \
+                          f'<strong>Job Location : </strong>{job.job_location} <br><br>' \
+                          f'You will be communicated by recruiter, if your resume will be shortlisted.'
 
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [candi.uname.email, ]
-            send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [candi.uname.email, ]
+                send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
 
-            messages.success(request, "Successfully applied !!!")
-            return redirect('jobDetails', job_id)
+                messages.success(request, "Successfully applied !!!")
+                return redirect('jobDetails', job_id)
 
     context = {
         'candi': candi,
@@ -797,10 +804,10 @@ def bookmarkJob(request, bookmark_job_id):
         bookmark_job = BookmarkJob(user=request.user, job_id=bookmark_job_id)
         bookmark_job.save()
         messages.success(request, "Job successfully saved !!!")
-        return redirect('bookmarkJob', bookmark_job_id)
+        return redirect('jobDetails', bookmark_job_id)
     except:
         messages.error(request, "Something went wrong !!!")
-        return redirect('bookmarkJob', bookmark_job_id)
+        return redirect('jobDetails', bookmark_job_id)
 
 
 @login_required(login_url='/candi-login')

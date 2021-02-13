@@ -12,7 +12,8 @@
         <div class="container myClass">
             <div class="title text-center" id="recu-title">
                 <h3 class="font-weight-bold">Recruiter Sign-In</h3>
-            </div><hr>
+            </div>
+            <hr>
             <form action="{% url 'recruiterLogin' %}" method="post">
                 {% csrf_token %}
                 <!-- Username input -->
@@ -55,7 +56,14 @@
                 </div>
 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                <div class="text-center">
+                    <button id="submit" type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                    <button id="btn-loader" class="btn btn-primary btn-block"
+                            type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
+                                                         aria-hidden="true"></span>
+                        Please Wait...
+                    </button>
+                </div>
 
                 <!-- Register buttons -->
                 <div class="text-center">

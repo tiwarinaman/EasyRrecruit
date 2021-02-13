@@ -8,14 +8,7 @@
     <section id="candidate-register">
 
 
-        {% for msg in messages %}
-            <div class="alert alert-danger alert-dismissible fade show col-md-4" role="alert">
-                <span>{{ msg }}</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
+        {% include 'common/message.html' %}
 
         <div class="container registerForm">
             <div class="title text-center" id="candiSignUP-title">
@@ -47,7 +40,8 @@
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="eg: naman@gmail.com" required>
+                        <input type="email" name="email" class="form-control" placeholder="eg: naman@gmail.com"
+                               required>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -89,7 +83,12 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Sign-Up</button>
+                    <button id="submit" type="submit" class="btn btn-primary">Sign-Up</button>
+                    <button id="btn-loader" class="btn btn-primary font-weight-bold"
+                            type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
+                                              aria-hidden="true"></span>
+                        Please Wait...
+                    </button>
                 </div>
             </form>
         </div>

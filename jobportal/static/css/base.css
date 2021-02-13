@@ -275,8 +275,7 @@ ul li.active-nav a {
 
 .myClass button:hover,
 .myClass button:active {
-    background: transparent;
-    color: black;
+    background: black;
 }
 
 /*-----------Candidate Login Extra CSS-----------------*/
@@ -414,15 +413,12 @@ ul li.active-nav a {
 /*---------------- Edit Profile CSS -----------------------*/
 
 .edit-profile {
-    max-width: 90%;
-    margin: auto;
     padding: 20px 0;
 }
 
 .edit-profile img {
     max-width: 250px;
     max-height: 250px;
-    margin: auto 100px;
     border-radius: 30%;
 }
 

@@ -14,15 +14,14 @@
         <!-----------------  If user role is candidate then render this part of code      ------------>
 
         {% if user.role == "candidate" %}
-            <div class="container edit-profile">
-                <h2 class="text-center font-weight-bold title">Edit Profile</h2>
-                <hr>
-                <div class="container-fluid">
+            <div class="container">
+                <div class="edit-profile">
+                    <h2 class="text-center font-weight-bold title">Edit Profile</h2>
+                    <hr>
+
                     <div class="row mr-auto">
-                        <div class="col-md-4 text-right">
+                        <div class="col-md-4 text-center">
                             <img src="{{ candi.candidate_image.url }}" alt="{{ user.first_name }}">
-                            <strong>Last Login :</strong><span> {{ user.last_login }}</span><br>
-                            <strong>Date of Joining :</strong><span> {{ user.date_joined }}</span>
                         </div>
                         <div class="col-md-8">
                             <form method="post" action="{% url 'editCandidateProfile' %}" enctype="multipart/form-data">
@@ -57,7 +56,8 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="exampleInputPassword1" class="font-weight-bold">Date Of Birth</label>
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Date Of
+                                            Birth</label>
                                         <input type="text" class="form-control" id="exampleInputPassword1"
                                                value="{{ candi.dob }}" name="dob" readonly>
                                     </div>
@@ -90,13 +90,19 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    <button id="submit" type="text" class="btn btn-primary btn-lg">
+                                        Update Profile
+                                    </button>
+                                    <button id="btn-loader" class="btn btn-primary"
+                                            type="button" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                              aria-hidden="true"></span>
+                                        Please Wait...
+                                    </button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         {% endif %}
@@ -109,7 +115,7 @@
                 <hr>
                 <div class="container-fluid">
                     <div class="row mr-auto">
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-center">
                             <img src="{{ recu.recruiter_image.url }}" alt="{{ user.first_name }}">
                         </div>
                         <div class="col-md-8">
@@ -148,7 +154,8 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="exampleInputPassword1" class="font-weight-bold">Contact Number</label>
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Contact
+                                            Number</label>
                                         <input type="text" class="form-control" id="exampleInputPassword1"
                                                value="{{ recu.recruiter_number }}" name="mobile">
                                     </div>
@@ -173,7 +180,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="exampleInputPassword1" class="font-weight-bold">Date Of Birth</label>
+                                        <label for="exampleInputPassword1" class="font-weight-bold">Date Of
+                                            Birth</label>
                                         <input type="text" class="form-control" id="exampleInputPassword1"
                                                value="{{ recu.dob }}" name="dob" readonly>
                                     </div>
@@ -183,7 +191,15 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    <button id="submit" type="text" class="btn btn-primary btn-lg">
+                                        Update Profile
+                                    </button>
+                                    <button id="btn-loader" class="btn btn-primary"
+                                            type="button" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                              aria-hidden="true"></span>
+                                        Please Wait...
+                                    </button>
                                 </div>
                             </form>
                         </div>

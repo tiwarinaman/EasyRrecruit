@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
     Candidate Sign-Up
 {% endblock %}
@@ -16,49 +16,52 @@
             </div>
             <hr>
             <form action="{% url 'candidateRegister' %}" method="post" enctype="multipart/form-data">
+
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4" class="font-weight-bold">Firstname</label>
-                        <input type="text" name="fname" class="form-control" placeholder="eg: naman" required>
+                        <input id="fname" type="text" name="fname" class="form-control" placeholder="eg: naman">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="inputEmail4" class="font-weight-bold">Lastname</label>
-                        <input type="text" name="lname" class="form-control" placeholder="eg: kumar" required>
+                        <input id="lname" type="text" name="lname" class="form-control" placeholder="eg: kumar">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Username</label>
-                        <input type="text" name="uname" class="form-control" placeholder="eg: naman123" required>
+                        <input id="uname" type="text" name="uname" class="form-control" placeholder="eg: naman123">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Date Of Birth</label>
-                        <input type="date" name="dob" class="form-control" placeholder="Date Of Birth" required>
+                        <input id="dob" type="date" name="dob" class="form-control" placeholder="Date Of Birth">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="eg: naman@gmail.com"
-                               required>
+                        <input id="email" type="email" name="email" class="form-control"
+                               placeholder="eg: naman@gmail.com"
+                        >
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Contact Number</label>
-                        <input type="text" name="contactNumber" class="form-control" placeholder="eg: 9898989898"
-                               required>
+                        <input id="contactNumber" type="text" name="contactNumber" class="form-control"
+                               placeholder="eg: 9898989898"
+                        >
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Password</label>
-                        <input type="password" name="pass" class="form-control" placeholder="password" required>
+                        <input id="pass" type="password" name="pass" class="form-control" placeholder="password">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputEmail4" class="font-weight-bold">Confirm Password</label>
-                        <input type="password" name="confirmPass" class="form-control"
-                               placeholder="confirm password" required>
+                        <input id="confirmPass" type="password" name="confirmPass" class="form-control"
+                               placeholder="confirm password">
                     </div>
 
 
@@ -78,15 +81,16 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlFile1" class="font-weight-bold">Upload Your Image</label>
-                        <input type="file" name="imageFile" class="form-control-file" id="exampleFormControlFile1"
-                               required>
+                        <input id="imageFile" type="file" name="imageFile" class="form-control-file"
+                               id="exampleFormControlFile1"
+                        >
                     </div>
                 </div>
                 <div class="text-center">
                     <button id="submit" type="submit" class="btn btn-primary">Sign-Up</button>
                     <button id="btn-loader" class="btn btn-primary font-weight-bold"
                             type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
-                                              aria-hidden="true"></span>
+                                                         aria-hidden="true"></span>
                         Please Wait...
                     </button>
                 </div>
@@ -94,4 +98,9 @@
         </div>
 
     </section>
+
+    {% block script %}
+        <script src="{% static 'js/candidate/candidate_register.js' %}"></script>
+    {% endblock %}
+
 {% endblock %}

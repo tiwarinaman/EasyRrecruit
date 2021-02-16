@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <title>{% block title %} {% endblock %}</title>
 </head>
-<body onload="load()">
+<body>
 
 <!----------- Preloader ---------->
 
@@ -57,6 +57,10 @@
 <!-- External JavaScript -->
 
 <script src="{% static 'js/main.js' %}"></script>
+
+{% block script %}
+
+{% endblock %}
 
 </body>
 </html>

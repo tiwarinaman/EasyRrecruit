@@ -1,0 +1,574 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#overlayer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 7100;
+    background: #fff;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.loader {
+    z-index: 7700;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.menu-bar {
+    /* background-image: linear-gradient(to right, #6db9ef, #7ce08a); */
+    background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+}
+
+.menu-bar .navbar-toggler {
+    padding-right: 0;
+    outline: none;
+    border: none;
+}
+
+.navbar-nav {
+    text-align: right;
+}
+
+.nav-link {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 2px;
+    color: white !important;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+ul li.active-nav a {
+    color: gray !important;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.banner {
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/banner-img.jpg");
+    background-size: cover;
+    /* background-position: center; */
+    color: white;
+    position: relative;
+    z-index: -10;
+}
+
+.banner h1 {
+    padding-top: 180px;
+    font-size: 50px;
+    letter-spacing: 6px;
+    font-weight: 600;
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+    text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.search-job {
+    padding: 30px;
+    margin: -280px 6% 50px;
+    /*background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
+    background: transparent;
+}
+
+.search-job .form-control {
+    max-width: 250px;
+    display: inline-flex;
+    margin: 10px 15px;
+    border-radius: 10px;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.search-job .btn-primary {
+    outline: none;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+
+/*---------------------Top Recruiters -------------*/
+#recruiters {
+    padding-top: 200px;
+    padding-bottom: 100px;
+}
+
+#recruiters h3 {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+#recruiters h3::before {
+    content: '';
+    background-image: linear-gradient(to right, #6db9ef, #7ce08a);
+    width: 50px;
+    height: 30px;
+    position: absolute;
+    z-index: -10;
+    margin-top: -15px;
+    border-top-left-radius: 70px;
+    border-bottom-right-radius: 90px;
+}
+
+#recruiters img {
+    max-width: 100px;
+    margin: 10px 20px;
+}
+
+/*--------------RECENT JOBS------------*/
+
+#jobs {
+    background: #f8f8fa;
+    padding: 50px 0;
+}
+
+.recent-job {
+    text-decoration: none !important;
+    padding: 25px;
+    box-shadow: 2px 2px 10px lightslategrey;
+    border-radius: 20px;
+    margin: 30px auto;
+}
+
+.recent-job__title h2 {
+    letter-spacing: 2px;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+.recent-job img {
+    max-width: 100px;
+    margin: 10px 20px;
+}
+
+.recent-job:hover {
+    box-shadow: 2px 2px 10px blue;
+}
+
+
+/*-------------------site stats-------------------------*/
+
+#site-stats {
+    padding: 100px 0;
+}
+
+#site-stats h3 {
+    margin-bottom: 30px;
+}
+
+.stats-box {
+    padding: 30px;
+    border-radius: 100px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px 0 rgba(110, 130, 208, .18);
+}
+
+.stats-box .fas {
+    font-size: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.stats-box .fab {
+    font-size: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/*-----------Section Starts Here------------*/
+#section-start {
+    padding-top: 70px;
+    line-height: 2.5rem;
+}
+
+/*-----------About Us Page Design ---------*/
+
+#about {
+    padding-top: 70px;
+}
+
+
+/*-----------Contact Us Page Design ---------*/
+
+#contact {
+    padding-top: 70px;
+}
+
+.contact-form {
+    max-width: 500px;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .18);
+}
+
+.contact-form p {
+    letter-spacing: 2px;
+}
+
+.contact-form .form-control {
+    border-radius: 10px;
+}
+
+.contact-form button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.contact-form button:hover {
+    background: #000;
+}
+
+
+/*----------- Candidate and Recruiter Login Page Design ---------*/
+
+#candidate-login {
+    padding-top: 80px;
+}
+
+.myClass {
+    max-width: 400px;
+    margin: 32px auto;
+    padding: 20px;
+    /*background: #f8f8fa;*/
+    box-shadow: 2px 2px 4px lightgray;
+    border-radius: 10px;
+    border: 2px solid lightgray;
+}
+
+.title {
+    letter-spacing: 3px;
+    border-radius: 20px;
+    margin: 10px auto;
+    max-width: 500px;
+    /*box-shadow: 2px 2px 10px black;*/
+}
+
+.myClass .form-control {
+    border-radius: 10px;
+}
+
+
+.myClass button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.myClass button:hover,
+.myClass button:active {
+    background: black;
+}
+
+/*-----------Candidate Login Extra CSS-----------------*/
+
+#candi-title {
+    color: #2f4f4f;
+    /*text-shadow: 4px 4px 10px black;*/
+    /*background: lightgray;*/
+}
+
+/*-----------Recruiter Login Extra CSS-----------------*/
+
+#recu-title {
+    color: black;
+    /*text-shadow: 4px 4px 10px black;*/
+    /*background: lightgray;*/
+}
+
+/*-----------Admin Login Extra CSS-----------------*/
+
+.admin-login-section {
+    padding: 40px;
+}
+
+#admin-title {
+    color: lightcoral;
+    /*text-shadow: 4px 4px 10px black;*/
+    /*background: lightgray;*/
+}
+
+/*-----------Candidate and Recruiters Registration Page Design ---------*/
+
+#candidate-register {
+    padding-top: 70px;
+}
+
+.registerForm {
+    padding: 20px;
+    box-shadow: 0 2px 8px 0 lightgray;
+    border-radius: 10px;
+}
+
+.registerForm .form-control {
+    border-radius: 20px;
+}
+
+.registerForm button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 20px auto;
+}
+
+.registerForm button:hover,
+.registerForm button:active {
+    background: #000;
+}
+
+/*-----------Recruiter Registration Extra CSS ---------*/
+
+#candiSignUP-title {
+    color: #000;
+    /*text-shadow: 4px 4px 10px black;*/
+    /*background: lightgray;*/
+}
+
+#recuSignUP-title {
+    color: #110808;
+    /*text-shadow: 4px 4px 10px black;*/
+    /*background: lightgray;*/
+}
+
+
+/*------------- Admin Panel Design ----------------------*/
+
+#admin-panel {
+    padding-top: 70px;
+}
+
+.admin-panel {
+    padding: 25px;
+}
+
+.admin-panel h2 {
+    font-weight: bold;
+    letter-spacing: 3px;
+    background-image: linear-gradient(to right, #6db9ef, #7ce08a);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+.admin-panel .card-body {
+    background: #f8f8fa;
+}
+
+.admin-panel .card-body a {
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.admin-panel .card-body a:hover {
+    background: #000;
+}
+
+
+/*------------------- Reset Password ------------------------*/
+
+.reset-password {
+    max-width: 550px;
+    margin: 20px auto;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.reset-password input {
+    max-width: 200px;
+    margin: 30px;
+    font-weight: bold;
+}
+
+
+/*---------------- Set New Password ----------------------*/
+
+#new-password {
+    padding-top: 70px;
+}
+
+
+/*---------------- Edit Profile CSS -----------------------*/
+
+.edit-profile {
+    padding: 20px 0;
+}
+
+.edit-profile img {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 30%;
+}
+
+.edit-profile button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.edit-profile button:hover,
+.edit-profile button:active {
+    background: #000;
+}
+
+
+/*------------------ Post Job CSS starts here -------------*/
+
+.post-job {
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid green;
+}
+
+.post-job .form-control {
+    border-radius: 8px;
+}
+
+.post-job button {
+    font-weight: bold;
+    padding: 10px 40px;
+    border-radius: 10px;
+}
+
+.post-job button:hover {
+    background: #000;
+}
+
+/*------------ Job Details --------------*/
+
+.job-details img {
+    max-width: 100px;
+    margin: 10px 20px;
+}
+
+/*------------ Job Listing Page Css -----------*/
+
+.job-listings {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #eee;
+    border-radius: 7px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+}
+
+.job-listings .badge {
+    color: #fff;
+    padding: 4px 10px;
+}
+
+@media (max-width: 991.98px) {
+    .job-listings .custom-width {
+        width: 100% !important;
+    }
+}
+
+.job-listings .job-listing {
+    position: relative;
+    border-bottom: 1px solid #eee;
+    transition: .3s all ease;
+}
+
+.job-listings .job-listing:last-child {
+    border-bottom: none;
+}
+
+.job-listings .job-listing a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: .3s all ease;
+}
+
+.job-listings .job-listing a:hover {
+    border-left: 7px solid #89ba16;
+}
+
+.job-listings .job-listing .job-listing-logo {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 150px;
+    flex: 0 0 150px;
+    border-right: 1px solid #eee;
+}
+
+@media (max-width: 575.98px) {
+    .job-listings .job-listing .job-listing-logo {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+    }
+}
+
+.job-listings .job-listing-position h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.job-listings .job-listing-position strong {
+    color: #b3b3b3;
+}
+
+
+/*  Assign Status CSS  */
+
+.assign-status {
+    box-shadow: 2px 2px 4px black;
+    padding: 20px;
+    border-radius: 20px;
+    /*max-width: 50%;*/
+    /*margin: auto;*/
+}
+
+.assign-status h2 {
+    letter-spacing: 4px;
+    background: #aaf1aa;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.assign-status .form-control {
+    border-radius: 15px;
+}
+
+.assign-status button {
+    border-radius: 13px;
+    font-size: 20px;
+}
+
+.assign-status button:hover {
+    background: #000;
+}
+
+
+/*------------Footer--------------*/
+
+.footer {
+    /* background-image: linear-gradient(to right, #6db9ef, #7ce08a); */
+    background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+}
+
+.footer p {
+    color: white;
+    font-weight: bold;
+}

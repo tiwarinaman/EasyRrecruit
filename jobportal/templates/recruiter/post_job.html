@@ -41,9 +41,13 @@
 
             {% else %}
 
-                <h2 class="text-center font-weight-bold title">Add Job Details</h2>
-                <hr>
-                <div class="post-job">
+                <div class="post-job col-md-8 col-sm-12 mx-auto">
+
+                    <h2 class="text-center font-weight-bold text-info title">
+                        Add Job Details
+                    </h2>
+                    <hr>
+
                     <form method="post" action="{% url 'postJob' %}" enctype="multipart/form-data">
 
                         {% csrf_token %}
@@ -83,24 +87,24 @@
                                        required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Salary</label>
                                 <input type="text" name="salary" class="form-control" placeholder="eg: 3.5 LPA"
                                        required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Experience</label>
                                 <input type="text" name="experience" class="form-control" placeholder="eg: 0-1 year"
                                        required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Start Date</label>
                                 <input type="text" name="startDate" value="{{ date }}" class="form-control" readonly>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="inputEmail4" class="font-weight-bold">Last Date</label>
                                 <input type="date" name="lastDate" class="form-control" required>
                             </div>
@@ -131,12 +135,12 @@
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <button id="submit" type="text" class="btn btn-primary btn-lg">Submit</button>
+                            <button id="submit" type="text" class="btn btn-primary btn-block">Submit</button>
                             <button id="btn-loader" class="btn btn-primary"
-                                type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
-                                                             aria-hidden="true"></span>
-                            Please Wait...
-                        </button>
+                                    type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
+                                                                 aria-hidden="true"></span>
+                                Please Wait...
+                            </button>
                         </div>
                     </form>
                 </div>

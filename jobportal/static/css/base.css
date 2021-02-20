@@ -314,12 +314,9 @@ ul li.active-nav a {
 }
 
 .registerForm {
-    max-width: 70%;
-    /*margin: 20px auto;*/
     padding: 20px;
-    box-shadow: 2px 2px 4px lightgray;
+    box-shadow: 0 2px 8px 0 lightgray;
     border-radius: 10px;
-    border: 2px solid lightgray;
 }
 
 .registerForm .form-control {
@@ -438,8 +435,9 @@ ul li.active-nav a {
 /*------------------ Post Job CSS starts here -------------*/
 
 .post-job {
-    width: 80%;
-    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid green;
 }
 
 .post-job .form-control {
@@ -538,8 +536,8 @@ ul li.active-nav a {
     box-shadow: 2px 2px 4px black;
     padding: 20px;
     border-radius: 20px;
-    max-width: 50%;
-    margin: auto;
+    /*max-width: 50%;*/
+    /*margin: auto;*/
 }
 
 .assign-status h2 {
@@ -555,11 +553,7 @@ ul li.active-nav a {
 
 .assign-status button {
     border-radius: 13px;
-    padding: 10px;
-    font-weight: bold;
     font-size: 20px;
-    max-width: 300px;
-    margin: auto;
 }
 
 .assign-status button:hover {

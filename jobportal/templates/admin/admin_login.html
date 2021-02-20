@@ -7,14 +7,7 @@
 {% block body %}
     <section id="section-start">
 
-        {% for message in messages %}
-            <div class="alert {{ message.tags }} alert-dismissible col-md-4 ml-3" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-        {% endfor %}
+        {% include 'common/message.html' %}
 
         <div class="container">
             <div class="myClass admin-login-section">
@@ -41,7 +34,14 @@
                                placeholder="Password"/>
                     </div>
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                    <div>
+                        <button id="submit" type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                        <button id="btn-loader" class="btn btn-primary btn-block"
+                                type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
+                                                             aria-hidden="true"></span>
+                            Please Wait...
+                        </button>
+                    </div>
 
                     <!-- Forgot Password link -->
                     <div class="col text-right">

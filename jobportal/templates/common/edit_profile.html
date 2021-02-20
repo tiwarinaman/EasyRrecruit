@@ -16,7 +16,7 @@
         {% if user.role == "candidate" %}
             <div class="container">
                 <div class="edit-profile">
-                    <h2 class="text-center font-weight-bold title">Edit Profile</h2>
+                    <h2 class="text-center font-weight-bold text-info title">Edit Profile</h2>
                     <hr>
 
                     <div class="row mr-auto">
@@ -111,7 +111,7 @@
 
         {% if user.role == "recruiter" %}
             <div class="container edit-profile">
-                <h2 class="text-center font-weight-bold title">Edit Profile</h2>
+                <h2 class="text-center font-weight-bold text-info title">Edit Profile</h2>
                 <hr>
                 <div class="container-fluid">
                     <div class="row mr-auto">
@@ -211,7 +211,6 @@
         {% endif %}
 
         <!-------------------- If user role is admin then render this part of code ---------------->
-
     </section>
 
 {% endblock %}

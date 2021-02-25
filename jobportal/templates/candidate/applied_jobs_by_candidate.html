@@ -46,8 +46,18 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'withdrawJob' j.job_applied.id %}"
-                                           role="button">Withdraw</a>
+                                        {% if j.status == "hire" or j.status == "fire" %}
+                                            <button class="btn btn-danger font-weight-bold btn-sm" disabled
+                                                    style="cursor: context-menu">
+                                                Withdraw
+                                            </button>
+                                        {% else %}
+                                            <a class="btn btn-danger font-weight-bold btn-sm"
+                                               href="{% url 'withdrawJob' j.job_applied.id %}"
+                                               role="button">
+                                                Withdraw
+                                            </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

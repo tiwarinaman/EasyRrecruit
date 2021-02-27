@@ -560,6 +560,22 @@ ul li.active-nav a {
     background: #000;
 }
 
+/*-------- Queries CSS ---------*/
+
+.queries {
+    border: 1px solid green;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.queries__title {
+    letter-spacing: 4px;
+}
+
+.queries__body:hover {
+    box-shadow: 0 0 5px 5px lightsteelblue;
+}
 
 /*------------Footer--------------*/
 

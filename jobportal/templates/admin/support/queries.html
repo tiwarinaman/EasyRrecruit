@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Queries
+{% endblock %}
+
+{% block body %}
+    <section id="section-start">
+
+        {% include 'common/message.html' %}
+
+        <div class="container">
+            <div class="queries">
+                <div class="text-center">
+                    <h3 class="text-info font-weight-bold queries__title">New Messages</h3>
+                </div>
+                <hr>
+                <div class="col-md-12 mx-auto">
+                    {% for q in query %}
+                        <div class="alert alert-secondary queries__body" role="alert">
+                            <div class="d-flex justify-content-between">
+                                <div class="font-weight-bold text-muted">
+                                    {{ forloop.counter }}
+                                </div>
+                                <div class="queries__name">
+                                    <p class="text-dark {% if not q.is_replied %} font-weight-bold {% endif %}">
+                                        {{ q.name }}
+                                    </p>
+                                </div>
+                                <div class="queries__message {% if not q.is_replied %} font-weight-bold {% endif %}">
+                                    <a href="{% url 'queryReply' q.id %}" style="text-decoration: none">
+                                        {{ q.subject | safe | truncatechars:40 }}
+                                    </a>
+                                </div>
+                                <div class="queries__message {% if not q.is_replied %} font-weight-bold {% endif %}">
+                                    <a href="{% url 'queryReply' q.id %}" style="text-decoration: none">
+                                        {{ q.message | safe | truncatechars:50 }}
+                                    </a>
+                                </div>
+                                <div class="queries__button">
+                                    <a href="{% url 'deleteQuery' q.id %}" class="btn btn-danger btn-sm" role="button">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

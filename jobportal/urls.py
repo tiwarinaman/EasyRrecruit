@@ -47,6 +47,10 @@ urlpatterns = [
                   path('delete-job-by-admin/<int:job_id>', views.deleteJobByAdmin, name="deleteJobByAdmin"),
                   path('add-recruiter', views.addNewRecruiter, name="addNewRecruiter"),
                   path('resubmit-profile', views.resubmitProfileForReview, name="resubmitProfile"),
+                  path('queries', views.queries, name="queries"),
+                  path('query-reply/<int:query_id>', views.queryReply, name="queryReply"),
+                  path('delete-query/<int:query_id>', views.deleteQuery, name="deleteQuery"),
+
 
                   # This Urls is for resetting the password (By Using Django Default Views)
                   path('reset_password',

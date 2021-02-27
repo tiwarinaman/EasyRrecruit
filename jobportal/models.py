@@ -71,3 +71,24 @@ class BookmarkJob(models.Model):
 
     def __str__(self):
         return self.user.first_name + " - " + self.job.job_title
+
+
+class Query(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    email = models.EmailField(max_length=250)
+    subject = models.CharField(max_length=100, null=True)
+    message = models.TextField(blank=True, null=True)
+    is_replied = models.BooleanField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.subject} || Is Replied - {self.is_replied}"
+
+
+class QueryReply(models.Model):
+    query = models.ForeignKey(Query, on_delete=models.CASCADE)
+    answer = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.query.name} - {self.query.subject}"

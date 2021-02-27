@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import Candidate, Recruiter, Job, ApplyJob, BookmarkJob
+from .models import Candidate, Recruiter, Job, ApplyJob, BookmarkJob, Query, QueryReply
 
 # Register Your Site Here
 
@@ -12,3 +12,5 @@ admin.site.register(Recruiter)
 admin.site.register(Job)
 admin.site.register(ApplyJob)
 admin.site.register(BookmarkJob)
+admin.site.register(Query)
+admin.site.register(QueryReply)

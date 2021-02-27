@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 
 from jobportal.permission import *
 # Importing models class
-from .models import Candidate, Recruiter, Job, ApplyJob, BookmarkJob
+from .models import Candidate, Recruiter, Job, ApplyJob, BookmarkJob, Query, QueryReply
 
 User = get_user_model()
 
@@ -70,15 +70,10 @@ def contact(request):
             messages.info(request, "All fields are required !!!")
             return redirect('contact')
         else:
-            subject = f'Message By - {name}'
-            message = f'<strong>Subject :</strong> {sub} <br> <strong>Email : </strong> {email} <br> ' \
-                      f'<strong>Message : </strong> {msg}'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [settings.EMAIL_HOST_USER, ]
-            send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
-
-            messages.success(request, "Message successfully send. We will contact you shortly.")
-            return redirect('contact')
+            con = Query.objects.create(name=name, email=email, subject=sub, message=msg, is_replied=False)
+            con.save()
+            messages.success(request, "Thank you for reaching with us, we will be back soon.")
+            redirect('contact')
 
     return render(request, 'contact.html')
 
@@ -1042,3 +1037,63 @@ def addNewRecruiter(request):
                 return redirect('viewAllRecruiter')
 
     return render(request, 'admin/add_recruiter.html')
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def queries(request):
+    query = Query.objects.all().order_by('-timestamp')
+
+    context = {
+        'query': query
+    }
+
+    return render(request, 'admin/support/queries.html', context)
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def queryReply(request, query_id):
+    query = Query.objects.get(id=query_id)
+
+    if query.is_replied:
+        reply = QueryReply.objects.get(query=query)
+    else:
+        reply = None
+
+    if request.method == 'POST':
+        reply_message = request.POST.get('reply_message', False)
+
+        if reply_message == '':
+            messages.info(request, "Reply field can't be blank.")
+        else:
+            reply = QueryReply.objects.create(query=query, answer=reply_message)
+            reply.save()
+            query.is_replied = True
+            query.save()
+
+            subject = f'Reply By Admin In Reference To - {query.subject}'
+            message = f'{reply_message}'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [query.email, ]
+            send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
+            messages.success(request, "Successfully replied !!!")
+            redirect("queryReply", query_id)
+
+    context = {
+        'query': query,
+        'reply': reply
+    }
+
+    return render(request, 'admin/support/query_reply.html', context)
+
+
+@login_required(login_url='/admin-login')
+@user_is_admin
+def deleteQuery(request, query_id):
+    query = Query.objects.filter(id=query_id)
+    query.delete()
+    messages.success(request, "Query successfully deleted !!!")
+    return redirect('queries')
+
+

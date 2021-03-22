@@ -27,7 +27,7 @@ SECRET_KEY = 'aebt2)51mg!g@1)f%!=#=58e#j015l!%nmt4g-iru-@f+t&gt%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'easyrecruit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'easy_recruit',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'NAME': 'easyrecruit$easyrecruit',
+        'USER': 'easyrecruit',
+        'PASSWORD': '1875536tnaman',
         'PORT': '3306',
-        'HOST': 'localhost',
+        'HOST': 'easyrecruit.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -134,7 +134,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

@@ -1076,7 +1076,7 @@ def queryReply(request, query_id):
             message = f'{reply_message}'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [query.email, ]
-            send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=True)
+            send_mail(subject, message, email_from, recipient_list, html_message=message, fail_silently=False)
             messages.success(request, "Successfully replied !!!")
             redirect("queryReply", query_id)
 

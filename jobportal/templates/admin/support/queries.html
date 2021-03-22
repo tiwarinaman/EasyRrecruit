@@ -24,7 +24,9 @@
                                 </div>
                                 <div class="queries__name">
                                     <p class="text-dark {% if not q.is_replied %} font-weight-bold {% endif %}">
-                                        {{ q.name }}
+                                        <a href="{% url 'queryReply' q.id %}"
+                                           style="text-decoration: none; color: black">{{ q.name }}
+                                        </a>
                                     </p>
                                 </div>
                                 <div class="queries__message {% if not q.is_replied %} font-weight-bold {% endif %}">

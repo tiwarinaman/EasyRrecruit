@@ -577,6 +577,12 @@ ul li.active-nav a {
     box-shadow: 0 0 5px 5px lightsteelblue;
 }
 
+@media screen and (max-width: 400px) {
+    .queries__message {
+        display: none;
+    }
+}
+
 /*------------Footer--------------*/
 
 .footer {

@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/common/contact.css' %}">
+{% endblock %}
 
 {% block title %}
     Contact Us
@@ -6,7 +11,7 @@
 
 {% block body %}
 
-    <section id="contact">
+    <section id="section-start">
         {% include 'common/message.html' %}
         <div class="container contact-form mx-auto">
             <div class="text-center mt-2">

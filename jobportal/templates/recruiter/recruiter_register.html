@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/recruiter/recruiter_register.css' %}">
+{% endblock %}
 
 {% block title %}
     Recruiter Sign-Up
 {% endblock %}
 
 {% block body %}
-    <section id="candidate-register">
+    <section id="section-start">
 
         <div class="container registerForm">
 

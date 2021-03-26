@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/candidate/candidate_register.css' %}">
+{% endblock %}
+
 {% block title %}
     Candidate Sign-Up
 {% endblock %}
 
 {% block body %}
-    <section id="candidate-register">
+    <section id="section-start">
 
 
         {% include 'common/message.html' %}

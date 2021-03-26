@@ -12,7 +12,14 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common/footer.css' %}">
+
+    <!---------- External CSS Block ------------->
+    {% block css %}
+    {% endblock %}
+
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
@@ -29,7 +36,7 @@
 
 <!----------- Navbar Content starts here-------------------->
 
-{% include 'navbar.html' %}
+{% include 'common/navbar.html' %}
 
 <!----------- Body Content starts here-------------------->
 
@@ -40,7 +47,7 @@
 
 <!----------- Footer Content starts here-------------------->
 
-{% include 'footer.html' %}
+{% include 'common/footer.html' %}
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

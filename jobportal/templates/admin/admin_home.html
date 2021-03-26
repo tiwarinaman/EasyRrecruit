@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin_home.css' %}">
+{% endblock %}
 
 {% block title %}
     Admin Panel
@@ -6,7 +11,7 @@
 
 {% block body %}
 
-    <section id="admin-panel">
+    <section id="section-start">
         <div class="container admin-panel">
             <div class="text-center">
                 <h2>WELCOME TO ADMIN PANEL</h2>

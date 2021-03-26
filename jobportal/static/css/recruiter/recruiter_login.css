@@ -1,0 +1,49 @@
+.myClass {
+    max-width: 400px;
+    margin: 32px auto;
+    padding: 20px;
+    /*background: #f8f8fa;*/
+    box-shadow: 2px 2px 4px lightgray;
+    border-radius: 10px;
+    border: 2px solid lightgray;
+}
+
+#recu-title {
+    color: black;
+    /*text-shadow: 4px 4px 10px black;*/
+    /*background: lightgray;*/
+}
+
+.title {
+    letter-spacing: 3px;
+    border-radius: 20px;
+    margin: 10px auto;
+    max-width: 500px;
+    /*box-shadow: 2px 2px 10px black;*/
+}
+
+.myClass .form-control {
+    border-radius: 10px;
+}
+
+
+.myClass button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.myClass button:hover,
+.myClass button:active {
+    background: black;
+}
+
+@media screen and (max-width: 400px) {
+    .myClass {
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0px;
+        border: none;
+    }
+}
+

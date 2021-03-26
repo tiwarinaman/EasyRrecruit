@@ -1,0 +1,15 @@
+.footer {
+    /* background-image: linear-gradient(to right, #6db9ef, #7ce08a); */
+    background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+}
+
+.footer p {
+    color: white;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 400px) {
+    .footer .lead {
+        font-size: 15px;
+    }
+}

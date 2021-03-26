@@ -1,0 +1,25 @@
+.post-job {
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid green;
+}
+
+.post-job .form-control {
+    border-radius: 8px;
+}
+
+.post-job button {
+    font-weight: bold;
+    padding: 10px 40px;
+    border-radius: 10px;
+}
+
+.post-job button:hover {
+    background: #000;
+}
+
+@media screen and (max-width: 400px) {
+    .post-job {
+        border: none;
+    }
+}

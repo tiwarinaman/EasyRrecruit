@@ -4,6 +4,11 @@
 {% load is_job_already_saved %}
 {% load is_same_recruiter %}
 {% load is_job_expired %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/common/job_details.css' %}">
+{% endblock %}
+
 {% block title %}
     Job Details
 {% endblock %}

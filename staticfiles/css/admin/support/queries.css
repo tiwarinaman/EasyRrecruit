@@ -1,0 +1,26 @@
+.queries {
+    border: 1px solid green;
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 10px;
+}
+
+.queries__title {
+    letter-spacing: 4px;
+}
+
+.queries__body:hover {
+    box-shadow: 0 0 5px 5px lightsteelblue;
+}
+
+@media screen and (max-width: 400px) {
+
+    .queries {
+        border: none;
+        padding: 0px;
+    }
+
+    .queries__message {
+        display: none;
+    }
+}

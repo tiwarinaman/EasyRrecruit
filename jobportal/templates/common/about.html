@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/common/about.css' %}">
+{% endblock %}
+
 {% block title %}
     About Us
 {% endblock %}

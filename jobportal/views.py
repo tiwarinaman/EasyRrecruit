@@ -52,11 +52,11 @@ def home(request):
         'total_recruiter': total_recruiter,
         'total_job_posted': total_job_posted,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'common/home.html', context)
 
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'common/about.html')
 
 
 def contact(request):
@@ -75,7 +75,7 @@ def contact(request):
             messages.success(request, "Thank you for reaching with us, we will be back soon.")
             redirect('contact')
 
-    return render(request, 'contact.html')
+    return render(request, 'common/contact.html')
 
 
 # This Python method is used to validate the dob

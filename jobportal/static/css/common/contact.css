@@ -1,0 +1,42 @@
+
+.contact-form {
+    max-width: 500px;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .18);
+}
+
+.contact-form p {
+    letter-spacing: 2px;
+}
+
+.contact-form .form-control {
+    border-radius: 10px;
+}
+
+.contact-form button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.contact-form button:hover {
+    background: #000;
+}
+
+@media screen and (max-width: 400px) {
+    .contact-form {
+        width: 100%;
+        border-radius: 0px;
+        box-shadow: none;
+    }
+
+    .contact-form h2 {
+        font-size: 22px;
+    }
+
+    .contact-form p {
+        font-size: 15px;
+    }
+}

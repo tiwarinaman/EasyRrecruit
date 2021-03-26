@@ -1,0 +1,37 @@
+.edit-profile {
+    padding: 20px 0;
+    border: 2px solid green;
+    border-radius: 15px;
+}
+
+.edit-profile img {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 50%;
+}
+
+.edit-profile button {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.edit-profile button:hover,
+.edit-profile button:active {
+    background: #000;
+}
+
+@media screen and (max-width: 400px) {
+
+    .edit-profile {
+        width: 100%;
+        border: none;
+        border-radius: 0px;
+    }
+
+    .edit-profile img {
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 50%;
+    }
+}

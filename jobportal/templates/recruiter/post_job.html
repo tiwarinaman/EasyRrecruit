@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/recruiter/post_job.css' %}">
+{% endblock %}
 
 {% block title %}
     Post A New Job

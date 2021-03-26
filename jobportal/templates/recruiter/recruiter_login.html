@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/recruiter/recruiter_login.css' %}">
+{% endblock %}
 
 {% block title %}
     Recruiter Login
 {% endblock %}
 
 {% block body %}
-    <section id="candidate-login">
+    <section id="section-start">
 
         {% include 'common/message.html' %}
 

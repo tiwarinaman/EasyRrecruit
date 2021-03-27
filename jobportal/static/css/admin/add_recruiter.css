@@ -1,0 +1,19 @@
+.add-recruiter {
+    border: 2px solid lightslategray;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 70%;
+}
+
+.add-recruiter .form-control {
+    border-radius: 10px;
+}
+
+
+@media screen and (max-width: 400px){
+    .add-recruiter {
+        border: none;
+        width: 100%;
+    }
+}

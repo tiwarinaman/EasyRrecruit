@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/common/search_result.css' %}">
+{% endblock %}
+
 {% block title %}
     Search Result
 {% endblock %}
 
 {% block body %}
     <section id="section-start">
-        <div class="container bg-light border border-success rounded p-4 mt-3">
+        <div class="container bg-light p-4 mt-3 search_result">
             <div class="text-center">
                 <h2 class="text-info font-weight-bold">Search Results</h2>
             </div>

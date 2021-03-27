@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'easyrecruit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'easyrecruit$easyrecruit',
-        'USER': 'easyrecruit',
-        'PASSWORD': '1875536tnaman',
+        'NAME': 'easy_recruit',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'PORT': '3306',
-        'HOST': 'easyrecruit.mysql.pythonanywhere-services.com',
+        'HOST': 'localhost',
     }
 }
 

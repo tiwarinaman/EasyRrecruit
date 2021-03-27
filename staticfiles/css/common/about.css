@@ -1,3 +1,144 @@
-#about {
-    padding-top: 70px;
+.about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #181515;
+    color: white;
+    margin: -20px auto;
+}
+
+.about-section h1 {
+    color: #3030f1;
+    font-weight: bold;
+    font-size: 30px;
+    letter-spacing: 4px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px;
+    background: #f2f2f2;
+    border-radius: 20px;
+}
+
+.dev-section {
+    margin: 10px auto;
+    text-align: center;
+}
+
+.dev-section h2 {
+    letter-spacing: 2px;
+}
+
+.column {
+    float: left;
+    width: 100%;
+    padding: 20px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(10, 10, 10, 0.2);
+    margin: 8px;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.card img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+.container {
+    padding: 0 16px;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.title {
+    color: grey;
+}
+
+.button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    font-weight: bold;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px auto;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.card:hover{
+    box-shadow: 0px 0px 5px 5px black;
+}
+
+
+.about-section_description {
+    width: 50%;
+    margin: 10px;
+    padding: 20px;
+}
+
+.about-section_description p {
+    letter-spacing: 2px;
+    margin-top: 30px;
+    color: #2c5364;
+    font-style: italic;
+    border: 2px solid gray;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+
+@media screen and (max-width: 400px) {
+
+    .about-section {
+        padding: 30px;
+    }
+
+    .about-section h1 {
+        font-size: 25px;
+    }
+
+    .about-section p {
+        font-size: 10px;
+    }
+
+    .flex-container {
+        flex-direction: column;
+        margin: 30px auto;
+    }
+
+    .column {
+        width: 100%;
+        display: block;
+    }
+
+    .dev-section h2 {
+        text-align: center;
+    }
+
+    .about-section_description {
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    .about-section_description p {
+        border: none;
+    }
 }

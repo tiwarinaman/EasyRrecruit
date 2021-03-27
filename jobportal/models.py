@@ -32,6 +32,19 @@ class Recruiter(models.Model):
         return self.uname.first_name + " " + self.uname.last_name
 
 
+# Admin Model
+
+class Admin(models.Model):
+    uname = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    admin_number = models.BigIntegerField(null=True)
+    dob = models.DateField(null=True)
+    admin_image = models.FileField(upload_to='admin_profile/', null=True)
+    gender = models.CharField(max_length=50, null=True)
+
+    def __str__(self):
+        return self.uname.first_name + " " + self.uname.last_name
+
+
 # Post Job Model
 
 class Job(models.Model):

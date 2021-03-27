@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 
 from jobportal.permission import *
 # Importing models class
-from .models import Candidate, Recruiter, Job, ApplyJob, BookmarkJob, Query, QueryReply
+from .models import Candidate, Recruiter, Admin, Job, ApplyJob, BookmarkJob, Query, QueryReply
 
 User = get_user_model()
 
@@ -481,6 +481,59 @@ def edit_recruiter_profile(request):
 
     recu = Recruiter.objects.get(uname=request.user)
     return render(request, 'common/edit_profile.html', {'recu': recu})
+
+
+@login_required(login_url='/')
+@user_is_admin
+def edit_admin_profile(request):
+    if request.method == 'POST':
+        fname = request.POST.get('fname', False)
+        lname = request.POST.get('lname', False)
+        em = request.POST.get('email', False)
+        uname = request.POST.get('username', False)
+        mobile = request.POST.get('mobile', False)
+        gen = request.POST.get('gender', False)
+        img = request.FILES.get('image', False)
+
+        if fname == '' or lname == '' or em == '' or uname == '' or mobile == '':
+            messages.info(request, "All fields must be filled !!!")
+            return redirect('editAdminProfile')
+        else:
+            try:
+                if User.objects.filter(email=em).exists() and request.user.email != em:
+                    messages.warning(request, "Email already in use, please choice another email !!!")
+                    return redirect('editAdminProfile')
+                elif Admin.objects.filter(admin_number=mobile).exists() and Admin.objects.get(
+                        uname=request.user).admin_number == mobile:
+                    messages.warning(request, "Mobile number already in use, please try again !!!")
+                    return redirect('editAdminProfile')
+                else:
+                    try:
+                        u = User.objects.get(username=request.user)
+                        u.first_name = fname
+                        u.last_name = lname
+                        u.email = em
+                        a = Admin.objects.get(uname=request.user)
+                        a.admin_number = mobile
+
+                        if img:
+                            a.admin_image = img
+                        if gen:
+                            a.gender = gen
+
+                        u.save()
+                        a.save()
+                        messages.success(request, "You profile has been updated !!!")
+                        return redirect('editAdminProfile')
+                    except:
+                        messages.warning(request, "Something went wrong !!!")
+                        return redirect('editAdminProfile')
+            except:
+                messages.warning(request, "Something went wrong !!!")
+                return redirect('editAdminProfile')
+
+    admin = Admin.objects.get(uname=request.user)
+    return render(request, 'common/edit_profile.html', {'admin': admin})
 
 
 @login_required(login_url='/recu-login')
@@ -1095,5 +1148,3 @@ def deleteQuery(request, query_id):
     query.delete()
     messages.success(request, "Query successfully deleted !!!")
     return redirect('queries')
-
-

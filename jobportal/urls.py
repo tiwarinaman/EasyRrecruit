@@ -21,6 +21,7 @@ urlpatterns = [
                   path('change-password', views.change_password, name="changePassword"),
                   path('edit-candidate-profile', views.edit_candidate_profile, name="editCandidateProfile"),
                   path('edit-recruiter-profile', views.edit_recruiter_profile, name="editRecruiterProfile"),
+                  path('edit-admin-profile', views.edit_admin_profile, name="editAdminProfile"),
                   path('post-job', views.post_job, name="postJob"),
                   path('edit-job/<int:job_id>', views.editJob, name="editJob"),
                   path('job/<int:job_id>', views.jobDetails, name="jobDetails"),

@@ -11,12 +11,53 @@
 
 {% block body %}
 
-    <section id="about">
-        <div class="container-fluid">
-            <h1 class="text-muted font-weight-bold text-center mt-4 p-4"
-                style="font-size: 150px; margin-bottom: 20px;letter-spacing: 2px">
-                COMMING <br> SOON <i class="far fa-smile"></i> !!!</h1>
+    <section id="section-start">
+        <div class="about">
+            <div class="about-section">
+                <h1>Easy-Recruit</h1>
+                <p class="text-danger font-weight-bold">We Will Help You To Find Your Dream Job.</p>
+            </div>
+
+            <div class="flex-container">
+            <div class="dev-section">
+                <h2 class="text-primary font-weight-bold">Meet Our Owner</h2>
+                <div class="column">
+                    <div class="card">
+                        <img src="{% static 'img/naman.png' %}" alt="image" \>
+                        <div class="container">
+                            <h2 class="text-info font-weight-bold">Naman Kumar</h2>
+                            <p class="title">CEO & Founder & Developer</p>
+                            <p>He is a CEO, Founder and Developer of Easy-Recruit.</p>
+                            <p>easyrecruit24.7@gmail.com</p>
+                            <p>
+                                <a href="https://tiwarinaman.github.io/" target="_blank" style="text-decoration: none">
+                                    <button class="button">Contact</button>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-section_description">
+                <h2 class="text-primary font-weight-bold" style="text-align:center">About Us</h2>
+                <p>Every organization, whether big or small, has challenges to overcome and managing the information of
+                    Employer Registration, Search Job, Call Letter.
+                    <br><br>
+                    Every Job Portal System has different Employer
+                    needs, therefore I design exclusive <b>Easy-Recruit</b> that are adapted to your managerial
+                    requirements.
+                    <br><br>
+                    This is designed to assist in strategic planning, and will help you ensure that your
+                    organization is equipped with the right level of information and details for your future goals.
+                    <br><br>
+                    Also, for those busy
+                    executive who are always on the go, our system come with remote access features, which will allow
+                    you to manage your workforce anytime, at all times. These systems will ultimately allow you to
+                    better manage resources.</p>
+            </div>
         </div>
+
     </section>
 
 {% endblock %}

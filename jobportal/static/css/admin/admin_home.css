@@ -24,3 +24,11 @@
 .admin-panel .card-body a:hover {
     background: #000;
 }
+
+@media screen and (max-width: 400px) {
+    .admin-panel h2 {
+        font-size: 15px;
+        width: 100%;
+        letter-spacing: 1px;
+    }
+}

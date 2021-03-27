@@ -1,7 +1,9 @@
 .registerForm {
     padding: 20px;
-    box-shadow: 0 2px 8px 0 lightgray;
-    border-radius: 10px;
+    /*box-shadow: 0 2px 8px 0 lightgray;*/
+    border-radius: 20px;
+    border: 2px solid lightslategray;
+    width: 70%;
 }
 
 #recuSignUP-title {
@@ -12,7 +14,7 @@
 
 
 .registerForm .form-control {
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .registerForm button {
@@ -25,4 +27,15 @@
 .registerForm button:hover,
 .registerForm button:active {
     background: #000;
+}
+
+@media screen and (max-width: 400px){
+    .registerForm {
+        border: none;
+        width: 100%;
+    }
+
+    #recuSignUP-title h1 {
+        font-size: 30px;
+    }
 }

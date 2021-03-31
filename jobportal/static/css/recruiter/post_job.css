@@ -1,5 +1,9 @@
+.pre-message {
+    padding: 110px;
+}   
+
 .post-job {
-    padding: 20px;
+    padding: 30px;
     border-radius: 15px;
     border: 1px solid green;
 }
@@ -19,7 +23,14 @@
 }
 
 @media screen and (max-width: 400px) {
+
+    .pre-message {
+        padding: 0px;
+
+    }
+
     .post-job {
         border: none;
+        padding: 0px;
     }
 }

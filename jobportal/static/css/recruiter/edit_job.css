@@ -1,0 +1,19 @@
+.edit-job {
+    width: 90%;
+    margin: 20px auto;
+    padding: 30px;
+    border: 1px solid green;
+    border-radius: 15px;
+}
+
+.edit-job button:hover {
+    background: #000;
+}
+
+@media screen and (max-width: 400px){
+    .edit-job {
+        width: 100%;
+        border: none;
+        padding: 0px;
+    }
+}

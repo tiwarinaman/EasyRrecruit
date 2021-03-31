@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/candidate/apply_job.css' %}">
+{% endblock %}
 
 {% block title %}
     Apply Job
@@ -10,21 +15,21 @@
 
             {% include 'common/message.html' %}
 
-            <h2 class="text-center font-weight-bold title">Application Form</h2>
-            <hr>
+            <div class="apply-job">
 
-            <div class="post-job">
+                <h2 class="text-center font-weight-bold title">Application Form</h2>
+                <hr>
+
                 <form method="post" action="#" enctype="multipart/form-data">
                     {% csrf_token %}
 
                     <div class="form-row">
 
-                        <div class="col-md-6 mx-auto mt-3">
-                            <img src="{{ candi.candidate_image.url }}" alt=""
-                                 style="max-height: 200px; border-radius: 30px;">
+                        <div class="col-md-4 mx-auto mt-3 apply-job__image">
+                            <img src="{{ candi.candidate_image.url }}" alt="image">
                         </div>
 
-                        <div class="col-md-6 border border-dark rounded mt-3">
+                        <div class="col-md-4 mx-auto apply-job__summary mt-3">
                             <label for="inputEmail4" class="font-weight-bold text-center text-primary">Job
                                 Summary</label><br>
                             <strong>Position : </strong> {{ job.job_title }} <br>
@@ -71,13 +76,16 @@
                         </div>
 
                         <div class="col-md-12">
-                            <label for="exampleInputPassword1" class="font-weight-bold">Upload your updated resume</label>
+                            <label for="exampleInputPassword1" class="font-weight-bold">Upload your updated
+                                resume</label>
                             <input type="file" class="form-control" id="exampleInputPassword1" name="resume" required>
                         </div>
                     </div>
                     <div class="text-center mt-4">
-                        <button  id="submit" type="text" class="btn btn-primary btn-lg">Submit</button>
-                        <button id="btn-loader" class="btn btn-primary font-weight-bold" type="button" disabled>
+                        <button id="submit" type="text" class="btn btn-primary btn-lg btn-block font-weight-bold">
+                            Submit
+                        </button>
+                        <button id="btn-loader" class="btn btn-primary font-weight-bold btn-block" type="button" disabled>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Please Wait...
                         </button>

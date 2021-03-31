@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts.apps.AccountsConfig',
-    'jobportal.apps.JobportalConfig'
+    'jobportal.apps.JobportalConfig',
+    'ckeditor',
 
 ]
 

@@ -85,8 +85,10 @@
                                     {% else %}
                                         <span class="badge badge-info">Internship</span>
                                     {% endif %}
-                                    <span class="badge badge-secondary">{{ job.job_location }}</span>
-                                    <p class="card-text text-dark mt-3">{{ job.description | safe | truncatechars:150 }}</p>
+                                    <span class="badge badge-secondary">{{ job.job_location }}</span><br><br>
+                                    <p class="card-text text-dark mt-3">
+                                        {{ job.description | safe | truncatechars:100 }}
+                                    </p>
                                 </div>
                             </div>
                         </a>

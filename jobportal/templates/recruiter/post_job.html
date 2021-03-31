@@ -18,13 +18,16 @@
 
             {% if recu.status == "pending" %}
 
-                <div class="alert alert-info mt-5" role="alert">
-                    <p class="text-dark font-weight-bold">Account is pending will be reviewed by admin, have patience <i
-                            class="far fa-smile"></i> !!! <br>
-                        once account accepted you will be intimated via email...
-                    </p>
-                    <span class="text-dark font-weight-bold">Status : </span><span
-                        class="badge badge-danger">{{ recu.status }}</span>
+                <div class="pre-message">
+                    <div class="alert alert-info mt-5" role="alert">
+                        <p class="text-dark font-weight-bold">Account is pending will be reviewed by admin, have
+                            patience <i
+                                    class="far fa-smile"></i> !!! <br>
+                            once account accepted you will be intimated via email...
+                        </p>
+                        <span class="text-dark font-weight-bold">Status : </span><span
+                            class="badge badge-danger">{{ recu.status }}</span>
+                    </div>
                 </div>
 
             {% elif recu.status == "rejected" %}
@@ -46,7 +49,7 @@
 
             {% else %}
 
-                <div class="post-job col-md-8 col-sm-12 mx-auto">
+                <div class="post-job col-md-12 col-sm-12 mx-auto">
 
                     <h2 class="text-center font-weight-bold text-info title">
                         Add Job Details
@@ -56,6 +59,7 @@
                     <form method="post" action="{% url 'postJob' %}" enctype="multipart/form-data">
 
                         {% csrf_token %}
+
 
                         <div class="form-row">
                             <div class="col-md-12">
@@ -127,8 +131,22 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label for="exampleInputPassword1" class="font-weight-bold">Description</label>
-                                <textarea class="form-control" rows="5" name="description"
+                                <label for="" class="font-weight-bold">Education</label>
+                                <textarea id="exampleInputPassword1" class="form-control" rows="5" name="education"
+                                          placeholder="eg: 10th passed..."
+                                          required></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="" class="font-weight-bold">Qualification</label>
+                                <textarea id="exampleInputPassword1" class="form-control" rows="5" name="qualification"
+                                          placeholder="eg: B.Tech(CS/IT), MCA...."
+                                          required></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="" class="font-weight-bold">Description</label>
+                                <textarea id="exampleInputPassword1" class="form-control" rows="12" name="description"
                                           placeholder="eg: Role Responsibilities, Education qualification etc."
                                           required></textarea>
                             </div>
@@ -140,7 +158,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <button id="submit" type="text" class="btn btn-primary btn-block">Submit</button>
+                            <button id="submit" type="submit" class="btn btn-primary btn-block">Submit</button>
                             <button id="btn-loader" class="btn btn-primary"
                                     type="button" disabled><span class="spinner-border spinner-border-sm" role="status"
                                                                  aria-hidden="true"></span>
@@ -152,4 +170,9 @@
             {% endif %}
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script src="{% static 'js/ckeditor.js' %}"></script>
 {% endblock %}

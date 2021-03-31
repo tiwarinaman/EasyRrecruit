@@ -1,0 +1,41 @@
+.apply-job {
+    border: 1px solid lightslategray;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+.apply-job .apply-job__image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.apply-job .apply-job__summary {
+    border: 1px solid lightgrey;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px;
+}
+
+.apply-job .form-control {
+    border-radius: 10px;
+}
+
+.apply-job button {
+    border-radius: 10px;
+}
+
+.apply-job button:hover {
+    background: #000;
+}
+
+@media screen and (max-width: 400px){
+    .apply-job {
+        border: none;
+        padding: 0px;
+    }
+
+    .apply-job .apply-job__image {
+        text-align: center;
+    }
+}

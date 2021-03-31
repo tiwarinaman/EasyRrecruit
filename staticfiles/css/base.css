@@ -26,7 +26,6 @@
 }
 
 .menu-bar {
-    /* background-image: linear-gradient(to right, #6db9ef, #7ce08a); */
     background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     position: fixed;
     z-index: 10;

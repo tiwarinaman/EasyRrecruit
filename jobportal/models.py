@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from ckeditor.fields import RichTextField
 
 User = get_user_model()
 
@@ -58,8 +59,10 @@ class Job(models.Model):
     start_date = models.DateField(null=True)
     last_date = models.DateField(null=True)
     skills = models.CharField(max_length=200, null=True)
+    education = RichTextField(blank=True, null=True)
+    qualification = RichTextField(blank=True, null=True)
     website_link = models.CharField(max_length=200, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
     company_logo_image = models.FileField(upload_to='post_job_company_logo/', null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

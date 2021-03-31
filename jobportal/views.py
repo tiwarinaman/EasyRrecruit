@@ -551,10 +551,14 @@ def post_job(request):
         lastDate = request.POST.get('lastDate', False)
         requiredSkill = request.POST.get('requiredSkills', False)
         web = request.POST.get('website', False)
+        edu = request.POST.get('education', False)
+        quali = request.POST.get('qualification', False)
         des = request.POST.get('description', False)
         companyLogo = request.FILES.get('image', False)
 
-        if companyName == '' or jobTitle == '' or jobLocation == '' or jobType == '' or cate == '' or sal == '' or exp == '' or startDate == '' or lastDate == '' or requiredSkill == '' or web == '' or des == '' or companyLogo == '':
+        if companyName == '' or jobTitle == '' or jobLocation == '' or jobType == '' or cate == '' \
+                or sal == '' or exp == '' or startDate == '' or lastDate == '' or requiredSkill == '' \
+                or web == '' or des == '' or companyLogo == '' or edu == '' or quali == '':
             messages.info(request, "All fields are required, please try again !!!")
             return redirect('postJob')
         else:
@@ -573,7 +577,8 @@ def post_job(request):
                                               job_type=jobType,
                                               category=cate, salary=sal, experience=exp, start_date=startDate,
                                               last_date=lastDate,
-                                              skills=requiredSkill, website_link=web, description=des,
+                                              skills=requiredSkill, education=edu, qualification=quali,
+                                              website_link=web, description=des,
                                               company_logo_image=companyLogo)
 
                     post.save()
@@ -609,10 +614,14 @@ def editJob(request, job_id):
         lastDate = request.POST.get('lastDate', False)
         requiredSkill = request.POST.get('requiredSkills', False)
         web = request.POST.get('website', False)
+        edu = request.POST.get('education', False)
+        quali = request.POST.get('qualification', False)
         des = request.POST.get('description', False)
         companyLogo = request.FILES.get('image', False)
 
-        if companyName == '' or jobTitle == '' or jobLocation == '' or jobType == '' or cate == '' or sal == '' or exp == '' or startDate == '' or requiredSkill == '' or web == '' or des == '':
+        if companyName == '' or jobTitle == '' or jobLocation == '' or jobType == '' or cate == '' or sal == '' \
+                or exp == '' or startDate == '' or requiredSkill == '' or web == '' or des == '' \
+                or edu == '' or quali == '':
             messages.info(request, "All fields are required, please try again !!!")
             return redirect('postJob')
         else:
@@ -629,6 +638,8 @@ def editJob(request, job_id):
             edit_job.salary = sal
             edit_job.experience = exp
             edit_job.skills = requiredSkill
+            edit_job.education = edu
+            edit_job.qualification = quali
             edit_job.website_link = web
             edit_job.description = des
 

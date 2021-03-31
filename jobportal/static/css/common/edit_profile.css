@@ -1,6 +1,6 @@
 .edit-profile {
     padding: 20px 0;
-    border: 2px solid green;
+    border: 1px solid green;
     border-radius: 15px;
 }
 
@@ -8,6 +8,10 @@
     max-width: 250px;
     max-height: 250px;
     border-radius: 50%;
+}
+
+.edit-profile .form-control {
+    border-radius: 15px;
 }
 
 .edit-profile button {

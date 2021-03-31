@@ -40,7 +40,7 @@
                                         <td scope="row">{{ n.uname.email }}</td>
                                         <td scope="row">{{ n.uname.date_joined }}</td>
                                         <td scope="row"><img src="{{ n.recruiter_image.url }}" alt=""
-                                                             style="max-height: 150px; max-width: 150px; border-radius: 30px">
+                                                             style="height: 150px; width: 150px; border-radius: 50%">
                                         </td>
                                         <td scope="row" class="text-danger font-weight-bold">{{ n.status }}</td>
                                         <td scope="row"><a href="{% url 'assignStatus' n.uname.id %}" role="button"

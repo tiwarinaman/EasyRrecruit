@@ -29,10 +29,6 @@
                         {% if user.role == "candidate" %}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'listJobs' %}"><i class="fas fa-list-ul"></i> JOB LISTS</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'appliedJobsByCandidate' %}"><i
                                         class="fas fa-briefcase"></i> APPLIED JOBS</a>
                             </li>
@@ -143,7 +139,8 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{% url 'changePassword' %}"><i
                                             class="fas fa-key"></i> Change Password</a>
-                                    <a class="dropdown-item" href="{% url 'editAdminProfile' %}"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                                    <a class="dropdown-item" href="{% url 'editAdminProfile' %}"><i
+                                            class="fas fa-user-edit"></i> Edit Profile</a>
                                 </div>
                             </li>
 
@@ -154,6 +151,10 @@
                                     class="fas fa-sign-out-alt"></i></a>
                         </li>
                     {% else %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'listJobs' %}"><i class="fas fa-list-ul"></i> JOB LISTS</a>
+                        </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

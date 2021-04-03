@@ -8,7 +8,7 @@
     font-weight: bold;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
     .footer .lead {
         font-size: 15px;
     }

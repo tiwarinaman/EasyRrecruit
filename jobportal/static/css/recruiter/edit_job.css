@@ -10,7 +10,7 @@
     background: #000;
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 900px){
     .edit-job {
         width: 100%;
         border: none;

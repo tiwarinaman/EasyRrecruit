@@ -42,7 +42,7 @@
     background: black;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
     .myClass {
         width: 100%;
         box-shadow: none;

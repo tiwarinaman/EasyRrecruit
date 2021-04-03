@@ -198,7 +198,7 @@ ul li.active-nav a {
 }
 
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
     .banner h1 {
         font-size: 28px;
     }

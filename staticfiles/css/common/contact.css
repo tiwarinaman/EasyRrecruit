@@ -25,7 +25,7 @@
     background: #000;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
     .contact-form {
         width: 100%;
         border-radius: 0px;

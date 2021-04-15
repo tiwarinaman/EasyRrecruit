@@ -60,8 +60,7 @@ ROOT_URLCONF = 'easyrecruit.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'jobportal/templates']
-        ,
+        'DIRS': [BASE_DIR / 'jobportal/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
